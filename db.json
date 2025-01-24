@@ -1,0 +1,2376 @@
+{
+	"users": [
+		{
+			"id": "991d",
+			"name": "ada1",
+			"surname": "ada1",
+			"email": "adam@adam.pl",
+			"password": "123123",
+			"cardId": "iuum0bl8n",
+			"role": "Klient",
+			"borrowedBooks": []
+		},
+		{
+			"id": "991dc",
+			"name": "adam2",
+			"surname": "adam2",
+			"email": "adam@adam.pl",
+			"password": "123123",
+			"cardId": "iuum0bl8n1",
+			"role": "Klient",
+			"borrowedBooks": []
+		},
+		{
+			"id": "d903",
+			"name": "Admin",
+			"surname": "Admin",
+			"email": "admin@admin.pl",
+			"password": "123123",
+			"cardId": "1e2ucxoya",
+			"role": "Admin",
+			"borrowedBooks": ["1984"]
+		},
+		{
+			"id": "02d4",
+			"name": "aaa",
+			"surname": "aaaa",
+			"email": "aa@aa.pl",
+			"password": "123123",
+			"borrowedBooks": [],
+			"cardId": "j0qt4dof6",
+			"role": "Klient"
+		}
+	],
+	"books": [
+		{
+			"id": "1",
+			"title": "Władca Pierścieni: Drużyna Pierścienia",
+			"author": "J.R.R. Tolkien",
+			"description": "Pierwsza część trylogii Władca Pierścieni.",
+			"year": 1954,
+			"copies": 5,
+			"borrowedBy": []
+		},
+		{
+			"id": "2",
+			"title": "Harry Potter i Kamień Filozoficzny",
+			"author": "J.K. Rowling",
+			"description": "Pierwsza część serii o Harrym Potterze.",
+			"year": 1997,
+			"copies": 5,
+			"borrowedBy": []
+		},
+		{
+			"id": "3",
+			"title": "1984",
+			"author": "George Orwell",
+			"description": "Klasyczna powieść dystopijna.",
+			"year": 1949,
+			"copies": 4,
+			"borrowedBy": ["1e2ucxoya"]
+		}
+	],
+	"borrowings": [
+		{
+			"id": "d727",
+			"userId": "991d",
+			"bookId": "3",
+			"borrowDate": "2025-01-16T03:06:54.433Z",
+			"expectedreturnDate": "2025-01-30T03:06:54.433Z",
+			"returnDate": "2025-01-16T03:11:14.765Z"
+		},
+		{
+			"id": "b102",
+			"userId": "991d",
+			"bookId": "3",
+			"borrowDate": "2025-01-16T03:07:00.151Z",
+			"expectedreturnDate": "2025-01-30T03:07:00.151Z",
+			"returnDate": "2025-01-16T03:11:10.466Z"
+		},
+		{
+			"id": "7052",
+			"userId": "845e",
+			"bookId": "3",
+			"borrowDate": "2025-01-16T03:58:46.583Z",
+			"expectedreturnDate": "2025-01-30T03:58:46.583Z",
+			"returnDate": "2025-01-16T04:02:35.931Z"
+		},
+		{
+			"id": "38d7",
+			"userId": "845e",
+			"bookId": "3",
+			"borrowDate": "2025-01-16T04:04:11.201Z",
+			"expectedreturnDate": "2025-01-30T04:04:11.201Z",
+			"returnDate": "2025-01-16T04:06:23.045Z"
+		},
+		{
+			"id": "4cfe",
+			"userId": "d903",
+			"bookId": "3",
+			"borrowDate": "2025-01-16T04:07:47.651Z",
+			"expectedreturnDate": "2025-01-30T04:07:47.651Z",
+			"returnDate": "2025-01-16T04:13:17.245Z"
+		},
+		{
+			"id": "057a",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:55:35.295Z",
+			"expectedreturnDate": "2025-02-06T01:55:35.295Z",
+			"returnDate": "2025-01-23T02:56:15.211Z"
+		},
+		{
+			"id": "e954",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:55:35.627Z",
+			"expectedreturnDate": "2025-02-06T01:55:35.627Z",
+			"returnDate": "2025-01-23T02:56:17.345Z"
+		},
+		{
+			"id": "543f",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:55:38.805Z",
+			"expectedreturnDate": "2025-02-06T01:55:38.805Z",
+			"returnDate": "2025-01-23T02:56:19.262Z"
+		},
+		{
+			"id": "9317",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:55:41.495Z",
+			"expectedreturnDate": "2025-02-06T01:55:41.495Z",
+			"returnDate": "2025-01-23T02:56:12.860Z"
+		},
+		{
+			"id": "7557",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:58:30.309Z",
+			"expectedreturnDate": "2025-02-06T01:58:30.309Z",
+			"returnDate": "2025-01-23T02:56:08.877Z"
+		},
+		{
+			"id": "94fd",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:58:30.477Z",
+			"expectedreturnDate": "2025-02-06T01:58:30.477Z",
+			"returnDate": "2025-01-23T02:56:10.545Z"
+		},
+		{
+			"id": "0611",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:58:34.186Z",
+			"expectedreturnDate": "2025-02-06T01:58:34.186Z",
+			"returnDate": "2025-01-23T02:56:03.210Z"
+		},
+		{
+			"id": "2c12",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T01:58:35.123Z",
+			"expectedreturnDate": "2025-02-06T01:58:35.123Z",
+			"returnDate": "2025-01-23T02:56:06.960Z"
+		},
+		{
+			"id": "3b97",
+			"userId": "991d",
+			"bookId": "2",
+			"borrowDate": "2025-01-23T02:31:00.925Z",
+			"expectedreturnDate": "2025-02-06T02:31:00.925Z",
+			"returnDate": "2025-01-23T02:56:05.110Z"
+		},
+		{
+			"id": "a5b8",
+			"userId": "991d",
+			"bookId": "2",
+			"borrowDate": "2025-01-23T02:31:03.417Z",
+			"expectedreturnDate": "2025-02-06T02:31:03.417Z",
+			"returnDate": "2025-01-23T02:56:35.532Z"
+		},
+		{
+			"id": "2b2e",
+			"userId": "991d",
+			"bookId": "2",
+			"borrowDate": "2025-01-23T02:35:25.526Z",
+			"expectedreturnDate": "2025-02-06T02:35:25.526Z",
+			"returnDate": "2025-01-23T02:56:21.646Z"
+		},
+		{
+			"id": "2c1c",
+			"userId": "991d",
+			"bookId": "2",
+			"borrowDate": "2025-01-23T02:35:28.529Z",
+			"expectedreturnDate": "2025-02-06T02:35:28.529Z",
+			"returnDate": "2025-01-23T02:56:23.212Z"
+		},
+		{
+			"id": "546f",
+			"userId": "991d",
+			"bookId": "2",
+			"borrowDate": "2025-01-23T02:44:39.600Z",
+			"expectedreturnDate": "2025-02-06T02:44:39.600Z",
+			"returnDate": "2025-01-23T02:56:24.680Z"
+		},
+		{
+			"id": "9e17",
+			"userId": "991d",
+			"bookId": "3",
+			"borrowDate": "2025-01-23T02:44:42.879Z",
+			"expectedreturnDate": "2025-02-06T02:44:42.879Z",
+			"returnDate": "2025-01-23T02:56:26.130Z"
+		},
+		{
+			"id": "d5c5",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T02:56:46.896Z",
+			"expectedreturnDate": "2025-02-06T02:56:46.896Z",
+			"returnDate": ""
+		},
+		{
+			"id": "2e05",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T02:56:49.393Z",
+			"expectedreturnDate": "2025-02-06T02:56:49.393Z",
+			"returnDate": ""
+		},
+		{
+			"id": "ee68",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T02:56:51.946Z",
+			"expectedreturnDate": "2025-02-06T02:56:51.946Z",
+			"returnDate": ""
+		},
+		{
+			"id": "2dd9",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T02:56:53.879Z",
+			"expectedreturnDate": "2025-02-06T02:56:53.879Z",
+			"returnDate": ""
+		},
+		{
+			"id": "c022",
+			"userId": "991d",
+			"bookId": "1",
+			"borrowDate": "2025-01-23T02:56:55.578Z",
+			"expectedreturnDate": "2025-02-06T02:56:55.578Z",
+			"returnDate": "2025-01-23T03:27:54.687Z"
+		}
+	],
+	"logs": [
+		{
+			"id": "3270",
+			"date": "2025-01-16T03:23:43.205Z",
+			"userId": "02d4",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika aa@aa.pl"
+		},
+		{
+			"id": "de5b",
+			"date": "2025-01-16T03:54:10.242Z",
+			"userId": "02d4",
+			"action": "Logowanie",
+			"details": "Użytkownik aa@aa.pl zalogował się."
+		},
+		{
+			"id": "9777",
+			"date": "2025-01-16T03:54:34.300Z",
+			"userId": "845e",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika adam@adam1.pl"
+		},
+		{
+			"id": "ee9b",
+			"date": "2025-01-16T03:55:00.479Z",
+			"userId": "845e",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam1.pl zalogował się."
+		},
+		{
+			"id": "2972",
+			"date": "2025-01-16T04:00:04.695Z",
+			"userId": "845e",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam1.pl zalogował się."
+		},
+		{
+			"id": "96a4",
+			"date": "2025-01-16T04:02:26.867Z",
+			"userId": "845e",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam1.pl zalogował się."
+		},
+		{
+			"id": "78d5",
+			"date": "2025-01-16T04:04:11.205Z",
+			"userId": "845e",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam1.pl wypożyczył książkę: 1984"
+		},
+		{
+			"id": "b24e",
+			"date": "2025-01-16T04:06:23.059Z",
+			"userId": "845e",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam1.pl zwrócił książkę: 1984"
+		},
+		{
+			"id": "267f",
+			"date": "2025-01-16T04:07:06.442Z",
+			"userId": "d903",
+			"action": "Logowanie",
+			"details": "Użytkownik admin@admin.pl zalogował się."
+		},
+		{
+			"id": "d96b",
+			"date": "2025-01-16T04:07:47.656Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: 1984"
+		},
+		{
+			"id": "cb06",
+			"date": "2025-01-16T04:13:17.251Z",
+			"userId": "d903",
+			"action": "Wymuszony zwrot książki",
+			"details": "Administrator wymusił zwrot książki: 1984 od użytkownika admin@admin.pl"
+		},
+		{
+			"id": "7b92",
+			"date": "2025-01-22T02:24:41.154Z",
+			"userId": "d449",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tt@tttt.pl"
+		},
+		{
+			"id": "9529",
+			"date": "2025-01-22T02:30:16.046Z",
+			"userId": "d477",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "070b",
+			"date": "2025-01-22T02:30:17.906Z",
+			"userId": "c120",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f93a",
+			"date": "2025-01-22T02:30:43.705Z",
+			"userId": "a293",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "30f9",
+			"date": "2025-01-22T02:30:45.447Z",
+			"userId": "529b",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "6bc8",
+			"date": "2025-01-22T02:31:05.229Z",
+			"userId": "9a81",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "9ab1",
+			"date": "2025-01-22T02:31:08.968Z",
+			"userId": "e28b",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c5bf",
+			"date": "2025-01-22T02:33:39.399Z",
+			"userId": "c448",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika test@te.pl"
+		},
+		{
+			"id": "07ee",
+			"date": "2025-01-22T02:35:32.920Z",
+			"userId": "7382",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d56c",
+			"date": "2025-01-22T02:35:34.967Z",
+			"userId": "216f",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "20fb",
+			"date": "2025-01-22T02:35:54.442Z",
+			"userId": "ac4d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "fc76",
+			"date": "2025-01-22T02:35:58.444Z",
+			"userId": "ed3e",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c812",
+			"date": "2025-01-22T02:37:46.504Z",
+			"userId": "dfbd",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "ef00",
+			"date": "2025-01-22T02:37:48.688Z",
+			"userId": "be08",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7a00",
+			"date": "2025-01-22T02:38:03.207Z",
+			"userId": "4061",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7882",
+			"date": "2025-01-22T02:39:17.232Z",
+			"userId": "a3d5",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "9288",
+			"date": "2025-01-22T02:39:19.142Z",
+			"userId": "6a23",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "1c11",
+			"date": "2025-01-22T02:39:38.760Z",
+			"userId": "cfb5",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f431",
+			"date": "2025-01-22T02:39:42.739Z",
+			"userId": "4e17",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "b801",
+			"date": "2025-01-22T02:42:24.555Z",
+			"userId": "0173",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "e2a2",
+			"date": "2025-01-22T02:42:27.106Z",
+			"userId": "04ac",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "87a3",
+			"date": "2025-01-22T02:42:35.777Z",
+			"userId": "d5fa",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "14a8",
+			"date": "2025-01-22T02:44:10.869Z",
+			"userId": "f6c0",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "54e6",
+			"date": "2025-01-22T02:44:12.683Z",
+			"userId": "9b34",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "1002",
+			"date": "2025-01-22T02:44:17.373Z",
+			"userId": "e3e3",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "cb9d",
+			"date": "2025-01-22T02:44:21.325Z",
+			"userId": "c3da",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "3dd4",
+			"date": "2025-01-22T02:45:23.220Z",
+			"userId": "0834",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "e5f7",
+			"date": "2025-01-22T02:45:25.193Z",
+			"userId": "eda2",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "4eb8",
+			"date": "2025-01-22T03:26:27.383Z",
+			"userId": "b6a3",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika mm@mm.pl"
+		},
+		{
+			"id": "d8f3",
+			"date": "2025-01-22T03:33:52.484Z",
+			"userId": "3433",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "8a0f",
+			"date": "2025-01-22T03:33:54.556Z",
+			"userId": "576d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "ecf8",
+			"date": "2025-01-22T03:34:09.391Z",
+			"userId": "0a57",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "fc7b",
+			"date": "2025-01-22T03:34:14.362Z",
+			"userId": "9731",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "bf40",
+			"date": "2025-01-22T03:35:37.264Z",
+			"userId": "1876",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "2440",
+			"date": "2025-01-22T03:35:39.542Z",
+			"userId": "dd62",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "88df",
+			"date": "2025-01-22T03:36:09.275Z",
+			"userId": "92fe",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "ad7c",
+			"date": "2025-01-22T03:36:14.399Z",
+			"userId": "d866",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "0b82",
+			"date": "2025-01-22T03:37:20.280Z",
+			"userId": "ad50",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika d@d.pl"
+		},
+		{
+			"id": "66b1",
+			"date": "2025-01-22T04:07:58.641Z",
+			"userId": "9128",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "67f5",
+			"date": "2025-01-22T04:08:00.538Z",
+			"userId": "a469",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f723",
+			"date": "2025-01-22T04:08:15.431Z",
+			"userId": "0311",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "8d72",
+			"date": "2025-01-22T04:08:19.347Z",
+			"userId": "39c6",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "5739",
+			"date": "2025-01-22T04:09:11.472Z",
+			"userId": "a1c9",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f9ef",
+			"date": "2025-01-22T04:09:13.302Z",
+			"userId": "6ff7",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "630b",
+			"date": "2025-01-22T04:09:18.077Z",
+			"userId": "bce6",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "5a83",
+			"date": "2025-01-22T04:10:57.983Z",
+			"userId": "0a87",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "5b51",
+			"date": "2025-01-22T04:10:58.043Z",
+			"userId": "ec68",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c996",
+			"date": "2025-01-22T04:11:00.561Z",
+			"userId": "254b",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "37e1",
+			"date": "2025-01-22T04:11:01.231Z",
+			"userId": "5b0a",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c004",
+			"date": "2025-01-22T04:11:04.755Z",
+			"userId": "2580",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7461",
+			"date": "2025-01-22T04:12:40.553Z",
+			"userId": "b129",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "5c07",
+			"date": "2025-01-22T04:12:41.013Z",
+			"userId": "1435",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "8a4d",
+			"date": "2025-01-22T04:12:41.046Z",
+			"userId": "e9a9",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "dd49",
+			"date": "2025-01-22T04:12:41.750Z",
+			"userId": "d2b5",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "1803",
+			"date": "2025-01-22T04:12:44.590Z",
+			"userId": "52c0",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "207d",
+			"date": "2025-01-22T04:12:46.985Z",
+			"userId": "2e73",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "3f34",
+			"date": "2025-01-22T04:12:47.843Z",
+			"userId": "3491",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "eb6b",
+			"date": "2025-01-22T04:12:48.747Z",
+			"userId": "0a93",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "26aa",
+			"date": "2025-01-22T04:14:01.798Z",
+			"userId": "9af5",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "0203",
+			"date": "2025-01-22T04:14:02.109Z",
+			"userId": "0c37",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d522",
+			"date": "2025-01-22T04:14:02.456Z",
+			"userId": "878f",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "73f5",
+			"date": "2025-01-22T04:14:02.704Z",
+			"userId": "4611",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "ea59",
+			"date": "2025-01-22T04:14:05.468Z",
+			"userId": "f7f6",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "8ffd",
+			"date": "2025-01-22T04:14:07.023Z",
+			"userId": "feed",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "482e",
+			"date": "2025-01-22T04:14:07.528Z",
+			"userId": "4d73",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c5ea",
+			"date": "2025-01-22T04:14:08.430Z",
+			"userId": "2eb3",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "f04d",
+			"date": "2025-01-22T04:14:09.940Z",
+			"userId": "84e5",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7b0e",
+			"date": "2025-01-22T04:14:10.769Z",
+			"userId": "2004",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "e9b6",
+			"date": "2025-01-22T04:14:13.649Z",
+			"userId": "270a",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "bbf2",
+			"date": "2025-01-22T20:29:35.557Z",
+			"userId": "e6d8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "8888",
+			"date": "2025-01-22T20:29:35.635Z",
+			"userId": "d300",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "e94d",
+			"date": "2025-01-22T20:29:35.641Z",
+			"userId": "c996",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "027b",
+			"date": "2025-01-22T20:29:36.693Z",
+			"userId": "052c",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "b82f",
+			"date": "2025-01-22T20:29:40.967Z",
+			"userId": "875d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "1792",
+			"date": "2025-01-22T20:29:47.141Z",
+			"userId": "6210",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "b0f0",
+			"date": "2025-01-22T20:29:47.340Z",
+			"userId": "071e",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "0a6b",
+			"date": "2025-01-22T20:29:48.029Z",
+			"userId": "9336",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "437e",
+			"date": "2025-01-22T20:29:48.577Z",
+			"userId": "6fd8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "dd73",
+			"date": "2025-01-22T20:29:49.072Z",
+			"userId": "2ff6",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "0b02",
+			"date": "2025-01-22T20:36:39.055Z",
+			"userId": "d14a",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika adam@adam.pl"
+		},
+		{
+			"id": "31fe",
+			"date": "2025-01-22T20:51:07.566Z",
+			"userId": "0768",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d4e4",
+			"date": "2025-01-22T20:51:07.638Z",
+			"userId": "2bff",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "76e0",
+			"date": "2025-01-22T20:51:08.997Z",
+			"userId": "4e97",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "e0eb",
+			"date": "2025-01-22T20:59:50.142Z",
+			"userId": "e399",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d6a5",
+			"date": "2025-01-22T20:59:50.563Z",
+			"userId": "a874",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "11d8",
+			"date": "2025-01-22T20:59:50.666Z",
+			"userId": "6ba4",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "9806",
+			"date": "2025-01-22T20:59:53.849Z",
+			"userId": "9885",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "e914",
+			"date": "2025-01-22T20:59:55.228Z",
+			"userId": "9fc7",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "76a1",
+			"date": "2025-01-22T20:59:55.739Z",
+			"userId": "5947",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7c38",
+			"date": "2025-01-22T20:59:56.880Z",
+			"userId": "33d2",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "bd58",
+			"date": "2025-01-22T20:59:57.978Z",
+			"userId": "2dc0",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "4515",
+			"date": "2025-01-22T20:59:58.741Z",
+			"userId": "79d8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "46da",
+			"date": "2025-01-22T20:59:59.413Z",
+			"userId": "393d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "ebc4",
+			"date": "2025-01-22T21:04:58.550Z",
+			"userId": "5c0c",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "4eff",
+			"date": "2025-01-22T21:04:58.572Z",
+			"userId": "d158",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c138",
+			"date": "2025-01-22T21:04:58.723Z",
+			"userId": "1038",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c87b",
+			"date": "2025-01-22T21:05:00.943Z",
+			"userId": "bef0",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "4fec",
+			"date": "2025-01-22T21:05:02.287Z",
+			"userId": "d537",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "4175",
+			"date": "2025-01-22T21:05:03.762Z",
+			"userId": "508f",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "5585",
+			"date": "2025-01-22T21:05:06.225Z",
+			"userId": "ced9",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "0e73",
+			"date": "2025-01-22T21:05:07.522Z",
+			"userId": "831a",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "6884",
+			"date": "2025-01-22T21:05:07.919Z",
+			"userId": "f45a",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "a174",
+			"date": "2025-01-22T21:05:08.185Z",
+			"userId": "4017",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c85a",
+			"date": "2025-01-22T21:08:02.309Z",
+			"userId": "a354",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "bfd1",
+			"date": "2025-01-22T21:08:02.653Z",
+			"userId": "413d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "8e40",
+			"date": "2025-01-22T21:08:03.028Z",
+			"userId": "213c",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "19b5",
+			"date": "2025-01-22T21:08:03.336Z",
+			"userId": "e77d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "6b64",
+			"date": "2025-01-22T21:08:04.412Z",
+			"userId": "f7d0",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "1b19",
+			"date": "2025-01-22T21:08:05.204Z",
+			"userId": "6623",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "f229",
+			"date": "2025-01-22T21:08:08.702Z",
+			"userId": "4b43",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "a3ad",
+			"date": "2025-01-22T21:08:10.308Z",
+			"userId": "f215",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "bd9f",
+			"date": "2025-01-22T21:08:12.008Z",
+			"userId": "d106",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "16e5",
+			"date": "2025-01-22T21:08:13.047Z",
+			"userId": "aa59",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "9ce7",
+			"date": "2025-01-22T21:08:16.708Z",
+			"userId": "f2f7",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "2818",
+			"date": "2025-01-22T21:08:17.800Z",
+			"userId": "05fe",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "55fd",
+			"date": "2025-01-22T21:08:20.432Z",
+			"userId": "7c2c",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "b6ad",
+			"date": "2025-01-22T21:08:29.191Z",
+			"userId": "6615",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "cef5",
+			"date": "2025-01-22T21:08:30.752Z",
+			"userId": "4d0f",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "c22b",
+			"date": "2025-01-22T21:08:31.517Z",
+			"userId": "a51f",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d907",
+			"date": "2025-01-22T21:08:32.489Z",
+			"userId": "e597",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "b106",
+			"date": "2025-01-22T21:10:26.124Z",
+			"userId": "81b8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika adam@adam1.pl"
+		},
+		{
+			"id": "778f",
+			"date": "2025-01-22T21:16:54.872Z",
+			"userId": "8434",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "a024",
+			"date": "2025-01-22T21:19:02.374Z",
+			"userId": "0c9f",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c8c9",
+			"date": "2025-01-22T21:19:02.459Z",
+			"userId": "75a3",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "b17f",
+			"date": "2025-01-22T21:19:02.581Z",
+			"userId": "ac07",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "ddd1",
+			"date": "2025-01-22T21:19:02.601Z",
+			"userId": "a97b",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "809f",
+			"date": "2025-01-22T21:19:03.263Z",
+			"userId": "ab19",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "4e32",
+			"date": "2025-01-22T21:19:06.386Z",
+			"userId": "91e9",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "4a40",
+			"date": "2025-01-22T21:19:07.545Z",
+			"userId": "f9de",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c669",
+			"date": "2025-01-22T21:19:10.308Z",
+			"userId": "0fbf",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "30cb",
+			"date": "2025-01-22T21:19:10.443Z",
+			"userId": "ea0a",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d13f",
+			"date": "2025-01-22T21:19:10.705Z",
+			"userId": "1f86",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f1f9",
+			"date": "2025-01-22T21:19:12.246Z",
+			"userId": "96dc",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "e2e3",
+			"date": "2025-01-22T21:19:12.324Z",
+			"userId": "3017",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "eebb",
+			"date": "2025-01-22T21:19:22.617Z",
+			"userId": "b9be",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "9a4a",
+			"date": "2025-01-22T21:19:23.446Z",
+			"userId": "77af",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "38a8",
+			"date": "2025-01-22T21:34:00.818Z",
+			"userId": "d4cd",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c538",
+			"date": "2025-01-22T21:34:01.079Z",
+			"userId": "d113",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "1bad",
+			"date": "2025-01-22T21:34:01.110Z",
+			"userId": "38c4",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "0654",
+			"date": "2025-01-22T21:34:01.424Z",
+			"userId": "e91d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d05e",
+			"date": "2025-01-22T21:34:02.137Z",
+			"userId": "c097",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "786b",
+			"date": "2025-01-22T21:34:02.312Z",
+			"userId": "880c",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "9345",
+			"date": "2025-01-22T21:34:05.187Z",
+			"userId": "e2d5",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "65a0",
+			"date": "2025-01-22T21:34:06.416Z",
+			"userId": "46e1",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f809",
+			"date": "2025-01-22T21:34:07.642Z",
+			"userId": "5141",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f4d0",
+			"date": "2025-01-22T21:34:08.430Z",
+			"userId": "9311",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "653a",
+			"date": "2025-01-22T21:34:09.526Z",
+			"userId": "fa53",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "176f",
+			"date": "2025-01-22T21:34:10.396Z",
+			"userId": "64f7",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "1179",
+			"date": "2025-01-22T21:34:13.352Z",
+			"userId": "7843",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "3a17",
+			"date": "2025-01-22T21:34:15.596Z",
+			"userId": "c4a6",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "0d3d",
+			"date": "2025-01-22T21:34:15.796Z",
+			"userId": "aee9",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "5e2c",
+			"date": "2025-01-22T21:34:19.786Z",
+			"userId": "4272",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "39b8",
+			"date": "2025-01-22T21:34:20.788Z",
+			"userId": "44a8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "1eda",
+			"date": "2025-01-22T21:47:13.053Z",
+			"userId": "d4be",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "b2c0",
+			"date": "2025-01-22T21:49:56.424Z",
+			"userId": "506a",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "57de",
+			"date": "2025-01-22T21:51:13.605Z",
+			"userId": "8d21",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7459",
+			"date": "2025-01-22T21:53:31.579Z",
+			"userId": "17a5",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f82b",
+			"date": "2025-01-22T21:56:26.592Z",
+			"userId": "5803",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "7326",
+			"date": "2025-01-22T21:56:26.812Z",
+			"userId": "ac63",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "8779",
+			"date": "2025-01-22T22:21:29.949Z",
+			"userId": "0736",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "6788",
+			"date": "2025-01-22T22:21:30.092Z",
+			"userId": "756b",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "38bc",
+			"date": "2025-01-22T22:22:25.315Z",
+			"userId": "66a8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "db01",
+			"date": "2025-01-22T22:23:57.632Z",
+			"userId": "5106",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "05a5",
+			"date": "2025-01-22T22:23:57.704Z",
+			"userId": "8081",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "c25d",
+			"date": "2025-01-22T22:23:57.840Z",
+			"userId": "8fbd",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "079b",
+			"date": "2025-01-22T22:53:31.636Z",
+			"userId": "b3f9",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "4115",
+			"date": "2025-01-22T22:53:31.941Z",
+			"userId": "ba63",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "191a",
+			"date": "2025-01-22T22:53:32.183Z",
+			"userId": "0c7d",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7387",
+			"date": "2025-01-22T22:57:00.009Z",
+			"userId": "f67b",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "f027",
+			"date": "2025-01-22T22:57:00.154Z",
+			"userId": "3ef9",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "be8b",
+			"date": "2025-01-22T22:58:50.088Z",
+			"userId": "6adc",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "de68",
+			"date": "2025-01-22T22:58:50.269Z",
+			"userId": "33ac",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "99bd",
+			"date": "2025-01-22T22:58:50.496Z",
+			"userId": "1d78",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "23a6",
+			"date": "2025-01-22T23:00:11.185Z",
+			"userId": "4865",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "df14",
+			"date": "2025-01-22T23:00:11.278Z",
+			"userId": "cf75",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "5205",
+			"date": "2025-01-22T23:00:11.489Z",
+			"userId": "7587",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "5289",
+			"date": "2025-01-22T23:02:05.530Z",
+			"userId": "baab",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "749f",
+			"date": "2025-01-22T23:02:06.150Z",
+			"userId": "c30e",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "e4ff",
+			"date": "2025-01-22T23:02:06.169Z",
+			"userId": "b4ae",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "b2cd",
+			"date": "2025-01-22T23:04:51.892Z",
+			"userId": "0448",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "0548",
+			"date": "2025-01-22T23:04:52.027Z",
+			"userId": "cde3",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "c746",
+			"date": "2025-01-22T23:04:52.118Z",
+			"userId": "af7f",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "5a83",
+			"date": "2025-01-22T23:06:11.602Z",
+			"userId": "e383",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "253e",
+			"date": "2025-01-22T23:06:11.743Z",
+			"userId": "a477",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "4c03",
+			"date": "2025-01-22T23:06:11.828Z",
+			"userId": "156b",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "c3b6",
+			"date": "2025-01-22T23:08:44.963Z",
+			"userId": "6f51",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika anna.nowak@example.com"
+		},
+		{
+			"id": "829e",
+			"date": "2025-01-22T23:27:54.492Z",
+			"userId": "0ebd",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "df14",
+			"date": "2025-01-22T23:27:54.907Z",
+			"userId": "c8e8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "e812",
+			"date": "2025-01-22T23:40:11.949Z",
+			"userId": "bffa",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "130b",
+			"date": "2025-01-22T23:40:12.620Z",
+			"userId": "08f8",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "62eb",
+			"date": "2025-01-22T23:47:43.755Z",
+			"userId": "ad06",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "7c16",
+			"date": "2025-01-22T23:47:44.044Z",
+			"userId": "00f4",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "d7fe",
+			"date": "2025-01-22T23:49:41.523Z",
+			"userId": "7dba",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika jan.kowalski@example.com"
+		},
+		{
+			"id": "d581",
+			"date": "2025-01-22T23:49:42.135Z",
+			"userId": "e5aa",
+			"action": "Rejestracja",
+			"details": "Zarejestrowano użytkownika tomasz.nowicki@example.com"
+		},
+		{
+			"id": "ae83",
+			"date": "2025-01-23T00:10:16.336Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "0e78",
+			"date": "2025-01-23T00:10:34.859Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "6e2d",
+			"date": "2025-01-23T00:10:37.652Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "9623",
+			"date": "2025-01-23T00:10:57.011Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "1554",
+			"date": "2025-01-23T00:20:49.113Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "edc6",
+			"date": "2025-01-23T00:20:52.395Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "bb0e",
+			"date": "2025-01-23T00:21:07.201Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "b093",
+			"date": "2025-01-23T00:21:14.173Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "fe62",
+			"date": "2025-01-23T00:23:02.821Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "fdd3",
+			"date": "2025-01-23T00:26:18.089Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "6abd",
+			"date": "2025-01-23T00:37:11.423Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "cbc4",
+			"date": "2025-01-23T00:37:13.338Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "875f",
+			"date": "2025-01-23T00:39:12.564Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "d55c",
+			"date": "2025-01-23T00:39:14.395Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "8bbf",
+			"date": "2025-01-23T00:39:29.103Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "35ac",
+			"date": "2025-01-23T00:39:32.795Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "7c9f",
+			"date": "2025-01-23T00:41:14.678Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "ddbd",
+			"date": "2025-01-23T00:41:17.650Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "e778",
+			"date": "2025-01-23T00:44:51.965Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "403a",
+			"date": "2025-01-23T00:44:56.638Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "91ec",
+			"date": "2025-01-23T01:49:34.696Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "27af",
+			"date": "2025-01-23T01:51:29.667Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "8bbe",
+			"date": "2025-01-23T01:51:29.997Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "e498",
+			"date": "2025-01-23T01:51:32.769Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "996a",
+			"date": "2025-01-23T01:51:33.366Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "e337",
+			"date": "2025-01-23T01:51:51.617Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "21a5",
+			"date": "2025-01-23T01:51:52.188Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "ac7a",
+			"date": "2025-01-23T01:51:57.165Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "531e",
+			"date": "2025-01-23T01:51:57.967Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "6b20",
+			"date": "2025-01-23T01:55:35.300Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "5cfd",
+			"date": "2025-01-23T01:55:35.633Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "d12b",
+			"date": "2025-01-23T01:55:38.816Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "fe9e",
+			"date": "2025-01-23T01:55:41.503Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "ea73",
+			"date": "2025-01-23T01:58:30.319Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "9ab3",
+			"date": "2025-01-23T01:58:30.488Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "12cf",
+			"date": "2025-01-23T01:58:34.204Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "a1d4",
+			"date": "2025-01-23T01:58:35.130Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "76c1",
+			"date": "2025-01-23T02:31:00.933Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "00aa",
+			"date": "2025-01-23T02:31:03.429Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "05d2",
+			"date": "2025-01-23T02:35:25.531Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "51ec",
+			"date": "2025-01-23T02:35:28.557Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "0c18",
+			"date": "2025-01-23T02:44:39.605Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "a00f",
+			"date": "2025-01-23T02:44:42.890Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: 1984"
+		},
+		{
+			"id": "c34c",
+			"date": "2025-01-23T02:55:01.310Z",
+			"userId": "991d",
+			"action": "Logowanie",
+			"details": "Użytkownik adam@adam.pl zalogował się."
+		},
+		{
+			"id": "793e",
+			"date": "2025-01-23T02:56:03.224Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "572d",
+			"date": "2025-01-23T02:56:05.123Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "c98c",
+			"date": "2025-01-23T02:56:06.972Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "484a",
+			"date": "2025-01-23T02:56:08.892Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "72e8",
+			"date": "2025-01-23T02:56:10.557Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "8fd9",
+			"date": "2025-01-23T02:56:12.873Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "7085",
+			"date": "2025-01-23T02:56:15.225Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "9c80",
+			"date": "2025-01-23T02:56:17.358Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "930c",
+			"date": "2025-01-23T02:56:19.275Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "b2f6",
+			"date": "2025-01-23T02:56:21.660Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "3630",
+			"date": "2025-01-23T02:56:23.224Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "c82b",
+			"date": "2025-01-23T02:56:24.692Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "eacc",
+			"date": "2025-01-23T02:56:26.144Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: 1984"
+		},
+		{
+			"id": "f9e1",
+			"date": "2025-01-23T02:56:35.546Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "89db",
+			"date": "2025-01-23T02:56:46.904Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "78a3",
+			"date": "2025-01-23T02:56:49.397Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "217b",
+			"date": "2025-01-23T02:56:51.951Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "cc3d",
+			"date": "2025-01-23T02:56:53.882Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "b1bd",
+			"date": "2025-01-23T02:56:55.581Z",
+			"userId": "991d",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik adam@adam.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "5fa3",
+			"date": "2025-01-23T03:26:24.474Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "f668",
+			"date": "2025-01-23T03:26:26.489Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "a5bf",
+			"date": "2025-01-23T03:26:41.915Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "aa53",
+			"date": "2025-01-23T03:26:46.679Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "b011",
+			"date": "2025-01-23T03:27:54.712Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "e785",
+			"date": "2025-01-23T03:35:51.089Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "9888",
+			"date": "2025-01-23T03:35:53.055Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "84da",
+			"date": "2025-01-23T03:36:08.479Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "065f",
+			"date": "2025-01-23T03:36:12.351Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "032c",
+			"date": "2025-01-23T03:37:47.320Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "7aef",
+			"date": "2025-01-23T03:37:49.586Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "1862",
+			"date": "2025-01-23T03:38:06.665Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "2181",
+			"date": "2025-01-23T03:38:11.045Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "3d05",
+			"date": "2025-01-23T03:39:40.422Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "e562",
+			"date": "2025-01-23T03:39:44.134Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "d0a3",
+			"date": "2025-01-23T03:39:59.611Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "dfdb",
+			"date": "2025-01-23T03:40:05.371Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "8df2",
+			"date": "2025-01-23T03:47:01.105Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "a995",
+			"date": "2025-01-23T03:47:03.110Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "8d57",
+			"date": "2025-01-23T03:48:59.796Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "4ada",
+			"date": "2025-01-23T03:49:02.000Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "ab1d",
+			"date": "2025-01-23T03:49:56.780Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "1c40",
+			"date": "2025-01-23T03:49:58.895Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "ac9c",
+			"date": "2025-01-23T03:50:15.817Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "d435",
+			"date": "2025-01-23T03:50:20.147Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "d519",
+			"date": "2025-01-23T03:53:15.563Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "cb86",
+			"date": "2025-01-23T03:53:17.918Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "18ab",
+			"date": "2025-01-23T03:53:41.847Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "ace3",
+			"date": "2025-01-23T03:53:43.886Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "67fe",
+			"date": "2025-01-23T03:54:00.936Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "945d",
+			"date": "2025-01-23T03:54:05.202Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "0ad8",
+			"date": "2025-01-23T03:54:41.674Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "13c6",
+			"date": "2025-01-23T03:54:43.856Z",
+			"userId": "991d",
+			"action": "Zwrot książki",
+			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		}
+	]
+}
