@@ -5,7 +5,7 @@ import axios from 'axios'
 import { vi } from 'vitest'
 
 vi.mock('axios')
-// @ts-ignore
+// @ts-expect-error Ignoring vi.Mock
 const mockedAxios = axios as vi.Mocked<typeof axios>
 
 const mockBook = {

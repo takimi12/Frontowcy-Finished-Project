@@ -28,7 +28,7 @@
 			"password": "123123",
 			"cardId": "1e2ucxoya",
 			"role": "Admin",
-			"borrowedBooks": ["1984"]
+			"borrowedBooks": ["1984", "Harry Potter i Kamień Filozoficzny"]
 		},
 		{
 			"id": "02d4",
@@ -58,7 +58,7 @@
 			"description": "Pierwsza część serii o Harrym Potterze.",
 			"year": 1997,
 			"copies": 5,
-			"borrowedBy": []
+			"borrowedBy": ["1e2ucxoya"]
 		},
 		{
 			"id": "3",
@@ -67,7 +67,7 @@
 			"description": "Klasyczna powieść dystopijna.",
 			"year": 1949,
 			"copies": 4,
-			"borrowedBy": ["1e2ucxoya"]
+			"borrowedBy": []
 		}
 	],
 	"borrowings": [
@@ -229,7 +229,7 @@
 			"bookId": "1",
 			"borrowDate": "2025-01-23T02:56:46.896Z",
 			"expectedreturnDate": "2025-02-06T02:56:46.896Z",
-			"returnDate": ""
+			"returnDate": "2025-01-25T00:20:44.718Z"
 		},
 		{
 			"id": "2e05",
@@ -237,7 +237,7 @@
 			"bookId": "1",
 			"borrowDate": "2025-01-23T02:56:49.393Z",
 			"expectedreturnDate": "2025-02-06T02:56:49.393Z",
-			"returnDate": ""
+			"returnDate": "2025-01-25T00:20:46.977Z"
 		},
 		{
 			"id": "ee68",
@@ -245,7 +245,7 @@
 			"bookId": "1",
 			"borrowDate": "2025-01-23T02:56:51.946Z",
 			"expectedreturnDate": "2025-02-06T02:56:51.946Z",
-			"returnDate": ""
+			"returnDate": "2025-01-25T00:30:09.798Z"
 		},
 		{
 			"id": "2dd9",
@@ -253,7 +253,7 @@
 			"bookId": "1",
 			"borrowDate": "2025-01-23T02:56:53.879Z",
 			"expectedreturnDate": "2025-02-06T02:56:53.879Z",
-			"returnDate": ""
+			"returnDate": "2025-01-25T00:30:14.382Z"
 		},
 		{
 			"id": "c022",
@@ -262,6 +262,70 @@
 			"borrowDate": "2025-01-23T02:56:55.578Z",
 			"expectedreturnDate": "2025-02-06T02:56:55.578Z",
 			"returnDate": "2025-01-23T03:27:54.687Z"
+		},
+		{
+			"id": "33eb",
+			"userId": "d903",
+			"bookId": "1",
+			"borrowDate": "2025-01-25T00:51:04.785Z",
+			"expectedreturnDate": "2025-02-08T00:51:04.785Z",
+			"returnDate": "2025-01-25T00:53:07.424Z"
+		},
+		{
+			"id": "628c",
+			"userId": "d903",
+			"bookId": "1",
+			"borrowDate": "2025-01-25T00:51:06.964Z",
+			"expectedreturnDate": "2025-02-08T00:51:06.964Z",
+			"returnDate": "2025-01-25T00:53:03.390Z"
+		},
+		{
+			"id": "ce10",
+			"userId": "d903",
+			"bookId": "1",
+			"borrowDate": "2025-01-25T00:51:10.859Z",
+			"expectedreturnDate": "2025-02-08T00:51:10.859Z",
+			"returnDate": "2025-01-25T00:53:04.790Z"
+		},
+		{
+			"id": "ce66",
+			"userId": "d903",
+			"bookId": "2",
+			"borrowDate": "2025-01-25T00:51:13.033Z",
+			"expectedreturnDate": "2025-02-08T00:51:13.033Z",
+			"returnDate": "2025-01-25T00:53:01.491Z"
+		},
+		{
+			"id": "4dbb",
+			"userId": "d903",
+			"bookId": "2",
+			"borrowDate": "2025-01-25T00:51:15.232Z",
+			"expectedreturnDate": "2025-02-08T00:51:15.232Z",
+			"returnDate": "2025-01-25T00:52:59.657Z"
+		},
+		{
+			"id": "1135",
+			"userId": "d903",
+			"bookId": "2",
+			"borrowDate": "2025-01-25T00:51:17.117Z",
+			"expectedreturnDate": "2025-02-08T00:51:17.117Z",
+			"returnDate": "2025-01-25T00:52:58.025Z"
+		},
+		{
+			"id": "0659",
+			"userId": "d903",
+			"bookId": "3",
+			"borrowDate": "2025-01-25T00:51:18.300Z",
+			"expectedreturnDate": "2025-02-08T00:51:18.300Z",
+			"returnDate": "2025-01-25T00:52:55.608Z"
+		},
+		{
+			"id": "d18d",
+			"userId": "d903",
+			"bookId": "2",
+			"borrowDate": "2025-01-25T01:12:46.293Z",
+			"expectedreturnDate": "2025-02-08T01:12:46.293Z",
+			"returnDate": ""
 		}
 	],
 	"logs": [
@@ -2371,6 +2435,146 @@
 			"userId": "991d",
 			"action": "Zwrot książki",
 			"details": "Użytkownik adam@adam.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "3029",
+			"date": "2025-01-24T20:51:22.986Z",
+			"userId": "d903",
+			"action": "Logowanie",
+			"details": "Użytkownik admin@admin.pl zalogował się."
+		},
+		{
+			"id": "cf34",
+			"date": "2025-01-25T00:20:44.727Z",
+			"userId": "991d",
+			"action": "Wymuszony zwrot książki",
+			"details": "Administrator wymusił zwrot książki: Władca Pierścieni: Drużyna Pierścienia od użytkownika adam@adam.pl"
+		},
+		{
+			"id": "1438",
+			"date": "2025-01-25T00:20:46.984Z",
+			"userId": "991d",
+			"action": "Wymuszony zwrot książki",
+			"details": "Administrator wymusił zwrot książki: Władca Pierścieni: Drużyna Pierścienia od użytkownika adam@adam.pl"
+		},
+		{
+			"id": "619f",
+			"date": "2025-01-25T00:30:09.811Z",
+			"userId": "991d",
+			"action": "Wymuszony zwrot książki",
+			"details": "Administrator wymusił zwrot książki: Władca Pierścieni: Drużyna Pierścienia od użytkownika adam@adam.pl"
+		},
+		{
+			"id": "b979",
+			"date": "2025-01-25T00:30:14.393Z",
+			"userId": "991d",
+			"action": "Wymuszony zwrot książki",
+			"details": "Administrator wymusił zwrot książki: Władca Pierścieni: Drużyna Pierścienia od użytkownika adam@adam.pl"
+		},
+		{
+			"id": "a1df",
+			"date": "2025-01-25T00:51:04.790Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "b002",
+			"date": "2025-01-25T00:51:06.968Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "71bb",
+			"date": "2025-01-25T00:51:10.864Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "fdd4",
+			"date": "2025-01-25T00:51:13.037Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "5dbe",
+			"date": "2025-01-25T00:51:15.236Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "68d5",
+			"date": "2025-01-25T00:51:17.122Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "c211",
+			"date": "2025-01-25T00:51:18.305Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: 1984"
+		},
+		{
+			"id": "5a29",
+			"date": "2025-01-25T00:52:55.624Z",
+			"userId": "d903",
+			"action": "Zwrot książki",
+			"details": "Użytkownik admin@admin.pl zwrócił książkę: 1984"
+		},
+		{
+			"id": "17c5",
+			"date": "2025-01-25T00:52:58.039Z",
+			"userId": "d903",
+			"action": "Zwrot książki",
+			"details": "Użytkownik admin@admin.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "8594",
+			"date": "2025-01-25T00:52:59.693Z",
+			"userId": "d903",
+			"action": "Zwrot książki",
+			"details": "Użytkownik admin@admin.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "9082",
+			"date": "2025-01-25T00:53:01.504Z",
+			"userId": "d903",
+			"action": "Zwrot książki",
+			"details": "Użytkownik admin@admin.pl zwrócił książkę: Harry Potter i Kamień Filozoficzny"
+		},
+		{
+			"id": "5049",
+			"date": "2025-01-25T00:53:03.404Z",
+			"userId": "d903",
+			"action": "Zwrot książki",
+			"details": "Użytkownik admin@admin.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "c194",
+			"date": "2025-01-25T00:53:04.803Z",
+			"userId": "d903",
+			"action": "Zwrot książki",
+			"details": "Użytkownik admin@admin.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "3dd6",
+			"date": "2025-01-25T00:53:07.441Z",
+			"userId": "d903",
+			"action": "Zwrot książki",
+			"details": "Użytkownik admin@admin.pl zwrócił książkę: Władca Pierścieni: Drużyna Pierścienia"
+		},
+		{
+			"id": "56df",
+			"date": "2025-01-25T01:12:46.298Z",
+			"userId": "d903",
+			"action": "Wypożyczenie książki",
+			"details": "Użytkownik admin@admin.pl wypożyczył książkę: Harry Potter i Kamień Filozoficzny"
 		}
 	]
 }

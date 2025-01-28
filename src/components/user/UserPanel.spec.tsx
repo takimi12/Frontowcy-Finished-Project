@@ -25,7 +25,7 @@ vi.mock('./AccountDeletion', () => ({
 
 describe('UserPanel', () => {
 	it('should render user data when user is logged in', () => {
-		// @ts-ignore
+		// @ts-expect-error Ignoring vi.Mock
 		;(AuthContext.useAuth as vi.Mock).mockReturnValue({
 			user: {
 				name: 'John',
@@ -48,7 +48,7 @@ describe('UserPanel', () => {
 	})
 
 	it('should show "Nie jesteś zalogowany" when user is not logged in', () => {
-		// @ts-ignore
+		// @ts-expect-error Ignoring vi.Mock
 		;(AuthContext.useAuth as vi.Mock).mockReturnValue({
 			user: null,
 			login: vi.fn(),
@@ -61,7 +61,7 @@ describe('UserPanel', () => {
 	})
 
 	it('should update selected month on input change', () => {
-		// @ts-ignore
+		// @ts-expect-error Ignoring vi.Mock
 		;(AuthContext.useAuth as vi.Mock).mockReturnValue({
 			user: {
 				name: 'John',
@@ -75,14 +75,14 @@ describe('UserPanel', () => {
 
 		render(<UserPanel />)
 
-		const monthInput = screen.getByLabelText('Wybierz miesiąc:')
+		// Poprawiona etykieta - usunięto dwukropek
+		const monthInput = screen.getByLabelText('Wybierz miesiąc')
 		fireEvent.change(monthInput, { target: { value: '2025-05' } })
 
 		expect(monthInput).toHaveValue('2025-05')
 	})
-
 	it('should render BorrowingStats, BorrowingHistory, and ResignMembership components', () => {
-		// @ts-ignore
+		// @ts-expect-error Ignoring vi.Mock
 		;(AuthContext.useAuth as vi.Mock).mockReturnValue({
 			user: {
 				name: 'John',

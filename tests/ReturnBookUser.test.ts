@@ -1,17 +1,15 @@
 import { test, expect, Page } from '@playwright/test'
 
-// Funkcja do zapisywania stanu użytkownika w localStorage
 async function setLocalStorage(page: Page, user: object) {
-	await page.goto('http://localhost:5173/user') // Załaduj stronę, żeby mieć dostęp do localStorage
+	await page.goto('http://localhost:5173/user')
 	await page.evaluate((userData) => {
-		localStorage.setItem('user', JSON.stringify(userData)) // Ustaw dane w localStorage
+		localStorage.setItem('user', JSON.stringify(userData))
 	}, user)
 }
 
 test('Użytkownik zwraca książkę z użyciem localStorage', async ({ page }) => {
-	const apiUrl = 'http://localhost:3001' // Adres API
+	const apiUrl = 'http://localhost:3001'
 
-	// Przygotowanie danych testowych
 	const testUser = {
 		id: '991d',
 		name: 'ada1',
@@ -42,7 +40,6 @@ test('Użytkownik zwraca książkę z użyciem localStorage', async ({ page }) =
 		returnDate: '',
 	}
 
-	// Mockowanie odpowiedzi z API
 	await page.route(`${apiUrl}/books`, (route) =>
 		route.fulfill({
 			status: 200,
@@ -64,20 +61,15 @@ test('Użytkownik zwraca książkę z użyciem localStorage', async ({ page }) =
 		}),
 	)
 
-	// Ustawienie danych użytkownika w localStorage
 	await setLocalStorage(page, testUser)
 
-	// Przejście na stronę aplikacji
 	await page.goto('http://localhost:5173/user')
 
-	// Czekanie na załadowanie elementu "Zwróć książkę" (przycisk)
 	const returnButton = page.locator('button:has-text("Zwróć książkę")')
 	await returnButton.waitFor({ state: 'visible', timeout: 20000 })
 
-	// Kliknięcie przycisku "Zwróć książkę"
 	await returnButton.click()
 
-	// Mockowanie odpowiedzi API po zwróceniu książki
 	await page.route(`${apiUrl}/borrowings/borrowing1`, (route) =>
 		route.fulfill({
 			status: 200,
@@ -110,21 +102,15 @@ test('Użytkownik zwraca książkę z użyciem localStorage', async ({ page }) =
 		}),
 	)
 
-	// Opóźnienie przed sprawdzeniem dialogu
 	await page.waitForTimeout(2000)
 
-	// Czekanie na dialog
+	const dialogLocator = page.locator('[data-testid="return-book-dialog"]')
+	await expect(dialogLocator).toHaveCount(1)
+	await expect(dialogLocator).toBeVisible()
 
-	// Poczekaj na pojawienie się dialogu
-	const dialogLocator = page.locator('[data-testid="return-book-dialog"]') // Użycie data-testid
-	await expect(dialogLocator).toHaveCount(1) // Sprawdzenie, czy dialog istnieje
-	await expect(dialogLocator).toBeVisible() // Czekaj, aż dialog będzie widoczny
-
-	// Sprawdzenie komunikatu o powodzeniu
 	const modalMessage = await dialogLocator.textContent()
 	expect(modalMessage).toContain('Książka została zwrócona pomyślnie!')
 
-	// Sprawdzenie, czy książka została usunięta z listy wypożyczonych książek
 	const borrowedBooks = await page.locator('.MuiCardContent-root').count()
-	expect(borrowedBooks).toBe(0) // Książka powinna zniknąć
+	expect(borrowedBooks).toBe(0)
 })

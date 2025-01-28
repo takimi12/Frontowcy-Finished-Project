@@ -20,7 +20,6 @@ export const App: React.FC = () => {
 					<Route path="/register" element={<Register />} />
 					<Route path="/admin" element={<BookManagement />} />
 					<Route path="/user" element={<UserPanel />} />
-					<Route path="/books" element={<BooksList />} />
 					<Route path="/books/:id" element={<BookDetail />} />
 				</Routes>
 			</Router>

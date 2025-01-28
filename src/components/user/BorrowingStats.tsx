@@ -1,6 +1,7 @@
 import React from 'react'
-import { useAuth } from '../../context/AuthContext' // Importujemy kontekst
+import { useAuth } from '../../context/AuthContext'
 import axios from 'axios'
+import { Typography, Box, Paper, Button } from '@mui/material'
 
 interface Borrowing {
 	id: string
@@ -16,10 +17,11 @@ interface BorrowingStatsProps {
 }
 
 const BorrowingStats: React.FC<BorrowingStatsProps> = ({ selectedMonth }) => {
-	const { user } = useAuth() // Pobieramy użytkownika z kontekstu
+	const { user } = useAuth()
 	const [borrowings, setBorrowings] = React.useState<Borrowing[]>([])
+	const [currentPage, setCurrentPage] = React.useState<number>(1)
+	const itemsPerPage = 5
 
-	// Pobierz wypożyczenia użytkownika
 	React.useEffect(() => {
 		if (user) {
 			axios
@@ -35,16 +37,26 @@ const BorrowingStats: React.FC<BorrowingStatsProps> = ({ selectedMonth }) => {
 		}
 	}, [user])
 
-	const currentYear = 2025 // Zakładamy, że statystyki dotyczą roku 2025
+	const currentYear = 2025
 
-	const borrowedThisMonth = borrowings.filter((borrowing) => {
-		const borrowDate = new Date(borrowing.borrowDate)
-		return (
-			borrowDate.getMonth() + 1 === selectedMonth &&
-			borrowDate.getFullYear() === currentYear
-		)
-	}).length
+	// Tablica z nazwami miesięcy
+	const monthNames = [
+		'Styczeń',
+		'Luty',
+		'Marzec',
+		'Kwiecień',
+		'Maj',
+		'Czerwiec',
+		'Lipiec',
+		'Sierpień',
+		'Wrzesień',
+		'Październik',
+		'Listopad',
+		'Grudzień',
+	]
 
+	// Statystyki ogólne
+	const totalBorrowed = borrowings.length
 	const returnedOnTime = borrowings.filter((borrowing) => {
 		if (!borrowing.returnDate) return false
 		const returnDate = new Date(borrowing.returnDate)
@@ -63,13 +75,108 @@ const BorrowingStats: React.FC<BorrowingStatsProps> = ({ selectedMonth }) => {
 		(borrowing) => !borrowing.returnDate,
 	).length
 
+	// Statystyki dla wybranego miesiąca
+	const borrowedThisMonth = borrowings.filter((borrowing) => {
+		const borrowDate = new Date(borrowing.borrowDate)
+		return (
+			borrowDate.getMonth() + 1 === selectedMonth &&
+			borrowDate.getFullYear() === currentYear
+		)
+	}).length
+
+	const totalPages = Math.ceil(borrowings.length / itemsPerPage)
+	const startIndex = (currentPage - 1) * itemsPerPage
+	const paginatedBorrowings = borrowings.slice(
+		startIndex,
+		startIndex + itemsPerPage,
+	)
+
 	return (
-		<div>
-			<p>Ilość książek wypożyczonych w danym miesiącu: {borrowedThisMonth}</p>
-			<p>Ilość książek oddanych w terminie: {returnedOnTime}</p>
-			<p>Ilość książek oddanych po terminie: {returnedLate}</p>
-			<p>Ilość książek aktualnie wypożyczonych: {currentlyBorrowed}</p>
-		</div>
+		<Paper
+			elevation={3}
+			sx={{
+				p: 4,
+				margin: '40px',
+			}}
+		>
+			<Typography variant="h6" gutterBottom>
+				Statystyki ogólne
+			</Typography>
+			<Typography>
+				Ilość książek wypożyczonych ogólnie: {totalBorrowed}
+			</Typography>
+			<Typography>
+				Ilość książek oddanych w terminie ogólnie: {returnedOnTime}
+			</Typography>
+			<Typography>
+				Ilość książek oddanych po terminie ogólnie: {returnedLate}
+			</Typography>
+			<Typography>
+				Ilość książek aktualnie wypożyczonych ogólnie: {currentlyBorrowed}
+			</Typography>
+
+			<Typography variant="h6" gutterBottom mt={3}>
+				Statystyki za {monthNames[selectedMonth - 1]}
+			</Typography>
+			<Typography>
+				Ilość książek wypożyczonych w {monthNames[selectedMonth - 1]}:{' '}
+				{borrowedThisMonth}
+			</Typography>
+			<Typography>
+				Ilość książek oddanych w terminie w {monthNames[selectedMonth - 1]}:{' '}
+				{returnedOnTime}
+			</Typography>
+			<Typography>
+				Ilość książek oddanych po terminie w {monthNames[selectedMonth - 1]}:{' '}
+				{returnedLate}
+			</Typography>
+			<Typography>
+				Ilość książek aktualnie wypożyczonych: {currentlyBorrowed}
+			</Typography>
+
+			<Box mt={2}>
+				<Typography variant="h6">Wypożyczenia:</Typography>
+				<ul>
+					{paginatedBorrowings.map((borrowing) => (
+						<li key={borrowing.id}>
+							<Typography>
+								<strong>ID Książki:</strong> {borrowing.bookId} |{' '}
+								<strong>Data wypożyczenia:</strong>{' '}
+								{new Date(borrowing.borrowDate).toLocaleDateString()} |{' '}
+								<strong>Termin zwrotu:</strong>{' '}
+								{new Date(borrowing.expectedreturnDate).toLocaleDateString()} |{' '}
+								<strong>Data zwrotu:</strong>{' '}
+								{borrowing.returnDate
+									? new Date(borrowing.returnDate).toLocaleDateString()
+									: 'Nie zwrócono'}
+							</Typography>
+						</li>
+					))}
+				</ul>
+			</Box>
+
+			<Box display="flex" justifyContent="space-between" mt={3}>
+				<Button
+					disabled={currentPage === 1}
+					variant="outlined"
+					onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+				>
+					Poprzednia strona
+				</Button>
+				<Typography>
+					Strona {currentPage} z {totalPages}
+				</Typography>
+				<Button
+					disabled={currentPage === totalPages}
+					variant="outlined"
+					onClick={() =>
+						setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+					}
+				>
+					Następna strona
+				</Button>
+			</Box>
+		</Paper>
 	)
 }
 

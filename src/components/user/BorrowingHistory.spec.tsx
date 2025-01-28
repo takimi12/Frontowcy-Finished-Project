@@ -24,7 +24,7 @@ vi.mock('@mui/material', async () => {
 		DialogTitle: ({ children }: DialogTitleProps) => (
 			<div data-testid="dialog-title">{children}</div>
 		),
-		Card: ({ children, sx }: CardProps) => (
+		Card: ({ children }: CardProps) => (
 			<div data-testid="book-card">{children}</div>
 		),
 	}

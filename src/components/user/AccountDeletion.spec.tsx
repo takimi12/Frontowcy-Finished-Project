@@ -4,6 +4,7 @@ import '@testing-library/jest-dom'
 import AccountDeletion from './AccountDeletion'
 import { useAuth } from '../../context/AuthContext'
 
+// Mock komponentów Material-UI
 vi.mock('@mui/material', async () => {
 	const actual = await vi.importActual('@mui/material')
 	return {
@@ -30,10 +31,12 @@ vi.mock('@mui/material', async () => {
 	}
 })
 
+// Mock kontekstu autoryzacji
 vi.mock('../../context/AuthContext', () => ({
 	useAuth: vi.fn(),
 }))
 
+// Mock funkcji fetch
 const mockFetch = vi.fn()
 global.fetch = mockFetch
 
@@ -79,11 +82,9 @@ describe('AccountDeletion', () => {
 		render(<AccountDeletion />)
 
 		fireEvent.click(screen.getByText('Zrezygnuj z członkostwa'))
-
 		expect(screen.getByTestId('dialog')).toBeInTheDocument()
 
 		fireEvent.click(screen.getByText('Anuluj'))
-
 		expect(screen.queryByTestId('dialog')).not.toBeInTheDocument()
 	})
 
@@ -155,6 +156,7 @@ describe('AccountDeletion', () => {
 			})
 			.mockResolvedValueOnce({
 				ok: false,
+				statusText: 'Server Error',
 			})
 
 		render(<AccountDeletion />)
@@ -165,13 +167,14 @@ describe('AccountDeletion', () => {
 		await waitFor(() => {
 			expect(screen.getByText('Wystąpił błąd')).toBeInTheDocument()
 			expect(
-				screen.getByText('Wystąpił błąd podczas usuwania konta.'),
+				screen.getByText(/Wystąpił błąd podczas usuwania konta/),
 			).toBeInTheDocument()
 		})
 	})
 
 	it('shows error when checking active loans fails', async () => {
-		mockFetch.mockRejectedValueOnce(new Error('Network error'))
+		const networkError = new Error('Network error')
+		mockFetch.mockRejectedValueOnce(networkError)
 
 		render(<AccountDeletion />)
 
@@ -181,7 +184,9 @@ describe('AccountDeletion', () => {
 		await waitFor(() => {
 			expect(screen.getByText('Wystąpił błąd')).toBeInTheDocument()
 			expect(
-				screen.getByText('Wystąpił błąd podczas sprawdzania wypożyczeń.'),
+				screen.getByText(
+					/Wystąpił błąd podczas sprawdzania wypożyczeń. Network error/,
+				),
 			).toBeInTheDocument()
 		})
 	})
@@ -198,5 +203,46 @@ describe('AccountDeletion', () => {
 		fireEvent.click(screen.getByText('Potwierdzam rezygnację'))
 
 		expect(mockFetch).not.toHaveBeenCalled()
+	})
+
+	it('shows processing modal during account deletion', async () => {
+		mockFetch
+			.mockResolvedValueOnce({
+				ok: true,
+				json: async () => [],
+			})
+			.mockResolvedValueOnce({
+				ok: true,
+			})
+
+		render(<AccountDeletion />)
+
+		fireEvent.click(screen.getByText('Zrezygnuj z członkostwa'))
+		fireEvent.click(screen.getByText('Potwierdzam rezygnację'))
+
+		expect(
+			screen.getByText(
+				'Trwa sprawdzanie możliwości rezygnacji i usuwanie konta...',
+			),
+		).toBeInTheDocument()
+	})
+
+	it('handles failed API response for active loans check', async () => {
+		mockFetch.mockResolvedValueOnce({
+			ok: false,
+			statusText: 'Server Error',
+		})
+
+		render(<AccountDeletion />)
+
+		fireEvent.click(screen.getByText('Zrezygnuj z członkostwa'))
+		fireEvent.click(screen.getByText('Potwierdzam rezygnację'))
+
+		await waitFor(() => {
+			expect(screen.getByText('Wystąpił błąd')).toBeInTheDocument()
+			expect(
+				screen.getByText(/Wystąpił błąd podczas sprawdzania wypożyczeń/),
+			).toBeInTheDocument()
+		})
 	})
 })

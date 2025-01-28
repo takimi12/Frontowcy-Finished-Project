@@ -1,9 +1,7 @@
 /// <reference types="vitest" />
-
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
-// https://vite.dev/config/
 export default defineConfig({
 	plugins: [react()],
 	test: {
@@ -14,5 +12,8 @@ export default defineConfig({
 			provider: 'istanbul',
 			reporter: ['text', 'json', 'html'],
 		},
+		// Add these lines to explicitly include/exclude test files
+		include: ['src/**/*.spec.tsx', 'src/**/*.test.ts'],
+		exclude: ['**/e2e/**', '**/*.e2e.ts'],
 	},
 })

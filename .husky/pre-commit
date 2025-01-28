@@ -1,4 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Uruchomienie formatowania, lintowania i testów jednostkowych (Vitest), bez testów e2e
 npm run format
+npm run lint --fix
+npm run test:ci   # Zmienione z npm run test na test:ci

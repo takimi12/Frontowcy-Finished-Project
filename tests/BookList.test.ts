@@ -49,7 +49,7 @@ test.describe('Komponent BooksList', () => {
 						borrowedSuccessfully = true
 						break
 					} catch (error) {
-						console.log(`Nie udało się wypożyczyć książki na indeksie ${i}`)
+						console.log(`Nie udało się wypożyczyć książki na indeksie ${error}`)
 					}
 				}
 			}

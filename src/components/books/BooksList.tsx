@@ -202,7 +202,7 @@ export const BooksList: React.FC = () => {
 			setModalMessage('Książka została wypożyczona pomyślnie!')
 			setIsModalOpen(true)
 		} catch (error) {
-			setModalMessage('Wystąpił błąd podczas wypożyczania książki.')
+			setModalMessage(`Wystąpił błąd podczas wypożyczania książki. ${error}`)
 			setIsModalOpen(true)
 		}
 	}

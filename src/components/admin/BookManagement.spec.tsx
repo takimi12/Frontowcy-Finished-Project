@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import { vi } from 'vitest'
 import { BookManagement } from './BookManagement'
 import { useAuth } from '../../context/AuthContext'
@@ -30,7 +30,7 @@ vi.mock('./components/DeleteBookDialog', () => ({
 
 describe('BookManagement', () => {
 	beforeEach(() => {
-		//@ts-ignore
+		// @ts-expect-error Ignoring vi.Mock
 		;(useAuth as vi.Mock).mockReturnValue({ user: { role: 'Admin' } })
 		global.fetch = vi.fn(() =>
 			Promise.resolve({
@@ -64,7 +64,7 @@ describe('BookManagement', () => {
 	})
 
 	it('displays access denied message for non-admin users', async () => {
-		//@ts-ignore
+		// @ts-expect-error Ignoring vi.Mock
 		;(useAuth as vi.Mock).mockReturnValue({ user: { role: 'User' } })
 		await act(async () => {
 			render(<BookManagement />)

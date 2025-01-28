@@ -3,6 +3,7 @@ import BorrowingStats from './BorrowingStats'
 import BorrowingHistory from './BorrowingHistory'
 import { useAuth } from '../../context/AuthContext'
 import ResignMembership from './AccountDeletion'
+import { Container, Typography, Paper, Box, TextField } from '@mui/material'
 
 const UserPanel: React.FC = () => {
 	const { user } = useAuth()
@@ -15,36 +16,52 @@ const UserPanel: React.FC = () => {
 	}
 
 	return (
-		<div>
-			<h1>Panel użytkownika</h1>
-			<div>
-				<h2>Dane użytkownika</h2>
-				<p>Imię: {user.name}</p>
-				<p>Nazwisko: {user.surname}</p>
-				<p>Email: {user.email}</p>
-				<p>Numer karty bibliotecznej: {user.cardId}</p>
-			</div>
-			<div>
-				<h2>Statystyki wypożyczeń</h2>
-				<label>
-					Wybierz miesiąc:
-					<input
+		<Paper
+			elevation={3}
+			sx={{
+				p: 4,
+				margin: '40px',
+			}}
+		>
+			<Container maxWidth="lg" sx={{ py: 4 }}>
+				<Typography variant="h4" component="h1" gutterBottom>
+					Panel użytkownika
+				</Typography>
+
+				{/* User Data Section */}
+				<Box mb={3}>
+					<Typography variant="h6">Dane użytkownika</Typography>
+					<Typography variant="body1">Imię: {user.name}</Typography>
+					<Typography variant="body1">Nazwisko: {user.surname}</Typography>
+					<Typography variant="body1">Email: {user.email}</Typography>
+					<Typography variant="body1">
+						Numer karty bibliotecznej: {user.cardId}
+					</Typography>
+				</Box>
+
+				<Box mb={3}>
+					<Typography variant="h6">Statystyki wypożyczeń</Typography>
+					<TextField
 						type="month"
 						value={`2025-${selectedMonth.toString().padStart(2, '0')}`}
 						onChange={(e) =>
 							setSelectedMonth(parseInt(e.target.value.split('-')[1]))
 						}
+						label="Wybierz miesiąc"
+						fullWidth
 					/>
-				</label>
-				<BorrowingStats selectedMonth={selectedMonth} />
-			</div>
-			<div>
-				<BorrowingHistory />
-			</div>
-			<div>
-				<ResignMembership />
-			</div>
-		</div>
+					<BorrowingStats selectedMonth={selectedMonth} />
+				</Box>
+
+				<Box mb={3}>
+					<BorrowingHistory />
+				</Box>
+
+				<Box>
+					<ResignMembership />
+				</Box>
+			</Container>
+		</Paper>
 	)
 }
 

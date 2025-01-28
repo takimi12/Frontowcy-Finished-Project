@@ -5,10 +5,10 @@ import React, {
 	ReactNode,
 	useEffect,
 } from 'react'
-import { loginUser } from '../api/api'
+import { loginUser, User } from '../api/api'
 
 interface AuthContextType {
-	user: any
+	user: User | null
 	login: (cardId: string, password: string) => Promise<void>
 	logout: () => void
 }
@@ -16,13 +16,12 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | null>(null)
 
 interface AuthProviderProps {
-	children: ReactNode // Define the children prop
+	children: ReactNode
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-	const [user, setUser] = useState<any>(null)
+	const [user, setUser] = useState<User | null>(null)
 
-	// Check localStorage for a saved user on initial load
 	useEffect(() => {
 		const savedUser = localStorage.getItem('user')
 		if (savedUser) {
@@ -31,10 +30,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	}, [])
 
 	const login = async (cardId: string, password: string) => {
-		const user = await loginUser(cardId, password)
-		setUser(user)
-		// Save the user to localStorage
-		localStorage.setItem('user', JSON.stringify(user))
+		try {
+			const loggedInUser = await loginUser(cardId, password)
+			setUser(loggedInUser)
+			// Save the user to localStorage
+			localStorage.setItem('user', JSON.stringify(loggedInUser))
+		} catch (error) {
+			console.error('Login failed:', error)
+		}
 	}
 
 	const logout = () => {

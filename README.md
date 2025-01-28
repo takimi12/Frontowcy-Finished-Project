@@ -48,4 +48,5 @@ export default tseslint.config({
 	},
 })
 ```
+
 # Frontowcy-Projekt-4

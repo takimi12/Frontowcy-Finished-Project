@@ -24,6 +24,7 @@ export const BookManagement: React.FC = () => {
 		copies: '',
 	})
 
+	console.log(user, 'user')
 	useEffect(() => {
 		fetchBooks()
 		fetchBorrowings()
@@ -141,13 +142,11 @@ export const BookManagement: React.FC = () => {
 
 	const handleForceReturn = async (borrowingId: string): Promise<void> => {
 		try {
-			// Pobierz aktualne wypożyczenie
 			const borrowingResponse = await fetch(
 				`${API_URL}/borrowings/${borrowingId}`,
 			)
 			const borrowing = await borrowingResponse.json()
 
-			// Zaktualizuj wypożyczenie, dodając returnDate
 			const updatedBorrowing = {
 				...borrowing,
 				returnDate: new Date().toISOString(),
@@ -163,7 +162,6 @@ export const BookManagement: React.FC = () => {
 				throw new Error('Failed to force return')
 			}
 
-			// Zaloguj wymuszenie zwrotu
 			const user = users.find((u) => u.id === borrowing.userId)
 			const book = books.find((b) => b.id === borrowing.bookId)
 
@@ -180,7 +178,7 @@ export const BookManagement: React.FC = () => {
 				})
 			}
 
-			await fetchBorrowings() // Odśwież listę wypożyczeń
+			await fetchBorrowings()
 		} catch (error) {
 			console.error('Error forcing return:', error)
 		}
@@ -207,6 +205,10 @@ export const BookManagement: React.FC = () => {
 			/>
 
 			<Box sx={{ display: 'grid', gap: 2 }}>
+				<Typography variant="h4" gutterBottom>
+					Dostępne ksiąki
+				</Typography>
+
 				{books.map((book) => (
 					<BookCard
 						key={book.id}

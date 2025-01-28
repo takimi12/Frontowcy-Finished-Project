@@ -12,6 +12,11 @@ import {
 	Paper,
 } from '@mui/material'
 
+interface LoginFormInputs {
+	cardId: string
+	password: string
+}
+
 const validationSchema = Yup.object().shape({
 	cardId: Yup.string()
 		.required('Numer karty jest wymagany')
@@ -35,13 +40,13 @@ const Login: React.FC = () => {
 		resolver: yupResolver(validationSchema),
 	})
 
-	const onSubmit = async (data: any) => {
+	const onSubmit = async (data: LoginFormInputs) => {
 		const { cardId, password } = data
 		try {
 			await login(cardId, password)
 			alert('Zalogowano pomyślnie!')
 		} catch (error) {
-			alert('Błąd logowania')
+			alert(`Błąd logowania ${error}`)
 		}
 	}
 

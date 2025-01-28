@@ -13,6 +13,7 @@ import {
 	DialogActions,
 	Box,
 	Chip,
+	Paper,
 } from '@mui/material'
 
 interface Book {
@@ -45,9 +46,6 @@ const ReturnBooks: React.FC = () => {
 	const [users, setUsers] = useState<User[]>([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [modalMessage, setModalMessage] = useState('')
-
-	console.log(books)
-	console.log(users)
 
 	useEffect(() => {
 		Promise.all([
@@ -183,88 +181,103 @@ const ReturnBooks: React.FC = () => {
 	const borrowedBooks = getUserBorrowedBooks()
 
 	return (
-		<Container maxWidth="lg" sx={{ py: 4 }}>
-			<Typography variant="h4" component="h1" gutterBottom>
-				Twoje wypożyczone książki
-			</Typography>
-
-			{borrowedBooks.length === 0 ? (
-				<Typography variant="body1">
-					Nie masz obecnie wypożyczonych książek.
+		<Paper
+			elevation={3}
+			sx={{
+				p: 4,
+				margin: '40px',
+			}}
+		>
+			<Container maxWidth="lg" sx={{ py: 4 }}>
+				<Typography variant="h4" component="h1" gutterBottom>
+					Twoje wypożyczone książki
 				</Typography>
-			) : (
-				<Box display="flex" flexWrap="wrap" gap={3}>
-					{borrowedBooks.map((borrowing) => {
-						const daysOverdue = calculateDaysOverdue(
-							borrowing.expectedreturnDate,
-						)
 
-						return (
-							<Card
-								key={borrowing.id}
-								sx={{
-									width: '100%',
-									maxWidth: 345,
-									bgcolor: daysOverdue > 0 ? 'error.light' : 'background.paper',
-								}}
-							>
-								<CardContent>
-									<Typography variant="h6" gutterBottom>
-										{borrowing.bookTitle}
-									</Typography>
-									<Typography variant="body2" color="text.secondary">
-										Autor: {borrowing.bookAuthor}
-									</Typography>
-									<Typography variant="body2" color="text.secondary">
-										Data wypożyczenia:{' '}
-										{new Date(borrowing.borrowDate).toLocaleDateString()}
-									</Typography>
-									<Typography variant="body2" color="text.secondary">
-										Termin zwrotu:{' '}
-										{new Date(
-											borrowing.expectedreturnDate,
-										).toLocaleDateString()}
-									</Typography>
-									{daysOverdue > 0 && (
-										<Chip
-											label={`Przeterminowane o ${daysOverdue} dni`}
-											color="error"
-											sx={{ mt: 1 }}
-										/>
-									)}
-								</CardContent>
-								<CardActions>
-									<Button
-										size="small"
-										variant="contained"
-										onClick={() => handleReturn(borrowing.id, borrowing.bookId)}
-										color="primary"
-									>
-										Zwróć książkę
-									</Button>
-								</CardActions>
-							</Card>
-						)
-					})}
-				</Box>
-			)}
-			<Dialog
-				open={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
-				aria-labelledby="alert-dialog-title"
-				data-testid="return-book-dialog"
-			>
-				<DialogTitle id="alert-dialog-title">Informacja</DialogTitle>
-				<DialogContent>
-					<Typography>{modalMessage}</Typography>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => setIsModalOpen(false)} autoFocus>
-						Zamknij
-					</Button>
-				</DialogActions>
-			</Dialog>
-		</Container>
+				{borrowedBooks.length === 0 ? (
+					<Typography variant="body1">
+						Nie masz obecnie wypożyczonych książek.
+					</Typography>
+				) : (
+					<Box
+						display="grid"
+						gridTemplateColumns="repeat(auto-fit, minmax(345px, 1fr))"
+						gap={3}
+					>
+						{borrowedBooks.map((borrowing) => {
+							const daysOverdue = calculateDaysOverdue(
+								borrowing.expectedreturnDate,
+							)
+
+							return (
+								<Card
+									key={borrowing.id}
+									sx={{
+										bgcolor:
+											daysOverdue > 0 ? 'error.light' : 'background.paper',
+										maxWidth: '400px',
+										width: '100%',
+									}}
+								>
+									<CardContent>
+										<Typography variant="h6" gutterBottom>
+											{borrowing.bookTitle}
+										</Typography>
+										<Typography variant="body2" color="text.secondary">
+											Autor: {borrowing.bookAuthor}
+										</Typography>
+										<Typography variant="body2" color="text.secondary">
+											Data wypożyczenia:{' '}
+											{new Date(borrowing.borrowDate).toLocaleDateString()}
+										</Typography>
+										<Typography variant="body2" color="text.secondary">
+											Termin zwrotu:{' '}
+											{new Date(
+												borrowing.expectedreturnDate,
+											).toLocaleDateString()}
+										</Typography>
+										{daysOverdue > 0 && (
+											<Chip
+												label={`Przeterminowane o ${daysOverdue} dni`}
+												color="error"
+												sx={{ mt: 1 }}
+											/>
+										)}
+									</CardContent>
+									<CardActions>
+										<Button
+											size="small"
+											variant="contained"
+											onClick={() =>
+												handleReturn(borrowing.id, borrowing.bookId)
+											}
+											color="primary"
+										>
+											Zwróć książkę
+										</Button>
+									</CardActions>
+								</Card>
+							)
+						})}
+					</Box>
+				)}
+				<Dialog
+					open={isModalOpen}
+					onClose={() => setIsModalOpen(false)}
+					aria-labelledby="alert-dialog-title"
+					data-testid="return-book-dialog"
+				>
+					<DialogTitle id="alert-dialog-title">Informacja</DialogTitle>
+					<DialogContent>
+						<Typography>{modalMessage}</Typography>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={() => setIsModalOpen(false)} autoFocus>
+							Zamknij
+						</Button>
+					</DialogActions>
+				</Dialog>
+			</Container>
+		</Paper>
 	)
 }
 
