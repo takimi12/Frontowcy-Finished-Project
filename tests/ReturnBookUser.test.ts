@@ -1,5 +1,3 @@
-
-
 import { test, expect } from '@playwright/test'
 
 test('should show return book text for logged in user and handle book return', async ({
