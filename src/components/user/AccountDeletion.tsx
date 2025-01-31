@@ -19,6 +19,15 @@ import {
 	CheckCircleOutline as SuccessIcon,
 } from '@mui/icons-material'
 
+interface Loan {
+	id: string
+	userId: string | null
+	bookId: string
+	borrowDate: string
+	expectedReturnDate: string
+	returnDate: string | null
+}
+
 const AccountDeletion: React.FC = () => {
 	const { user, logout } = useAuth()
 	const [error, setError] = useState<string>('')
@@ -32,23 +41,27 @@ const AccountDeletion: React.FC = () => {
 
 		try {
 			const response = await fetch(
-				`http://localhost:3001/borrowings?userId=${user.id}&returnDate=`,
+				`http://localhost:3001/borrowings?userId=${user.id}&returnDate=null`,
 			)
+
 			if (!response.ok) {
 				throw new Error('Błąd podczas pobierania danych o wypożyczeniach')
 			}
-			const activeLoans = await response.json()
 
-			if (activeLoans.length > 0) {
+			const activeLoans: Loan[] = await response.json()
+			const hasActiveLoans = activeLoans.length > 0
+
+			if (hasActiveLoans) {
 				setError(
 					'Nie możesz zrezygnować z członkostwa, ponieważ masz aktywne wypożyczenia.',
 				)
 				return false
 			}
+
 			return true
 		} catch (err) {
 			const errorMessage = err instanceof Error ? err.message : String(err)
-			setError(`Wystąpił błąd podczas sprawdzania wypożyczeń. ${errorMessage}`)
+			setError(`Wystąpił błąd podczas sprawdzania wypożyczeń: ${errorMessage}`)
 			return false
 		}
 	}
@@ -63,7 +76,6 @@ const AccountDeletion: React.FC = () => {
 			const canResign = await checkActiveLoans()
 			if (!canResign) {
 				setIsProcessingModalOpen(false)
-				setIsSuccess(false)
 				setIsResultModalOpen(true)
 				return
 			}
@@ -72,19 +84,32 @@ const AccountDeletion: React.FC = () => {
 				method: 'DELETE',
 			})
 
-			setIsProcessingModalOpen(false)
-
-			if (response.ok) {
-				setIsSuccess(true)
-				setError('')
-				setIsResultModalOpen(true)
-				setTimeout(() => {
-					logout()
-					window.location.href = '/'
-				}, 3000)
-			} else {
+			if (!response.ok) {
 				throw new Error('Błąd podczas usuwania konta')
 			}
+
+			await fetch('http://localhost:3001/logs', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					date: new Date().toISOString(),
+					userId: user.id,
+					action: 'Usunięcie konta',
+					details: `Użytkownik ${user.email} usunął swoje konto.`,
+				}),
+			})
+
+			setIsProcessingModalOpen(false)
+			setIsSuccess(true)
+			setError('')
+			setIsResultModalOpen(true)
+
+			setTimeout(() => {
+				logout()
+				window.location.href = '/'
+			}, 3000)
 		} catch (err) {
 			setIsProcessingModalOpen(false)
 			setIsSuccess(false)
@@ -94,7 +119,6 @@ const AccountDeletion: React.FC = () => {
 		}
 	}
 
-	// ... reszta komponentu bez zmian ...
 	return (
 		<Paper elevation={3} sx={{ p: 4, margin: '40px' }}>
 			<Container maxWidth="lg" sx={{ py: 4 }}>

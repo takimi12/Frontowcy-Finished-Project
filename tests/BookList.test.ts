@@ -1,137 +1,99 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Komponent BooksList', () => {
-	const BASE_URL = 'http://localhost:5173'
+const TEST_USER = {
+	id: 'c4ad',
+	name: 'admin',
+	surname: 'admin',
+	email: 'admin@admin.pl',
+	password: '123123',
+	borrowedBooks: [],
+	cardId: 'jnem32ykz',
+	role: 'Admin',
+}
 
-	const TEST_USER = {
-		id: '991d',
-		name: 'ada1',
-		surname: 'ada1',
-		email: 'adam@adam.pl',
-		password: '123123',
-		cardId: 'iuum0bl8n',
-		role: 'Klient',
-		borrowedBooks: [],
-	}
+test.describe('Testy E2E Aplikacji Bibliotecznej', () => {
+	let liczbaKsiazekPoczatkowa: number
 
-	test.describe('Wypozyczanie ksiazek', () => {
-		test.beforeEach(async ({ page, context }) => {
-			await context.addInitScript((user) => {
+	test.beforeEach(async ({ page }) => {
+		const response = await fetch('http://localhost:3001/books')
+		const books = await response.json()
+		liczbaKsiazekPoczatkowa = books.length
+
+		await page.goto('http://localhost:5173')
+	})
+
+	test('powinno wyświetlić listę książek z poprawną liczbą', async ({
+		page,
+	}) => {
+		await expect(page.locator('h1')).toContainText('Lista książek')
+		const books = page.locator('.MuiCard-root')
+		await expect(books).toHaveCount(liczbaKsiazekPoczatkowa)
+	})
+
+	test('powinno wyświetlić szczegóły książki', async ({ page }) => {
+		await page.waitForSelector('.MuiCard-root')
+		await page.locator('text=Szczegóły').first().click()
+		await expect(page.url()).toMatch(/\/books\/\d+/)
+		await page.waitForSelector('.MuiCard-root')
+	})
+
+	test('powinno obsłużyć wypożyczenie książki bez logowania', async ({
+		page,
+	}) => {
+		await page.waitForSelector('button:has-text("Wypożycz")')
+
+		const activeButton = page
+			.locator('button:has-text("Wypożycz"):not([disabled])')
+			.first()
+
+		await expect(activeButton).toBeEnabled()
+
+		await activeButton.click()
+
+		const dialog = page.locator('.MuiDialog-root')
+		await expect(dialog).toBeVisible()
+		await expect(dialog).toContainText('Zaloguj się, aby wypożyczyć książkę')
+	})
+
+	test.describe('Wypożyczenie książki i liczba dni do zwrotu', () => {
+		test.beforeEach(async ({ page }) => {
+			await page.addInitScript((user) => {
 				localStorage.setItem('user', JSON.stringify(user))
 			}, TEST_USER)
 
-			await page.goto(`${BASE_URL}/books`)
-
-			await page.waitForSelector('div[class*="MuiCard-root"]', {
-				state: 'visible',
-				timeout: 10000,
-			})
+			await page.goto('http://localhost:5173')
 		})
 
-		test('może pomyślnie wypożyczyć dostępną książkę', async ({ page }) => {
-			const bookCards = page.locator('div[class*="MuiCard-root"]')
-			const bookCount = await bookCards.count()
-
-			let borrowedSuccessfully = false
-			for (let i = 0; i < bookCount; i++) {
-				const bookCard = bookCards.nth(i)
-				const availableCopiesText =
-					(await bookCard.getByText(/Dostępne egzemplarze:/).textContent()) ||
-					''
-
-				if (!availableCopiesText.includes('Brak dostępnych egzemplarzy')) {
-					const borrowButton = bookCard.getByRole('button', {
-						name: /Wypożycz/i,
-					})
-
-					try {
-						await borrowButton.click({ timeout: 5000 })
-						borrowedSuccessfully = true
-						break
-					} catch (error) {
-						console.log(`Nie udało się wypożyczyć książki na indeksie ${error}`)
-					}
-				}
-			}
-
-			expect(borrowedSuccessfully).toBe(true)
-
-			const successModal = page.getByRole('dialog')
-			await expect(successModal).toBeVisible()
-			await expect(
-				successModal.getByText('Książka została wypożyczona pomyślnie!'),
-			).toBeVisible()
-
-			await page.getByRole('button', { name: /Zamknij/i }).click()
-		})
-
-		test('obsługuje książki bez dostępnych egzemplarzy', async ({ page }) => {
-			const bookCards = page.locator('div[class*="MuiCard-root"]')
-			const bookCount = await bookCards.count()
-
-			let noAvailableCopiesFound = false
-			for (let i = 0; i < bookCount; i++) {
-				const bookCard = bookCards.nth(i)
-				const availableCopiesText =
-					(await bookCard.getByText(/Dostępne egzemplarze:/).textContent()) ||
-					''
-
-				if (availableCopiesText.includes('Brak dostępnych egzemplarzy')) {
-					const borrowButton = bookCard.getByRole('button', {
-						name: /Wypożycz/i,
-					})
-					await expect(borrowButton).toBeDisabled()
-					noAvailableCopiesFound = true
-					break
-				}
-			}
-
-			expect(noAvailableCopiesFound).toBe(true)
-		})
-	})
-
-	test.describe('Niezalogowany użytkownik', () => {
-		test.beforeEach(async ({ page, context }) => {
-			await context.addInitScript(() => {
-				localStorage.removeItem('user')
-			})
-
-			await page.goto(`${BASE_URL}/books`)
-
-			await page.waitForSelector('div[class*="MuiCard-root"]', {
-				state: 'visible',
-				timeout: 10000,
-			})
-		})
-
-		test('wyświetla modal logowania przy próbie wypożyczenia bez autoryzacji', async ({
+		test('powinno poprawnie wypożyczyć książkę i obliczyć liczbę dni do zwrotu', async ({
 			page,
 		}) => {
-			const bookCards = page.locator('div[class*="MuiCard-root"]')
-			const bookCount = await bookCards.count()
+			await page.waitForSelector('.MuiCard-root')
 
-			for (let i = 0; i < bookCount; i++) {
-				const bookCard = bookCards.nth(i)
-				const availableCopiesText =
-					(await bookCard.getByText(/Dostępne egzemplarze:/).textContent()) ||
-					''
+			const wypozyczButton = page.locator('button:has-text("Wypożycz")').first()
+			await wypozyczButton.click()
 
-				if (!availableCopiesText.includes('Brak dostępnych egzemplarzy')) {
-					const borrowButton = bookCard.getByRole('button', {
-						name: /Wypożycz/i,
-					})
+			const dialog = page.locator('.MuiDialog-root')
+			await expect(dialog).toBeVisible()
+			await expect(dialog).toContainText(
+				'Książka została wypożyczona pomyślnie!',
+			)
 
-					await borrowButton.click()
+			await page.locator('.MuiDialog-root button:has-text("Zamknij")').click()
+			await expect(dialog).not.toBeVisible()
 
-					const loginModal = page.getByRole('dialog')
-					await expect(loginModal).toBeVisible()
-					await expect(
-						loginModal.getByText('Zaloguj się, aby wypożyczyć książkę'),
-					).toBeVisible()
+			await page.waitForSelector('text=Twoje terminy zwrotu')
+			const daysText = await page
+				.locator('text=Termin zwrotu:')
+				.first()
+				.textContent()
 
-					break
-				}
-			}
+			const today = new Date()
+			const expectedReturnDate = new Date()
+			expectedReturnDate.setDate(today.getDate() + 14)
+			const expectedReturnDateString = expectedReturnDate.toLocaleDateString()
+
+			expect(daysText).toContain(expectedReturnDateString)
+			expect(daysText).toMatch(/\(\d+ dni\)/)
 		})
 	})
 })

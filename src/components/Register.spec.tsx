@@ -1,134 +1,142 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { vi } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { BrowserRouter } from 'react-router-dom'
 import Register from './Register'
-import { registerUser, checkIfUserExists } from '../api/api'
+import * as api from '../api/api'
 
+// Mock the API functions
 vi.mock('../api/api', () => ({
-	registerUser: vi.fn(),
 	checkIfUserExists: vi.fn(),
+	registerUser: vi.fn(),
 }))
 
-describe('Register Component', () => {
-	it('should render the registration form with all fields', () => {
-		render(<Register />)
+// Mock useNavigate
+const mockNavigate = vi.fn()
+vi.mock('react-router-dom', async () => {
+	const actual = await vi.importActual('react-router-dom')
+	return {
+		...actual,
+		useNavigate: () => mockNavigate,
+	}
+})
 
-		expect(screen.getByLabelText(/Imię/i)).toBeInTheDocument()
-		expect(screen.getByLabelText(/Nazwisko/i)).toBeInTheDocument()
-		expect(screen.getByLabelText(/Email/i)).toBeInTheDocument()
-		expect(screen.getByLabelText(/Hasło/i)).toBeInTheDocument()
+const renderRegisterComponent = () => {
+	return render(
+		<BrowserRouter>
+			<Register />
+		</BrowserRouter>,
+	)
+}
+
+describe('Register Component', () => {
+	beforeEach(() => {
+		vi.clearAllMocks()
+	})
+
+	it('renders registration form with all required fields', () => {
+		renderRegisterComponent()
+
+		expect(screen.getByLabelText(/imię/i)).toBeInTheDocument()
+		expect(screen.getByLabelText(/nazwisko/i)).toBeInTheDocument()
+		expect(screen.getByLabelText(/email/i)).toBeInTheDocument()
+		expect(screen.getByLabelText(/hasło/i)).toBeInTheDocument()
 		expect(
-			screen.getByRole('button', { name: /Zarejestruj się/i }),
+			screen.getByRole('button', { name: /zarejestruj się/i }),
 		).toBeInTheDocument()
 	})
 
-	it('should call registerUser function with correct data when the form is submitted', async () => {
-		const registerMock = vi.fn().mockResolvedValueOnce({ cardId: '12345' })
-		const checkIfUserExistsMock = vi.fn().mockResolvedValueOnce(false)
+	it('displays error for short password', async () => {
+		renderRegisterComponent()
 
-		;(registerUser as ReturnType<typeof vi.fn>).mockImplementation(registerMock)
-		;(checkIfUserExists as ReturnType<typeof vi.fn>).mockImplementation(
-			checkIfUserExistsMock,
-		)
+		const passwordInput = screen.getByLabelText(/hasło/i)
+		await userEvent.type(passwordInput, '12345')
 
-		render(<Register />)
+		const form = screen.getByRole('form')
+		await fireEvent.submit(form)
 
-		fireEvent.change(screen.getByLabelText(/Imię/i), {
-			target: { value: 'Jan' },
+		await waitFor(() => {
+			expect(
+				screen.getByText(/hasło musi mieć co najmniej 6 znaków/i),
+			).toBeInTheDocument()
 		})
-		fireEvent.change(screen.getByLabelText(/Nazwisko/i), {
-			target: { value: 'Kowalski' },
-		})
-		fireEvent.change(screen.getByLabelText(/Email/i), {
-			target: { value: 'jan.kowalski@example.com' },
-		})
-		fireEvent.change(screen.getByLabelText(/Hasło/i), {
-			target: { value: 'password123' },
-		})
+	})
 
-		fireEvent.click(screen.getByRole('button', { name: /Zarejestruj się/i }))
+	it('handles successful registration', async () => {
+		const mockUser = { cardId: '123ABC' } // przykładowy alfanumeryczny ID
+		vi.mocked(api.checkIfUserExists).mockResolvedValue(false)
+		vi.mocked(api.registerUser).mockResolvedValue(mockUser)
 
-		await waitFor(() =>
-			expect(registerMock).toHaveBeenCalledWith({
+		renderRegisterComponent()
+
+		await userEvent.type(screen.getByLabelText(/imię/i), 'Jan')
+		await userEvent.type(screen.getByLabelText(/nazwisko/i), 'Kowalski')
+		await userEvent.type(screen.getByLabelText(/email/i), 'jan@example.com')
+		await userEvent.type(screen.getByLabelText(/hasło/i), 'password123')
+
+		const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
+
+		const form = screen.getByRole('form')
+		await fireEvent.submit(form)
+
+		await waitFor(() => {
+			expect(api.checkIfUserExists).toHaveBeenCalledWith('jan@example.com')
+			expect(api.registerUser).toHaveBeenCalledWith({
 				name: 'Jan',
 				surname: 'Kowalski',
-				email: 'jan.kowalski@example.com',
+				email: 'jan@example.com',
 				password: 'password123',
 				borrowedBooks: [],
-			}),
-		)
-	})
-
-	it('should show success message when registration is successful', async () => {
-		const registerMock = vi.fn().mockResolvedValueOnce({ cardId: '12345' })
-		const checkIfUserExistsMock = vi.fn().mockResolvedValueOnce(false)
-
-		;(registerUser as ReturnType<typeof vi.fn>).mockImplementation(registerMock)
-		;(checkIfUserExists as ReturnType<typeof vi.fn>).mockImplementation(
-			checkIfUserExistsMock,
-		)
-
-		const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
-
-		render(<Register />)
-
-		fireEvent.change(screen.getByLabelText(/Imię/i), {
-			target: { value: 'Jan' },
-		})
-		fireEvent.change(screen.getByLabelText(/Nazwisko/i), {
-			target: { value: 'Kowalski' },
-		})
-		fireEvent.change(screen.getByLabelText(/Email/i), {
-			target: { value: 'jan.kowalski@example.com' },
-		})
-		fireEvent.change(screen.getByLabelText(/Hasło/i), {
-			target: { value: 'password123' },
-		})
-
-		fireEvent.click(screen.getByRole('button', { name: /Zarejestruj się/i }))
-
-		await waitFor(() =>
+			})
 			expect(alertMock).toHaveBeenCalledWith(
-				'Zarejestrowano użytkownika z kartą biblioteczną: 12345',
-			),
-		)
-
-		alertMock.mockRestore()
+				`Zarejestrowano użytkownika z kartą biblioteczną: ${mockUser.cardId}`,
+			)
+			expect(mockNavigate).toHaveBeenCalledWith('/login')
+		})
 	})
+	it('handles existing user error', async () => {
+		vi.mocked(api.checkIfUserExists).mockResolvedValue(true)
 
-	it('should show error message when registration fails', async () => {
-		const registerMock = vi
-			.fn()
-			.mockRejectedValueOnce(new Error('Błąd podczas rejestracji'))
-		const checkIfUserExistsMock = vi.fn().mockResolvedValueOnce(false)
+		renderRegisterComponent()
 
-		;(registerUser as ReturnType<typeof vi.fn>).mockImplementation(registerMock)
-		;(checkIfUserExists as ReturnType<typeof vi.fn>).mockImplementation(
-			checkIfUserExistsMock,
-		)
+		await userEvent.type(screen.getByLabelText(/imię/i), 'Jan')
+		await userEvent.type(screen.getByLabelText(/nazwisko/i), 'Kowalski')
+		await userEvent.type(screen.getByLabelText(/email/i), 'jan@example.com')
+		await userEvent.type(screen.getByLabelText(/hasło/i), 'password123')
 
 		const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
 
-		render(<Register />)
+		const form = screen.getByRole('form')
+		await fireEvent.submit(form)
 
-		fireEvent.change(screen.getByLabelText(/Imię/i), {
-			target: { value: 'Jan' },
+		await waitFor(() => {
+			expect(alertMock).toHaveBeenCalledWith(
+				'Użytkownik o podanym adresie email już istnieje',
+			)
+			expect(api.registerUser).not.toHaveBeenCalled()
 		})
-		fireEvent.change(screen.getByLabelText(/Nazwisko/i), {
-			target: { value: 'Kowalski' },
-		})
-		fireEvent.change(screen.getByLabelText(/Email/i), {
-			target: { value: 'jan.kowalski@example.com' },
-		})
-		fireEvent.change(screen.getByLabelText(/Hasło/i), {
-			target: { value: 'password123' },
-		})
+	})
 
-		fireEvent.click(screen.getByRole('button', { name: /Zarejestruj się/i }))
-
-		await waitFor(() =>
-			expect(alertMock).toHaveBeenCalledWith('Błąd podczas rejestracji'),
+	it('handles API error during registration', async () => {
+		vi.mocked(api.checkIfUserExists).mockResolvedValue(false)
+		vi.mocked(api.registerUser).mockRejectedValue(
+			new Error('Błąd podczas rejestracji'),
 		)
 
-		alertMock.mockRestore()
+		renderRegisterComponent()
+
+		await userEvent.type(screen.getByLabelText(/imię/i), 'Jan')
+		await userEvent.type(screen.getByLabelText(/nazwisko/i), 'Kowalski')
+		await userEvent.type(screen.getByLabelText(/email/i), 'jan@example.com')
+		await userEvent.type(screen.getByLabelText(/hasło/i), 'password123')
+
+		const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
+
+		const form = screen.getByRole('form')
+		await fireEvent.submit(form)
+
+		await waitFor(() => {
+			expect(alertMock).toHaveBeenCalledWith('Błąd podczas rejestracji')
+		})
 	})
 })

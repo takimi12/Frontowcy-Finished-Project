@@ -11,6 +11,7 @@ import {
 	Box,
 	Paper,
 } from '@mui/material'
+import { useNavigate } from 'react-router-dom' // Dodany import
 
 type FormData = {
 	name: string
@@ -34,10 +35,11 @@ const schema = yup.object().shape({
 	borrowedBooks: yup
 		.array()
 		.of(yup.string().required())
-		.required('Lista wypożyczonych książek jest wymagana'), // Explicitly define as required
+		.required('Lista wypożyczonych książek jest wymagana'),
 })
 
 const Register: React.FC = () => {
+	const navigate = useNavigate() // Inicjalizacja hooka
 	const {
 		control,
 		handleSubmit,
@@ -67,8 +69,8 @@ const Register: React.FC = () => {
 				`Zarejestrowano użytkownika z kartą biblioteczną: ${newUser.cardId}`,
 			)
 			reset()
+			navigate('/login') // Przekierowanie po udanej rejestracji
 		} catch (error) {
-			// Handle the error properly
 			if (error instanceof Error) {
 				if (
 					error.message === 'Nie udało się sprawdzić, czy użytkownik istnieje.'
@@ -108,7 +110,7 @@ const Register: React.FC = () => {
 					Zarejestruj się
 				</Typography>
 
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<form role="form" onSubmit={handleSubmit(onSubmit)}>
 					<Box sx={{ mb: 3 }}>
 						<Controller
 							name="name"

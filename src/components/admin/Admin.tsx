@@ -5,14 +5,24 @@ import { Book, NewBook, User, Borrowing } from '../../types/types'
 import { AddBookForm } from './components/AddBookForm'
 import { BookCard } from './components/BookCard'
 import { DeleteBookDialog } from './components/DeleteBookDialog'
+import { EventLog } from './components/EventLogs'
 
 const API_URL = 'http://localhost:3001'
 
-export const BookManagement: React.FC = () => {
+type Log = {
+	id: string
+	date: string
+	userId: string
+	action: string
+	details: string
+}
+
+export const Admin: React.FC = () => {
 	const { user } = useAuth()
 	const [books, setBooks] = useState<Book[]>([])
 	const [users, setUsers] = useState<User[]>([])
 	const [borrowings, setBorrowings] = useState<Borrowing[]>([])
+	const [logs, setLogs] = useState<Log[]>([])
 	const [editingBook, setEditingBook] = useState<Book | null>(null)
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
 	const [bookToDelete, setBookToDelete] = useState<Book | null>(null)
@@ -24,11 +34,11 @@ export const BookManagement: React.FC = () => {
 		copies: '',
 	})
 
-	console.log(user, 'user')
 	useEffect(() => {
 		fetchBooks()
 		fetchBorrowings()
 		fetchUsers()
+		fetchLogs()
 	}, [])
 
 	const fetchBooks = async (): Promise<void> => {
@@ -58,6 +68,16 @@ export const BookManagement: React.FC = () => {
 			setUsers(data)
 		} catch (error) {
 			console.error('Error fetching users:', error)
+		}
+	}
+
+	const fetchLogs = async (): Promise<void> => {
+		try {
+			const response = await fetch(`${API_URL}/logs`)
+			const data = await response.json()
+			setLogs(data)
+		} catch (error) {
+			console.error('Error fetching logs:', error)
 		}
 	}
 
@@ -139,14 +159,15 @@ export const BookManagement: React.FC = () => {
 			console.error('Error deleting book:', error)
 		}
 	}
-
 	const handleForceReturn = async (borrowingId: string): Promise<void> => {
 		try {
+			// Pobierz dane o wypożyczeniu
 			const borrowingResponse = await fetch(
 				`${API_URL}/borrowings/${borrowingId}`,
 			)
 			const borrowing = await borrowingResponse.json()
 
+			// Zaktualizuj datę zwrotu w borrowings
 			const updatedBorrowing = {
 				...borrowing,
 				returnDate: new Date().toISOString(),
@@ -162,10 +183,40 @@ export const BookManagement: React.FC = () => {
 				throw new Error('Failed to force return')
 			}
 
+			// Pobierz użytkownika i książkę
 			const user = users.find((u) => u.id === borrowing.userId)
 			const book = books.find((b) => b.id === borrowing.bookId)
 
 			if (user && book) {
+				// Usuń książkę z borrowedBooks użytkownika
+				const updatedUser = {
+					...user,
+					borrowedBooks: user.borrowedBooks.filter(
+						(title) => title !== book.title,
+					),
+				}
+
+				await fetch(`${API_URL}/users/${user.id}`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(updatedUser),
+				})
+
+				// Usuń użytkownika z borrowedBy w książce
+				const updatedBook = {
+					...book,
+					borrowedBy: book.borrowedBy.filter(
+						(cardId) => cardId !== user.cardId,
+					),
+				}
+
+				await fetch(`${API_URL}/books/${book.id}`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(updatedBook),
+				})
+
+				// Dodaj log systemowy
 				await fetch(`${API_URL}/logs`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
@@ -178,7 +229,10 @@ export const BookManagement: React.FC = () => {
 				})
 			}
 
+			// Odśwież dane
 			await fetchBorrowings()
+			await fetchUsers()
+			await fetchBooks()
 		} catch (error) {
 			console.error('Error forcing return:', error)
 		}
@@ -206,7 +260,7 @@ export const BookManagement: React.FC = () => {
 
 			<Box sx={{ display: 'grid', gap: 2 }}>
 				<Typography variant="h4" gutterBottom>
-					Dostępne ksiąki
+					Dostępne książki
 				</Typography>
 
 				{books.map((book) => (
@@ -238,6 +292,8 @@ export const BookManagement: React.FC = () => {
 				}}
 				onConfirm={handleDeleteBook}
 			/>
+
+			<EventLog logs={logs} />
 		</Box>
 	)
 }

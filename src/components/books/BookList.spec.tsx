@@ -161,17 +161,17 @@ describe('BooksList', () => {
 		).toBeInTheDocument()
 	})
 
-	it('wyświetla chip z datą zwrotu dla wypożyczonych książek', async () => {
-		const mockUser = mockUsers[0]
-		renderBooksList(mockUser)
+	it('wyświetla informacje o terminach zwrotu dla wypożyczonych książek', async () => {
+		renderBooksList(mockUsers[0]) // Przekazujemy użytkownika, który ma wypożyczoną książkę
 
 		await waitFor(() => {
-			const daysElement = screen.getByText(/Do zwrotu za \d+ dni/)
-			expect(daysElement).toBeInTheDocument()
-
-			const days = parseInt(daysElement.textContent!.match(/\d+/)![0])
-			expect(days).toBeGreaterThanOrEqual(6)
-			expect(days).toBeLessThanOrEqual(7)
+			// Sprawdzamy, czy termin zwrotu dla wypożyczonej książki jest wyświetlany
+			expect(screen.getByText('Twoje terminy zwrotu:')).toBeInTheDocument()
+			expect(
+				screen.getByText(
+					`Termin zwrotu: ${new Date(futureDate).toLocaleDateString()} (7 dni)`,
+				),
+			).toBeInTheDocument() // Sprawdzamy czy data zwrotu jest poprawna
 		})
 	})
 

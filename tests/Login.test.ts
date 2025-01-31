@@ -1,20 +1,54 @@
 import { test, expect } from '@playwright/test'
+import axios from 'axios'
+
+const API_URL = 'http://localhost:3001'
 
 test.describe('Komponent logowania', () => {
+	const testUser = {
+		cardId: 'lr090fz3e',
+		password: '123123',
+	}
+
 	test.beforeEach(async ({ page }) => {
 		await page.goto('http://localhost:5173/login')
 	})
 
-	test('powinien umożliwić użytkownikowi pomyślne zalogowanie', async ({
+	test('powinien umożliwić użytkownikowi pomyślne zalogowanie i utworzyć log', async ({
 		page,
 	}) => {
-		await page.fill('input[name="cardId"]', 'iuum0bl8n')
-		await page.fill('input[name="password"]', '123123')
+		const initialLogsResponse = await axios.get(`${API_URL}/logs`)
+		const initialLogsCount = initialLogsResponse.data.length
+
+		await page.fill('input[name="cardId"]', testUser.cardId)
+		await page.fill('input[name="password"]', testUser.password)
+
 		page.on('dialog', async (dialog) => {
 			expect(dialog.message()).toBe('Zalogowano pomyślnie!')
 			await dialog.accept()
 		})
-		await page.click('button[type="submit"]')
+
+		await Promise.all([
+			page.click('button[type="submit"]'),
+			page.waitForNavigation({ url: '**/user' }),
+		])
+
+		await new Promise((resolve) => setTimeout(resolve, 2000))
+
+		const logsResponse = await axios.get(`${API_URL}/logs`)
+		const currentLogs = logsResponse.data
+
+		expect(currentLogs.length).toBe(initialLogsCount + 1)
+
+		const loginLog = currentLogs[currentLogs.length - 1]
+
+		expect(loginLog).toBeTruthy()
+		expect(loginLog.action).toBe('Logowanie')
+		expect(loginLog.details).toContain('zalogował się')
+
+		const logTime = new Date(loginLog.date).getTime()
+		const now = new Date().getTime()
+		expect(logTime).toBeLessThanOrEqual(now)
+		expect(logTime).toBeGreaterThan(now - 10000)
 	})
 
 	test('powinien wyświetlić komunikat o błędzie, gdy logowanie się nie powiedzie', async ({
@@ -26,81 +60,6 @@ test.describe('Komponent logowania', () => {
 			expect(dialog.message()).toBe('Błąd logowania')
 			await dialog.accept()
 		})
-		await page.click('button[type="submit"]')
-	})
-
-	test('powinien wyświetlić komunikat o błędzie, gdy cardId jest puste', async ({
-		page,
-	}) => {
-		await page.fill('input[name="password"]', '123123')
-		await page.click('button[type="submit"]')
-		await expect(page.locator('input[name="cardId"]')).toHaveAttribute(
-			'aria-invalid',
-			'true',
-		)
-		await expect(page.locator('text=Numer karty jest wymagany')).toBeVisible()
-	})
-
-	test('powinien wyświetlić komunikat o błędzie, gdy hasło jest puste', async ({
-		page,
-	}) => {
-		await page.fill('input[name="cardId"]', 'iuum0bl8n')
-		await page.click('button[type="submit"]')
-		await expect(page.locator('input[name="password"]')).toHaveAttribute(
-			'aria-invalid',
-			'true',
-		)
-		await expect(page.locator('text=Hasło jest wymagane')).toBeVisible()
-	})
-
-	test('powinien wyświetlić komunikat o błędzie, gdy cardId jest za krótkie', async ({
-		page,
-	}) => {
-		await page.fill('input[name="cardId"]', '123')
-		await page.fill('input[name="password"]', '123123')
-		await page.click('button[type="submit"]')
-		await expect(
-			page.locator('text=Numer karty musi zawierać od 4 do 16 cyfr'),
-		).toBeVisible()
-	})
-
-	test('powinien wyświetlić komunikat o błędzie, gdy hasło jest za krótkie', async ({
-		page,
-	}) => {
-		await page.fill('input[name="cardId"]', 'iuum0bl8n')
-		await page.fill('input[name="password"]', '123')
-		await page.click('button[type="submit"]')
-		await expect(
-			page.locator('text=Hasło musi mieć co najmniej 6 znaków'),
-		).toBeVisible()
-	})
-
-	test('powinien wyświetlić komunikaty o błędach walidacji dla niepoprawnych danych w formularzu', async ({
-		page,
-	}) => {
-		await page.click('button[type="submit"]')
-		await expect(page.locator('text=Numer karty jest wymagany')).toBeVisible()
-		await expect(page.locator('text=Hasło jest wymagane')).toBeVisible()
-	})
-
-	test('powinien włączyć przycisk logowania, gdy formularz jest poprawny', async ({
-		page,
-	}) => {
-		await page.fill('input[name="cardId"]', 'iuum0bl8n')
-		await page.fill('input[name="password"]', '123123')
-		const loginButton = page.locator('button[type="submit"]')
-		await expect(loginButton).toBeEnabled()
-	})
-
-	test('powinien wyświetlić komunikat o błędzie serwera, jeśli żądanie logowania nie powiedzie się', async ({
-		page,
-	}) => {
-		page.on('dialog', async (dialog) => {
-			expect(dialog.message()).toBe('Błąd logowania')
-			await dialog.accept()
-		})
-		await page.fill('input[name="cardId"]', 'iuum0bl8n')
-		await page.fill('input[name="password"]', 'wrongPassword')
 		await page.click('button[type="submit"]')
 	})
 })

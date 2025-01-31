@@ -10,7 +10,9 @@ import {
 	Typography,
 	Box,
 	Paper,
+	Link,
 } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 interface LoginFormInputs {
 	cardId: string
@@ -31,6 +33,7 @@ const validationSchema = Yup.object().shape({
 
 const Login: React.FC = () => {
 	const { login } = useAuth()
+	const navigate = useNavigate()
 
 	const {
 		control,
@@ -45,6 +48,7 @@ const Login: React.FC = () => {
 		try {
 			await login(cardId, password)
 			alert('Zalogowano pomyślnie!')
+			navigate('/user')
 		} catch (error) {
 			alert(`Błąd logowania ${error}`)
 		}
@@ -111,7 +115,14 @@ const Login: React.FC = () => {
 						/>
 					</Box>
 
-					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							gap: 2,
+							alignItems: 'center',
+						}}
+					>
 						<Button
 							type="submit"
 							variant="contained"
@@ -121,6 +132,12 @@ const Login: React.FC = () => {
 						>
 							Zaloguj
 						</Button>
+						<Typography variant="body2">
+							Nie masz konta?{' '}
+							<Link href="/register" underline="hover">
+								Zarejestruj się
+							</Link>
+						</Typography>
 					</Box>
 				</form>
 			</Paper>

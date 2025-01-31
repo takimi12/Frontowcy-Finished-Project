@@ -13,7 +13,9 @@ import {
 	DialogContent,
 	DialogActions,
 	Box,
-	Chip,
+	List,
+	ListItem,
+	ListItemText,
 } from '@mui/material'
 
 interface Book {
@@ -90,12 +92,13 @@ export const BooksList: React.FC = () => {
 		)
 	}
 
-	const getBookReturnDate = (bookId: string): string | null => {
-		if (!user) return null
-		const borrowing = borrowings.find(
-			(b) => b.bookId === bookId && b.userId === user.id && !b.returnDate,
-		)
-		return borrowing ? borrowing.expectedreturnDate : null
+	const getBookReturnDates = (bookId: string): string[] => {
+		if (!user) return []
+		return borrowings
+			.filter(
+				(b) => b.bookId === bookId && b.userId === user.id && !b.returnDate, // Wypożyczenia bez zwrotu
+			)
+			.map((b) => b.expectedreturnDate)
 	}
 
 	const borrowBook = async (bookId: string) => {
@@ -114,18 +117,15 @@ export const BooksList: React.FC = () => {
 			return
 		}
 
-		// Znajdź aktualnego użytkownika w stanie
 		const currentUser = users.find((u) => u.id === user.id)
 		if (!currentUser) return
 
-		// Dodaj tytuł książki do borrowedBooks użytkownika (nawet jeśli już istnieje)
 		const updatedUser = {
 			...currentUser,
-			borrowedBooks: [...currentUser.borrowedBooks, book.title], // Dodaj tytuł książki
+			borrowedBooks: [...currentUser.borrowedBooks, book.title],
 		}
 
 		try {
-			// Update user
 			await fetch(`http://localhost:3001/users/${user.id}`, {
 				method: 'PUT',
 				headers: {
@@ -134,7 +134,6 @@ export const BooksList: React.FC = () => {
 				body: JSON.stringify(updatedUser),
 			})
 
-			// Update book
 			const updatedBook = {
 				...book,
 				borrowedBy: [...book.borrowedBy, user.cardId],
@@ -148,7 +147,6 @@ export const BooksList: React.FC = () => {
 				body: JSON.stringify(updatedBook),
 			})
 
-			// Create new borrowing
 			const borrowDate = new Date()
 			const returnDate = new Date()
 			returnDate.setDate(returnDate.getDate() + 14)
@@ -175,17 +173,14 @@ export const BooksList: React.FC = () => {
 			const savedBorrowing = await borrowingResponse.json()
 			setBorrowings((prev) => [...prev, savedBorrowing])
 
-			// Update books state
 			setBooks((prevBooks) =>
 				prevBooks.map((b) => (b.id === bookId ? updatedBook : b)),
 			)
 
-			// Update users state
 			setUsers((prevUsers) =>
 				prevUsers.map((u) => (u.id === user.id ? updatedUser : u)),
 			)
 
-			// Log the borrowing action
 			await fetch('http://localhost:3001/logs', {
 				method: 'POST',
 				headers: {
@@ -227,8 +222,7 @@ export const BooksList: React.FC = () => {
 				gap={3}
 			>
 				{books.map((book) => {
-					const returnDate = getBookReturnDate(book.id)
-					const remainingDays = returnDate ? getRemainingDays(returnDate) : null
+					const returnDates = getBookReturnDates(book.id)
 
 					return (
 						<Box
@@ -262,18 +256,33 @@ export const BooksList: React.FC = () => {
 											: book.copies - book.borrowedBy.length}
 									</Typography>
 
-									{isBookBorrowedByUser(book.id) && remainingDays !== null && (
-										<Box mt={1}>
-											<Chip
-												label={`Do zwrotu za ${remainingDays} dni`}
-												color={
-													remainingDays < 3
-														? 'error'
-														: remainingDays < 7
-															? 'warning'
-															: 'info'
-												}
-											/>
+									{returnDates.length > 0 && (
+										<Box mt={2}>
+											<Typography variant="body2" color="text.primary">
+												Twoje terminy zwrotu:
+											</Typography>
+											<List>
+												{returnDates.map((date, index) => {
+													const remainingDays = getRemainingDays(date)
+													return (
+														<ListItem key={index} disablePadding>
+															<ListItemText
+																primary={`Termin zwrotu: ${new Date(
+																	date,
+																).toLocaleDateString()} (${remainingDays} dni)`}
+																primaryTypographyProps={{
+																	color:
+																		remainingDays < 3
+																			? 'error'
+																			: remainingDays < 7
+																				? 'warning'
+																				: 'text.primary',
+																}}
+															/>
+														</ListItem>
+													)
+												})}
+											</List>
 										</Box>
 									)}
 								</CardContent>

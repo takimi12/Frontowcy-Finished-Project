@@ -28,7 +28,6 @@ const UserPanel: React.FC = () => {
 					Panel użytkownika
 				</Typography>
 
-				{/* User Data Section */}
 				<Box mb={3}>
 					<Typography variant="h6">Dane użytkownika</Typography>
 					<Typography variant="body1">Imię: {user.name}</Typography>

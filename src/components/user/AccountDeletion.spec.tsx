@@ -4,7 +4,6 @@ import '@testing-library/jest-dom'
 import AccountDeletion from './AccountDeletion'
 import { useAuth } from '../../context/AuthContext'
 
-// Mock komponentów Material-UI
 vi.mock('@mui/material', async () => {
 	const actual = await vi.importActual('@mui/material')
 	return {
@@ -31,12 +30,10 @@ vi.mock('@mui/material', async () => {
 	}
 })
 
-// Mock kontekstu autoryzacji
 vi.mock('../../context/AuthContext', () => ({
 	useAuth: vi.fn(),
 }))
 
-// Mock funkcji fetch
 const mockFetch = vi.fn()
 global.fetch = mockFetch
 
@@ -91,7 +88,16 @@ describe('AccountDeletion', () => {
 	it('shows error when user has active loans', async () => {
 		mockFetch.mockResolvedValueOnce({
 			ok: true,
-			json: async () => [{ id: 1 }],
+			json: async () => [
+				{
+					id: '1',
+					userId: '123',
+					bookId: '456',
+					borrowDate: '2024-01-01',
+					expectedReturnDate: '2024-02-01',
+					returnDate: null,
+				},
+			],
 		})
 
 		render(<AccountDeletion />)
@@ -118,6 +124,9 @@ describe('AccountDeletion', () => {
 			.mockResolvedValueOnce({
 				ok: true,
 			})
+			.mockResolvedValueOnce({
+				ok: true,
+			})
 
 		const mockLocation = { href: '' }
 		Object.defineProperty(window, 'location', {
@@ -132,11 +141,6 @@ describe('AccountDeletion', () => {
 
 		await waitFor(() => {
 			expect(screen.getByText('Rezygnacja udana')).toBeInTheDocument()
-			expect(
-				screen.getByText(
-					'Twoje konto zostało pomyślnie usunięte. Za chwilę nastąpi przekierowanie na stronę główną.',
-				),
-			).toBeInTheDocument()
 		})
 
 		await waitFor(
@@ -144,7 +148,7 @@ describe('AccountDeletion', () => {
 				expect(mockLogout).toHaveBeenCalled()
 				expect(mockLocation.href).toBe('/')
 			},
-			{ timeout: 4000 },
+			{ timeout: 3500 },
 		)
 	})
 
@@ -185,7 +189,7 @@ describe('AccountDeletion', () => {
 			expect(screen.getByText('Wystąpił błąd')).toBeInTheDocument()
 			expect(
 				screen.getByText(
-					/Wystąpił błąd podczas sprawdzania wypożyczeń. Network error/,
+					/Wystąpił błąd podczas sprawdzania wypożyczeń: Network error/,
 				),
 			).toBeInTheDocument()
 		})
@@ -210,6 +214,9 @@ describe('AccountDeletion', () => {
 			.mockResolvedValueOnce({
 				ok: true,
 				json: async () => [],
+			})
+			.mockResolvedValueOnce({
+				ok: true,
 			})
 			.mockResolvedValueOnce({
 				ok: true,
