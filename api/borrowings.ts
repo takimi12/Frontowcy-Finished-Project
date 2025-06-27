@@ -87,11 +87,9 @@ export default async function handler(
 					!newBorrowing.borrowDate
 				) {
 					console.log('❌ Brak wymaganych pól dla nowego wypożyczenia.')
-					return res
-						.status(400)
-						.json({
-							error: 'Brak wymaganych pól: userId, bookId i borrowDate.',
-						})
+					return res.status(400).json({
+						error: 'Brak wymaganych pól: userId, bookId i borrowDate.',
+					})
 				}
 
 				// Konwersja userId i bookId na ObjectId, jeśli przychodzą jako stringi

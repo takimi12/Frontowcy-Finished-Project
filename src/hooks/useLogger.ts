@@ -18,14 +18,11 @@ export const useLogger = () => {
 		}
 
 		try {
-			await fetch(
-				'https://frontowcy-finished-project.vercel.app/api/logs',
-				{
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(logEntry),
-				},
-			)
+			await fetch('https://frontowcy-finished-project.vercel.app/api/logs', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(logEntry),
+			})
 		} catch (error) {
 			console.error('Błąd logowania akcji:', error)
 		}
