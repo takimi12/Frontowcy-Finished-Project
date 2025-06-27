@@ -6,7 +6,7 @@ export const useBooks = () => {
 		queryKey: ['books'],
 		queryFn: async () => {
 			const res = await fetch(
-				'https://frontowcy-finished-project-op3s.vercel.app/Books',
+				'https://frontowcy-finished-project-op3s.vercel.app/api/books',
 			)
 			if (!res.ok) throw new Error('Błąd pobierania książek')
 			return res.json()
@@ -19,7 +19,7 @@ export const useUpdateBook = () => {
 	return useMutation({
 		mutationFn: async (book: Book) => {
 			const res = await fetch(
-				`https://frontowcy-finished-project-op3s.vercel.app/api/${book.id}`,
+				`https://frontowcy-finished-project-op3s.vercel.app/api/books/${book.id}`,
 				{
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
