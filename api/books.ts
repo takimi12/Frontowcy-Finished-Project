@@ -54,7 +54,7 @@ function convertMongoDocs(docs: Book[] | null): ConvertedBook[] {
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<ConvertedBook[] | ApiResponse>
+	res: NextApiResponse<ConvertedBook[] | ApiResponse>,
 ): Promise<void> {
 	try {
 		const db = await connectToDatabase()

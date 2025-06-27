@@ -1,97 +1,140 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { connectToDatabase, ObjectId } from '../utils/db'
-import { convertMongoDoc } from '../utils/mongoConverters'
+import { MongoClient, Db, Collection, ObjectId } from 'mongodb'
+import dotenv from 'dotenv'
+import { NextApiRequest, NextApiResponse } from 'next' // Zmieniono na Next.js typy, bo '@vercel/node' może być specyficzne dla Vercel Functions
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-	const db = await connectToDatabase()
-	const usersCollection = db.collection('users')
-	const { id } = req.query
+dotenv.config()
 
-	const userId = Array.isArray(id) ? id[0] : id
+interface User {
+    _id?: ObjectId
+    id?: string
+    name: string // Przykład pola użytkownika
+    email: string // Przykład pola użytkownika
+    [key: string]: any // Pozwala na dodanie innych pól
+}
 
-	if (!userId) {
-		return res.status(400).json({ error: 'Brak ID użytkownika' })
-	}
+interface ConvertedUser {
+    id: string
+    [key: string]: any
+}
 
-	if (!ObjectId.isValid(userId)) {
-		console.log('❌ Nieprawidłowy ObjectId dla użytkownika:', userId)
-		return res.status(400).json({ error: 'Nieprawidłowy ID użytkownika' })
-	}
+interface ApiResponse {
+    message?: string
+    error?: string
+}
 
-	const objectId = new ObjectId(userId)
+const uri: string | undefined = process.env.MONGODB_URI
+const dbName: string = 'Books' // Nazwa Twojej bazy danych
 
-	try {
-		switch (req.method) {
-			case 'GET': {
-				const user = await usersCollection.findOne({ _id: objectId })
+let cachedClient: MongoClient | null = null
 
-				if (!user) {
-					console.log('❌ Użytkownik nie znaleziony dla ID:', userId)
-					return res.status(404).json({ error: 'Użytkownik nie znaleziony' })
-				}
+async function connectToDatabase(): Promise<Db> {
+    if (!cachedClient) {
+        if (!uri) {
+            throw new Error('MONGODB_URI is not defined in environment variables.')
+        }
+        const client = new MongoClient(uri)
+        await client.connect()
+        cachedClient = client
+        console.log('✅ Połączono z bazą danych MongoDB.')
+    }
+    return cachedClient.db(dbName)
+}
 
-				console.log('✅ Użytkownik pobrany:', user.name || 'bez nazwy')
-				const convertedUser = convertMongoDoc(user)
-				return res.status(200).json(convertedUser)
-			}
+function convertMongoDoc(doc: User | null): ConvertedUser | null {
+    if (!doc) {
+        return null
+    }
+    const { _id, ...rest } = doc
+    return { id: _id!.toString(), ...rest }
+}
 
-			case 'PUT': {
-				const updatedUserData = { ...req.body }
-				delete updatedUserData.id
-				delete updatedUserData._id
+export default async function handler(
+    req: NextApiRequest,
+    res: NextApiResponse<ConvertedUser | ApiResponse>,
+): Promise<void> {
+    const { id } = req.query
 
-				console.log('🔍 Rozpoczęcie aktualizacji użytkownika:', {
-					userId: userId,
-					updatedData: updatedUserData,
-				})
+    // Upewnij się, że ID jest stringiem i przypisz je do userId
+    const userId = Array.isArray(id) ? id[0] : id
 
-				const updateResult = await usersCollection.updateOne(
-					{ _id: objectId },
-					{ $set: updatedUserData },
-				)
+    if (!userId) {
+        return res.status(400).json({ error: 'Brak ID użytkownika.' })
+    }
 
-				console.log('📊 Wynik operacji aktualizacji użytkownika:', {
-					matchedCount: updateResult.matchedCount,
-					modifiedCount: updateResult.modifiedCount,
-				})
+    if (!ObjectId.isValid(userId)) {
+        console.log('❌ Nieprawidłowy format ID użytkownika:', userId)
+        return res.status(400).json({ error: 'Nieprawidłowy format ID użytkownika.' })
+    }
 
-				if (updateResult.matchedCount === 0) {
-					console.log(
-						'❌ Błąd: Użytkownik o podanym ID nie został znaleziony w bazie:',
-						userId,
-					)
-					return res.status(404).json({ error: 'Użytkownik nie znaleziony' })
-				}
+    const objectId = new ObjectId(userId)
 
-				console.log('✅ Użytkownik zaktualizowany pomyślnie!')
-				return res.status(200).json({ message: 'Użytkownik zaktualizowany' })
-			}
+    try {
+        const db = await connectToDatabase()
+        const usersCollection: Collection<User> = db.collection('users')
 
-			case 'DELETE': {
-				console.log('🔍 Usuwanie użytkownika o ID:', userId)
-				const deleteResult = await usersCollection.deleteOne({ _id: objectId })
+        switch (req.method) {
+            case 'GET': {
+                const user: User | null = await usersCollection.findOne({ _id: objectId })
 
-				console.log('📊 Wynik operacji usunięcia użytkownika:', {
-					deletedCount: deleteResult.deletedCount,
-				})
+                if (!user) {
+                    console.log('❌ Użytkownik nie znaleziony dla ID:', userId)
+                    return res.status(404).json({ error: 'Użytkownik nie znaleziony.' })
+                }
 
-				if (deleteResult.deletedCount === 0) {
-					console.log('❌ Użytkownik nie znaleziony dla ID:', userId)
-					return res.status(404).json({ error: 'Użytkownik nie znaleziony' })
-				}
+                console.log('✅ Użytkownik pobrany:', user.name || 'brak nazwy')
+                const convertedUser = convertMongoDoc(user)
+                return res.status(200).json(convertedUser!) // Używamy !, bo wiemy, że user nie jest null
+            }
 
-				console.log('✅ Użytkownik usunięty pomyślnie!')
-				return res
-					.status(200)
-					.json({ message: 'Użytkownik usunięty pomyślnie' })
-			}
+            case 'PUT': {
+                const updatedUserData: Partial<User> = { ...req.body } // Użyj Partial, bo nie wszystkie pola muszą być w body
+                delete updatedUserData.id
+                delete updatedUserData._id
 
-			default:
-				res.setHeader('Allow', ['GET', 'PUT', 'DELETE'])
-				return res.status(405).end(`Method ${req.method} Not Allowed`)
-		}
-	} catch (error) {
-		console.error('❌ Błąd w handlerze /api/users/[id]:', error)
-		return res.status(500).json({ error: 'Internal Server Error' })
-	}
+                console.log('🔍 Rozpoczęcie aktualizacji użytkownika:', {
+                    userId: userId,
+                    updatedData: updatedUserData,
+                })
+
+                const updateResult = await usersCollection.updateOne(
+                    { _id: objectId },
+                    { $set: updatedUserData },
+                )
+
+                if (updateResult.matchedCount === 0) {
+                    console.log('❌ Błąd: Użytkownik o podanym ID nie został znaleziony:', userId)
+                    return res.status(404).json({ error: 'Użytkownik nie znaleziony.' })
+                }
+
+                console.log('✅ Użytkownik zaktualizowany pomyślnie!', {
+                    matchedCount: updateResult.matchedCount,
+                    modifiedCount: updateResult.modifiedCount,
+                })
+                return res.status(200).json({ message: 'Użytkownik zaktualizowany.' })
+            }
+
+            case 'DELETE': {
+                console.log('🔍 Usuwanie użytkownika o ID:', userId)
+                const deleteResult = await usersCollection.deleteOne({ _id: objectId })
+
+                if (deleteResult.deletedCount === 0) {
+                    console.log('❌ Użytkownik nie znaleziony dla ID:', userId)
+                    return res.status(404).json({ error: 'Użytkownik nie znaleziony.' })
+                }
+
+                console.log('✅ Użytkownik usunięty pomyślnie!', {
+                    deletedCount: deleteResult.deletedCount,
+                })
+                return res.status(200).json({ message: 'Użytkownik usunięty pomyślnie.' })
+            }
+
+            default: {
+                res.setHeader('Allow', ['GET', 'PUT', 'DELETE'])
+                return res.status(405).end(`Metoda ${req.method} Niedozwolona`)
+            }
+        }
+    } catch (error) {
+        console.error('❌ Błąd w handlerze /api/users/[id]:', error)
+        return res.status(500).json({ error: 'Wystąpił wewnętrzny błąd serwera.' })
+    }
 }
