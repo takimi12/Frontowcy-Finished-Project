@@ -1,14 +1,35 @@
-import { MongoClient} from 'mongodb'
+import { MongoClient, Db, Collection, ObjectId } from 'mongodb'
 import dotenv from 'dotenv'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 dotenv.config()
 
-const uri = process.env.MONGODB_URI
-const dbName = 'Books' 
+interface Book {
+	_id?: ObjectId
+	id?: string
+	title?: string
+	author?: string
+	[key: string]: any
+}
 
-let cachedClient = null
+interface ConvertedBook {
+	id: string
+	[key: string]: any
+}
 
-async function connectToDatabase() {
+interface ApiResponse {
+	message?: string
+	insertedId?: ObjectId
+	id?: string
+	error?: string
+}
+
+const uri: string | undefined = process.env.MONGODB_URI
+const dbName: string = 'Books'
+
+let cachedClient: MongoClient | null = null
+
+async function connectToDatabase(): Promise<Db> {
 	if (!cachedClient) {
 		if (!uri) {
 			throw new Error('MONGODB_URI is not defined in environment variables.')
@@ -21,31 +42,34 @@ async function connectToDatabase() {
 	return cachedClient.db(dbName)
 }
 
-function convertMongoDocs(docs) {
+function convertMongoDocs(docs: Book[] | null): ConvertedBook[] {
 	if (!docs) {
 		return []
 	}
 	return docs.map((doc) => {
 		const { _id, ...rest } = doc
-		return { id: _id.toString(), ...rest }
+		return { id: _id!.toString(), ...rest }
 	})
 }
 
-export default async function handler(req, res) {
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse<ConvertedBook[] | ApiResponse>
+): Promise<void> {
 	try {
 		const db = await connectToDatabase()
-		const booksCollection = db.collection('books') 
+		const booksCollection: Collection<Book> = db.collection('books')
 
 		switch (req.method) {
 			case 'GET': {
-				const allBooks = await booksCollection.find({}).toArray()
+				const allBooks: Book[] = await booksCollection.find({}).toArray()
 				console.log('📚 Pobrano książki:', allBooks.length)
-				const convertedBooks = convertMongoDocs(allBooks) 
+				const convertedBooks = convertMongoDocs(allBooks)
 				return res.status(200).json(convertedBooks)
 			}
 
 			case 'POST': {
-				const newBook = req.body
+				const newBook: Book = req.body
 				delete newBook.id
 				delete newBook._id
 
