@@ -18,7 +18,7 @@ export const useUpdateUser = () => {
 	return useMutation({
 		mutationFn: async (user: User) => {
 			const res = await fetch(
-				`https://frontowcy-finished-project.vercel.app/api/${user.id}`,
+				`https://frontowcy-finished-project.vercel.app/api/users/${user.id}`,
 				{
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },

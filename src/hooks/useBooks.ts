@@ -6,8 +6,8 @@ export const useBooks = () => {
 		queryKey: ['books'],
 		queryFn: async () => {
 			const res = await fetch(
-				// 'https://frontowcy-finished-project.vercel.app/api/books',
-				'http://localhost:3002/books',
+				'https://frontowcy-finished-project.vercel.app/api/books',
+				// 'http://localhost:3002/books',
 			)
 			if (!res.ok) throw new Error('Błąd pobierania książek')
 			return res.json()
