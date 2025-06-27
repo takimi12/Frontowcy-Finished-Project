@@ -24,7 +24,6 @@ const AccountDeletion: React.FC = () => {
 		error: loansError,
 	} = useCheckActiveLoans()
 
-
 	const { mutate: deleteAccount, isPending: deletingAccount } =
 		useDeleteAccount()
 

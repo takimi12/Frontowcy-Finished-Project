@@ -12,7 +12,7 @@ export const useUpdateBorrowing = () => {
 				updatedBorrowing,
 			)
 			const res = await fetch(
-				`https://frontowcy-finished-project.vercel.app/api/${updatedBorrowing.id}`,
+				`https://frontowcy-finished-project.vercel.app/api/borrowings/${updatedBorrowing.id}`,
 				{
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
