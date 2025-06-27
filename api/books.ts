@@ -52,9 +52,13 @@ function convertMongoDocs(docs: Book[] | null): ConvertedBook[] {
 	}
 	return docs.map((doc) => {
 		const { _id, ...rest } = doc
-		return { 
-			id: _id ? (_id instanceof ObjectId ? _id.toString() : _id.toString()) : '',
-			...rest 
+		return {
+			id: _id
+				? _id instanceof ObjectId
+					? _id.toString()
+					: _id.toString()
+				: '',
+			...rest,
 		}
 	})
 }
@@ -94,7 +98,7 @@ export default async function handler(
 
 			case 'PUT': {
 				const { id, ...updateData } = req.body
-				
+
 				if (!id) {
 					return res.status(400).json({ error: 'ID książki jest wymagane.' })
 				}
@@ -103,7 +107,7 @@ export default async function handler(
 				delete updateData._id
 
 				console.log('📚 Aktualizacja książki o ID:', id)
-				
+
 				// Sprawdź czy id to ObjectId czy string
 				let query: any
 				if (ObjectId.isValid(id) && id.length === 24) {
@@ -112,19 +116,20 @@ export default async function handler(
 					query = { _id: id }
 				}
 
-				const result = await booksCollection.updateOne(
-					query,
-					{ $set: updateData }
-				)
+				const result = await booksCollection.updateOne(query, {
+					$set: updateData,
+				})
 
 				if (result.matchedCount === 0) {
-					return res.status(404).json({ error: 'Książka nie została znaleziona.' })
+					return res
+						.status(404)
+						.json({ error: 'Książka nie została znaleziona.' })
 				}
 
 				console.log('✅ Książka zaktualizowana')
 				return res.status(200).json({
 					message: 'Książka zaktualizowana',
-					id: id
+					id: id,
 				})
 			}
 
@@ -148,13 +153,15 @@ export default async function handler(
 				const result = await booksCollection.deleteOne(query)
 
 				if (result.deletedCount === 0) {
-					return res.status(404).json({ error: 'Książka nie została znaleziona.' })
+					return res
+						.status(404)
+						.json({ error: 'Książka nie została znaleziona.' })
 				}
 
 				console.log('✅ Książka usunięta')
 				return res.status(200).json({
 					message: 'Książka usunięta',
-					id: id
+					id: id,
 				})
 			}
 

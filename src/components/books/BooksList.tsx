@@ -31,6 +31,7 @@ export const BooksList: React.FC = () => {
 	const { data: borrowings = [] } = useBorrowings()
 	const { logAction } = useLogger()
 
+	console.log(books)
 
 	const updateBook = useUpdateBook()
 	const updateUser = useUpdateUser()
