@@ -8,7 +8,7 @@ interface DeleteAccountData {
 
 const deleteUserAccount = async ({ userId, userEmail }: DeleteAccountData) => {
 	const userResponse = await fetch(
-		`https://frontowcy-finished-project-op3s.vercel.app/api/users/${userId}`,
+		`https://frontowcy-finished-project.vercel.app/api/users/${userId}`,
 		{
 			method: 'DELETE',
 		},
@@ -19,7 +19,7 @@ const deleteUserAccount = async ({ userId, userEmail }: DeleteAccountData) => {
 	}
 
 	const logResponse = await fetch(
-		'https://frontowcy-finished-project-op3s.vercel.app/api/logs',
+		'https://frontowcy-finished-project.vercel.app/api/logs',
 		{
 			method: 'POST',
 			headers: {

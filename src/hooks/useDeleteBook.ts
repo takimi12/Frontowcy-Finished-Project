@@ -4,7 +4,7 @@ export const useDeleteBook = () => {
 	return useMutation({
 		mutationFn: async (bookId: string) => {
 			const res = await fetch(
-				`https://frontowcy-finished-project-op3s.vercel.app/api/books/${bookId}`,
+				`https://frontowcy-finished-project.vercel.app/api/books/${bookId}`,
 				{
 					method: 'DELETE',
 				},

@@ -6,7 +6,7 @@ export const useBook = (id: string) =>
 		queryKey: ['book', id],
 		queryFn: async () => {
 			const res = await fetch(
-				`https://frontowcy-finished-project-op3s.vercel.app/api/books/${id}`,
+				`https://frontowcy-finished-project.vercel.app/api/books/${id}`,
 			)
 			if (!res.ok) throw new Error('Błąd pobierania szczegółów książki')
 			return res.json()
