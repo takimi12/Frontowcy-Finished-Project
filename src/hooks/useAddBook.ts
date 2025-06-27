@@ -5,7 +5,7 @@ export const useAddBook = () => {
 	return useMutation<Book, Error, NewBook>({
 		mutationFn: async (newBook: NewBook) => {
 			const res = await fetch(
-				'https://frontowcy-finished-project-op3s.vercel.app/books',
+				'https://frontowcy-finished-project-op3s.vercel.app/api/books',
 				{
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },

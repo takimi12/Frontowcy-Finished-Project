@@ -19,7 +19,7 @@ export const useUpdateBook = () => {
 	return useMutation({
 		mutationFn: async (book: Book) => {
 			const res = await fetch(
-				`https://frontowcy-finished-project-op3s.vercel.app/${book.id}`,
+				`https://frontowcy-finished-project-op3s.vercel.app/api/${book.id}`,
 				{
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },

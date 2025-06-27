@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://frontowcy-finished-project-op3s.vercel.app'
+const API_URL = 'https://frontowcy-finished-project-op3s.vercel.app/api/'
 
 export interface User {
 	id: string
