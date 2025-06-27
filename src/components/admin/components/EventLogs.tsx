@@ -15,9 +15,8 @@ interface EventLogProps {
 
 export const EventLog: React.FC<EventLogProps> = ({ logs }) => {
 	const [page, setPage] = useState(1)
-	const logsPerPage = 5 // You can adjust the number of logs per page
+	const logsPerPage = 5
 
-	// Calculate the index of the first log to display
 	const indexOfLastLog = page * logsPerPage
 	const indexOfFirstLog = indexOfLastLog - logsPerPage
 	const currentLogs = logs.slice(indexOfFirstLog, indexOfLastLog)

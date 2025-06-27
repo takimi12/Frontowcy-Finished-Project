@@ -5,7 +5,7 @@ import React, {
 	ReactNode,
 	useEffect,
 } from 'react'
-import { loginUser, User } from '../api/api'
+import { loginUser, User } from '../hooks/useLogin'
 
 interface AuthContextType {
 	user: User | null
@@ -33,7 +33,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 		try {
 			const loggedInUser = await loginUser(cardId, password)
 			setUser(loggedInUser)
-			// Save the user to localStorage
 			localStorage.setItem('user', JSON.stringify(loggedInUser))
 		} catch (error) {
 			console.error('Login failed:', error)
@@ -42,7 +41,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 	const logout = () => {
 		setUser(null)
-		// Remove the user from localStorage
 		localStorage.removeItem('user')
 	}
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3001'
+const API_URL = 'http://localhost:3002'
 
 export interface User {
 	id: string
@@ -25,17 +25,19 @@ export const registerUser = async (
 	user: Omit<User, 'id' | 'cardId' | 'role'>,
 ) => {
 	try {
-		const cardId = Math.random().toString(36).substr(2, 9) // Generowanie unikalnego kodu karty
-		const response = await axios.post(`${API_URL}/users`, {
+		const cardId = Math.random().toString(36).substr(2, 9)
+
+		const userToRegister = {
 			...user,
 			cardId,
 			role: 'Klient',
-			borrowedBooks: [], // Inicjalizacja borrowedBooks jako pustej tablicy
-		})
+			borrowedBooks: [],
+		}
 
-		const newUser = response.data
+		const response = await axios.post(`${API_URL}/users`, userToRegister)
 
-		// Zapisanie logu systemowego po pomyślnej rejestracji
+		const newUser = { ...response.data, cardId }
+
 		await axios.post(`${API_URL}/logs`, {
 			date: new Date().toISOString(),
 			userId: newUser.id,
@@ -46,45 +48,63 @@ export const registerUser = async (
 		return newUser
 	} catch (error) {
 		console.error('Błąd podczas rejestracji użytkownika:', error)
+		if (axios.isAxiosError(error) && error.response) {
+			throw new Error(
+				error.response.data.error || 'Nie udało się zarejestrować użytkownika.',
+			)
+		}
 		throw new Error('Nie udało się zarejestrować użytkownika.')
 	}
 }
 
 export const loginUser = async (cardId: string, password: string) => {
 	try {
-		const response = await axios.get(
-			`${API_URL}/users?cardId=${cardId}&password=${password}`,
-		)
-		if (response.data.length > 0) {
-			const user = response.data[0]
+		const response = await axios.get(`${API_URL}/users`, {
+			params: {
+				cardId,
+				password,
+			},
+		})
 
-			// Zapisanie logu systemowego po pomyślnym logowaniu
-			await axios.post(`${API_URL}/logs`, {
-				date: new Date().toISOString(),
-				userId: user.id,
-				action: 'Logowanie',
-				details: `Użytkownik ${user.email} zalogował się.`,
-			})
+		const user = response.data
 
-			return user
-		}
-		throw new Error('Invalid credentials')
+		await axios.post(`${API_URL}/logs`, {
+			date: new Date().toISOString(),
+			userId: user.id,
+			action: 'Logowanie',
+			details: `Użytkownik ${user.email} zalogował się.`,
+		})
+
+		return user
 	} catch (error) {
 		console.error('Błąd podczas logowania:', error)
+		if (axios.isAxiosError(error) && error.response) {
+			throw new Error(error.response.data.error || 'Nie udało się zalogować.')
+		}
 		throw new Error('Nie udało się zalogować.')
 	}
 }
 
 export const logAction = async (log: Omit<Log, 'id'>) => {
-	await axios.post(`${API_URL}/logs`, log)
+	try {
+		await axios.post(`${API_URL}/logs`, log)
+	} catch (error) {
+		console.error('Błąd podczas logowania akcji:', error)
+	}
 }
 
 export const checkIfUserExists = async (email: string) => {
 	try {
 		const response = await axios.get(`${API_URL}/users?email=${email}`)
-		return response.data.length > 0 // Zwraca true, jeśli użytkownik istnieje
+		return response.data.length > 0
 	} catch (error) {
 		console.error('Błąd podczas sprawdzania istnienia użytkownika:', error)
+		if (axios.isAxiosError(error) && error.response) {
+			throw new Error(
+				error.response.data.error ||
+					'Nie udało się sprawdzić, czy użytkownik istnieje.',
+			)
+		}
 		throw new Error('Nie udało się sprawdzić, czy użytkownik istnieje.')
 	}
 }

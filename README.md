@@ -1,7 +1,6 @@
 # README - Library Management Application
 
-
-#  Project Description
+# Project Description
 
 The application is for managing a library, allowing easy registration of users, login, book borrowing, and enabling the administrator to manage the library’s resources. The application is divided into two types of users: Client and Administrator, with every action performed by a user being logged in the system logs. Additionally, all components are covered by unit tests using testing-library/react, vitejs/plugin-react-swc, and the main processes of the application, such as login, registration, and book return, are tested using Playwright.
 
@@ -18,7 +17,7 @@ The application is for managing a library, allowing easy registration of users, 
 
 The application consists of two main components: the front-end, responsible for the user interface, and the API, which handles the application's logic and stores user and book data in the db.json file, using json-server.
 
-#  Tech Stack
+# Tech Stack
 
 | Component            | Technology Used                    | Why?                                                             |
 | -------------------- | ---------------------------------- | ---------------------------------------------------------------- |
@@ -49,7 +48,7 @@ json-server --watch db.json --port 3000
 
 npm run start
 
-#  Application Scripts
+# Application Scripts
 
 | Script      | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
@@ -65,7 +64,7 @@ npm run start
 | `test:e2e`  | Runs E2E tests using Playwright                              |
 | `typecheck` | Checks TypeScript types without generating code              |
 
-#  Completed Features
+# Completed Features
 
 - User registration with the assignment of a unique library card code
 - User login and logout
@@ -75,14 +74,14 @@ npm run start
 - Table pagination for borrowing records
 - Unit and E2E tests
 
-#  Future Plans
+# Future Plans
 
 - Expanding the notification system for book return deadlines
 - Integration with an external database (e.g., MongoDB)
 - Ability to reserve books online
 - Implementation of an advanced book search
 
-##  Kontakt to the author
+## Kontakt to the author
 
 # Kontakt
 
@@ -92,9 +91,9 @@ LinkedIn:
 
 # README - Aplikacja do Zarządzania Biblioteką
 
-#  Screen z aplikacji
+# Screen z aplikacji
 
-#  Opis projektu
+# Opis projektu
 
 Aplikacja do zarządzania biblioteką, pozwalająca na łatwe rejestrowanie użytkowników, logowanie, wypożyczanie książek, a także umożliwiająca administratorowi zarządzanie zasobami biblioteki. Aplikacja jest podzielona na dwa typy użytkowników: **Klient** oraz **Administrator**, a każda akcja wykonywana przez użytkownika jest rejestrowana w logach systemowych. Dodatkowo wszystkie kompononety są pokryte testami jednostkowymi przy wykorzystaniu testing-library/react,
 vitejs/plugin-react-swc, a główne procesy aplikacji takie jak logowanie, rejestracja, zwrot ksiąki są testowane przy uyciu playwright.
@@ -108,11 +107,11 @@ vitejs/plugin-react-swc, a główne procesy aplikacji takie jak logowanie, rejes
 - Panel zarządzania książkami dla administratora: dodawanie, edytowanie, usuwanie książek.
 - Panel użytkownika: przeglądanie historii wypożyczeń oraz statystyki.
 
-#  Architektura
+# Architektura
 
 Aplikacja składa się z dwóch głównych komponentów: front-endu, który jest odpowiedzialny za interfejs użytkownika, oraz API, które obsługuje logikę aplikacji i przechowuje dane użytkowników i książek pliku db.json, korzystając z json-server
 
-#  Tech Stack
+# Tech Stack
 
 | Komponent             | Użyta technologia                 | Dlaczego?                                                           |
 | --------------------- | --------------------------------- | ------------------------------------------------------------------- |

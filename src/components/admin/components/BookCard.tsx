@@ -30,10 +30,7 @@ export const BookCard: React.FC<BookCardProps> = ({
 	onForceReturn,
 }) => {
 	return (
-		<Card
-			data-testid="book-card" // Add this line
-			data-book-id={book.id} // Optional: can be helpful for specific book targeting
-		>
+		<Card data-testid="book-card" data-book-id={book.id}>
 			<CardContent>
 				{editingBook?.id === book.id ? (
 					<BookEditForm

@@ -54,7 +54,7 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({
 						type="number"
 						value={newBook.year}
 						onChange={(e) =>
-							onNewBookChange({ ...newBook, year: e.target.value })
+							onNewBookChange({ ...newBook, year: Number(e.target.value) })
 						}
 						required
 						fullWidth
@@ -64,7 +64,7 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({
 						type="number"
 						value={newBook.copies}
 						onChange={(e) =>
-							onNewBookChange({ ...newBook, copies: e.target.value })
+							onNewBookChange({ ...newBook, copies: Number(e.target.value) })
 						}
 						required
 						fullWidth

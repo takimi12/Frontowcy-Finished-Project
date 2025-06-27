@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { checkIfUserExists, registerUser } from '../api/api'
+import { checkIfUserExists, registerUser } from '../hooks/useLogin'
 import {
 	Container,
 	TextField,
@@ -11,7 +11,7 @@ import {
 	Box,
 	Paper,
 } from '@mui/material'
-import { useNavigate } from 'react-router-dom' // Dodany import
+import { useNavigate } from 'react-router-dom'
 
 type FormData = {
 	name: string
@@ -39,7 +39,7 @@ const schema = yup.object().shape({
 })
 
 const Register: React.FC = () => {
-	const navigate = useNavigate() // Inicjalizacja hooka
+	const navigate = useNavigate()
 	const {
 		control,
 		handleSubmit,
@@ -69,7 +69,7 @@ const Register: React.FC = () => {
 				`Zarejestrowano użytkownika z kartą biblioteczną: ${newUser.cardId}`,
 			)
 			reset()
-			navigate('/login') // Przekierowanie po udanej rejestracji
+			navigate('/login')
 		} catch (error) {
 			if (error instanceof Error) {
 				if (

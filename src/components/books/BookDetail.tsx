@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 import {
 	Container,
@@ -10,30 +9,14 @@ import {
 	Button,
 	CircularProgress,
 } from '@mui/material'
-
-interface Book {
-	id: string
-	title: string
-	author: string
-	description: string
-	year: number
-	copies: number
-}
+import { useBook } from '../../hooks/useBook'
 
 const BookDetail: React.FC = () => {
-	const { id } = useParams<{ id: string }>()
-	const [book, setBook] = useState<Book | null>(null)
+	const { id } = useParams()
 
-	useEffect(() => {
-		axios
-			.get<Book>(`http://localhost:3001/books/${id}`)
-			.then((response) => setBook(response.data))
-			.catch((error) =>
-				console.error('Błąd podczas pobierania szczegółów książki:', error),
-			)
-	}, [id])
+	const { data: book, isLoading, isError } = useBook(id!)
 
-	if (!book) {
+	if (isLoading) {
 		return (
 			<Container
 				sx={{
@@ -44,6 +27,26 @@ const BookDetail: React.FC = () => {
 				}}
 			>
 				<CircularProgress />
+			</Container>
+		)
+	}
+
+	if (isError || !book) {
+		return (
+			<Container sx={{ py: 4 }}>
+				<Typography variant="h6" color="error">
+					Błąd podczas ładowania szczegółów książki.
+				</Typography>
+				<Button
+					size="small"
+					component={Link}
+					to="/"
+					variant="contained"
+					color="primary"
+					sx={{ mt: 2 }}
+				>
+					Wróć do listy
+				</Button>
 			</Container>
 		)
 	}

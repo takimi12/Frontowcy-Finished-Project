@@ -14,64 +14,86 @@ import {
 	Box,
 	Chip,
 	Paper,
+	CircularProgress,
 } from '@mui/material'
 
-interface Book {
-	id: string
-	title: string
-	author: string
-	copies: number
-	borrowedBy: string[]
-}
-
-interface Borrowing {
-	id: string
-	userId: string
-	bookId: string
-	borrowDate: string
-	expectedreturnDate: string
-	returnDate: string
-}
-
-interface User {
-	id: string
-	cardId: string
-	borrowedBooks: string[]
-}
+import { useBooks, useUpdateBook } from '../../hooks/useBooks'
+import { useBorrowings } from '../../hooks/useBorrowings'
+import { useUsers, useUpdateUser } from '../../hooks/useUsers'
+import { useUpdateBorrowing } from '../../hooks/useUpdateBorrowings'
+import { useCreateLog } from '../../hooks/useLogs'
+import { useQueryClient } from '@tanstack/react-query'
 
 const ReturnBooks: React.FC = () => {
 	const { user } = useAuth()
-	const [books, setBooks] = useState<Book[]>([])
-	const [borrowings, setBorrowings] = useState<Borrowing[]>([])
-	const [users, setUsers] = useState<User[]>([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [modalMessage, setModalMessage] = useState('')
 
+	const queryClient = useQueryClient()
+
+	const {
+		data: books,
+		isLoading: isLoadingBooks,
+		error: errorBooks,
+	} = useBooks()
+	const {
+		data: borrowings,
+		isLoading: isLoadingBorrowings,
+		error: errorBorrowings,
+	} = useBorrowings()
+	const {
+		data: users,
+		isLoading: isLoadingUsers,
+		error: errorUsers,
+	} = useUsers()
+
+	const updateBookMutation = useUpdateBook()
+	const updateBorrowingMutation = useUpdateBorrowing()
+	const updateUserMutation = useUpdateUser()
+	const createLogMutation = useCreateLog()
+	const isLoading = isLoadingBooks || isLoadingBorrowings || isLoadingUsers
+	const hasError = errorBooks || errorBorrowings || errorUsers
+
+	let errorMessage = ''
+	if (errorBooks) {
+		errorMessage = errorBooks.message
+	} else if (errorBorrowings) {
+		errorMessage = errorBorrowings.message
+	} else if (errorUsers) {
+		errorMessage = errorUsers.message
+	}
+
 	useEffect(() => {
-		Promise.all([
-			fetch('http://localhost:3001/books').then((res) => res.json()),
-			fetch('http://localhost:3001/borrowings').then((res) => res.json()),
-			fetch('http://localhost:3001/users').then((res) => res.json()),
-		])
-			.then(([booksData, borrowingsData, usersData]) => {
-				setBooks(booksData)
-				setBorrowings(borrowingsData)
-				setUsers(usersData)
-			})
-			.catch((error) => {
-				console.error('Błąd podczas pobierania danych:', error)
-				setModalMessage('Wystąpił błąd podczas ładowania danych.')
-				setIsModalOpen(true)
-			})
-	}, [])
+		if (hasError && !isModalOpen) {
+			setModalMessage(`Wystąpił błąd podczas ładowania danych: ${errorMessage}`)
+			setIsModalOpen(true)
+		}
+	}, [hasError, errorMessage, isModalOpen])
+
+	if (isLoading) {
+		return (
+			<Box
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				minHeight="80vh"
+			>
+				<CircularProgress />
+				<Typography variant="h6" sx={{ ml: 2 }}>
+					Ładowanie danych...
+				</Typography>
+			</Box>
+		)
+	}
 
 	const getUserBorrowedBooks = () => {
-		if (!user) return []
+		if (!user || !borrowings || !books) {
+			return []
+		}
 
 		return borrowings
 			.filter(
-				(borrowing) =>
-					borrowing.userId === user.id && borrowing.returnDate === '',
+				(borrowing) => borrowing.userId === user.id && !borrowing.returnDate,
 			)
 			.map((borrowing) => {
 				const book = books.find((b) => b.id === borrowing.bookId)
@@ -92,88 +114,66 @@ const ReturnBooks: React.FC = () => {
 	}
 
 	const handleReturn = async (borrowingId: string, bookId: string) => {
+		if (!books || !borrowings || !users || !user) {
+			setModalMessage('Brak danych do wykonania operacji.')
+			setIsModalOpen(true)
+			return
+		}
+
 		try {
-			// Znajdź wypożyczenie
 			const borrowing = borrowings.find((b) => b.id === borrowingId)
-			if (!borrowing) return
+			if (!borrowing) {
+				throw new Error('Nie znaleziono wypożyczenia.')
+			}
 
-			// Znajdź książkę
 			const book = books.find((b) => b.id === bookId)
-			if (!book) return
+			if (!book) {
+				throw new Error('Nie znaleziono książki.')
+			}
 
-			// Znajdź użytkownika
-			const currentUser = users.find((u) => u.id === user?.id)
-			if (!currentUser) return
+			const currentUser = users.find((u) => u.id === user.id)
+			if (!currentUser) {
+				throw new Error('Nie znaleziono użytkownika.')
+			}
 
-			// 1. Zaktualizuj wypożyczenie (ustaw datę zwrotu)
 			const updatedBorrowing = {
 				...borrowing,
 				returnDate: new Date().toISOString(),
 			}
 
-			await fetch(`http://localhost:3001/borrowings/${borrowingId}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(updatedBorrowing),
-			})
-
-			// 2. Zaktualizuj książkę (usuń cardId użytkownika z borrowedBy)
 			const updatedBook = {
 				...book,
-				borrowedBy: book.borrowedBy.filter((id) => id !== user?.cardId),
+				borrowedBy: book.borrowedBy.filter((id) => id !== user.cardId),
 			}
 
-			await fetch(`http://localhost:3001/books/${bookId}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(updatedBook),
-			})
-
-			// 3. Zaktualizuj użytkownika (usuń tylko jedno wystąpienie tytułu książki z borrowedBooks)
 			const updatedUser = { ...currentUser }
-			const titleIndex = updatedUser.borrowedBooks.indexOf(book.title) // Znajdź indeks tytułu
+			const titleIndex = updatedUser.borrowedBooks.indexOf(book.title)
 			if (titleIndex !== -1) {
-				updatedUser.borrowedBooks.splice(titleIndex, 1) // Usuń tylko jedno wystąpienie
+				updatedUser.borrowedBooks.splice(titleIndex, 1)
 			}
 
-			await fetch(`http://localhost:3001/users/${user?.id}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(updatedUser),
+			await updateBorrowingMutation.mutateAsync(updatedBorrowing)
+			await updateBookMutation.mutateAsync(updatedBook)
+			await updateUserMutation.mutateAsync(updatedUser)
+
+			await createLogMutation.mutateAsync({
+				date: new Date().toISOString(),
+				userId: user.id,
+				action: 'Zwrot książki',
+				details: `Użytkownik ${user.email} zwrócił książkę: ${book.title}`,
 			})
 
-			// 4. Zaloguj zwrot książki
-			await fetch('http://localhost:3001/logs', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					date: new Date().toISOString(),
-					userId: user?.id,
-					action: 'Zwrot książki',
-					details: `Użytkownik ${user?.email} zwrócił książkę: ${book.title}`,
-				}),
-			})
-
-			// Odśwież stan komponentu
-			setBorrowings((prev) =>
-				prev.map((b) => (b.id === borrowingId ? updatedBorrowing : b)),
-			)
-			setBooks((prev) => prev.map((b) => (b.id === bookId ? updatedBook : b)))
-			setUsers((prev) => prev.map((u) => (u.id === user?.id ? updatedUser : u)))
+			if (user?.id) {
+				queryClient.invalidateQueries({ queryKey: ['activeLoans', user.id] })
+			}
 
 			setModalMessage('Książka została zwrócona pomyślnie!')
 			setIsModalOpen(true)
-		} catch (error) {
+		} catch (error: any) {
 			console.error('Błąd podczas zwrotu książki:', error)
-			setModalMessage('Wystąpił błąd podczas zwrotu książki.')
+			setModalMessage(
+				`Wystąpił błąd podczas zwrotu książki: ${error.message || 'Nieznany błąd.'}`,
+			)
 			setIsModalOpen(true)
 		}
 	}
@@ -251,6 +251,12 @@ const ReturnBooks: React.FC = () => {
 												handleReturn(borrowing.id, borrowing.bookId)
 											}
 											color="primary"
+											disabled={
+												updateBookMutation.isPending ||
+												updateUserMutation.isPending ||
+												updateBorrowingMutation.isPending ||
+												createLogMutation.isPending
+											}
 										>
 											Zwróć książkę
 										</Button>

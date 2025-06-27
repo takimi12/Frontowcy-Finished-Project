@@ -1,238 +1,162 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Typography, Box } from '@mui/material'
 import { useAuth } from '../../context/AuthContext'
-import { Book, NewBook, User, Borrowing } from '../../types/types'
+import { Book, NewBook, User } from '../../types/types'
+
 import { AddBookForm } from './components/AddBookForm'
 import { BookCard } from './components/BookCard'
 import { DeleteBookDialog } from './components/DeleteBookDialog'
 import { EventLog } from './components/EventLogs'
 
-const API_URL = 'http://localhost:3001'
-
-type Log = {
-	id: string
-	date: string
-	userId: string
-	action: string
-	details: string
-}
+import { useAddBook } from '../../hooks/useAddBook'
+import { useBooks, useUpdateBook } from '../../hooks/useBooks'
+import { useDeleteBook } from '../../hooks/useDeleteBook'
+import { useUsers, useUpdateUser } from '../../hooks/useUsers'
+import { useBorrowings } from '../../hooks/useBorrowings'
+import { useLogs } from '../../hooks/useLogs'
+import { useLogger } from '../../hooks/useLogger'
+import { useUpdateBorrowing } from '../../hooks/useUpdateBorrowings'
 
 export const Admin: React.FC = () => {
 	const { user } = useAuth()
-	const [books, setBooks] = useState<Book[]>([])
-	const [users, setUsers] = useState<User[]>([])
-	const [borrowings, setBorrowings] = useState<Borrowing[]>([])
-	const [logs, setLogs] = useState<Log[]>([])
+
+	const { data: books = [], refetch: refetchBooks } = useBooks()
+	const { data: users = [], refetch: refetchUsers } = useUsers()
+	const { data: borrowings = [], refetch: refetchBorrowings } = useBorrowings()
+	const { data: logs = [] } = useLogs()
+	const { logAction } = useLogger()
+
+	const addBookMutation = useAddBook()
+	const updateBookMutation = useUpdateBook()
+	const deleteBookMutation = useDeleteBook()
+	const updateUserMutation = useUpdateUser()
+	const updateBorrowingMutation = useUpdateBorrowing()
+
 	const [editingBook, setEditingBook] = useState<Book | null>(null)
-	const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 	const [bookToDelete, setBookToDelete] = useState<Book | null>(null)
 	const [newBook, setNewBook] = useState<NewBook>({
 		title: '',
 		author: '',
 		description: '',
-		year: '',
-		copies: '',
+		year: 0,
+		copies: 0,
+		borrowedBy: [],
 	})
 
-	useEffect(() => {
-		fetchBooks()
-		fetchBorrowings()
-		fetchUsers()
-		fetchLogs()
-	}, [])
-
-	const fetchBooks = async (): Promise<void> => {
-		try {
-			const response = await fetch(`${API_URL}/books`)
-			const data = await response.json()
-			setBooks(data)
-		} catch (error) {
-			console.error('Error fetching books:', error)
-		}
-	}
-
-	const fetchBorrowings = async (): Promise<void> => {
-		try {
-			const response = await fetch(`${API_URL}/borrowings`)
-			const data = await response.json()
-			setBorrowings(data)
-		} catch (error) {
-			console.error('Error fetching borrowings:', error)
-		}
-	}
-
-	const fetchUsers = async (): Promise<void> => {
-		try {
-			const response = await fetch(`${API_URL}/users`)
-			const data = await response.json()
-			setUsers(data)
-		} catch (error) {
-			console.error('Error fetching users:', error)
-		}
-	}
-
-	const fetchLogs = async (): Promise<void> => {
-		try {
-			const response = await fetch(`${API_URL}/logs`)
-			const data = await response.json()
-			setLogs(data)
-		} catch (error) {
-			console.error('Error fetching logs:', error)
-		}
-	}
-
-	const handleAddBook = async (e: React.FormEvent): Promise<void> => {
+	const handleAddBook = async (e: React.FormEvent) => {
 		e.preventDefault()
-		try {
-			const bookData = {
-				...newBook,
-				year: parseInt(newBook.year),
-				copies: parseInt(newBook.copies),
-				borrowedBy: [],
-			}
 
-			const response = await fetch(`${API_URL}/books`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(bookData),
-			})
-
-			if (!response.ok) {
-				throw new Error('Failed to add book')
-			}
-
-			setNewBook({
-				title: '',
-				author: '',
-				description: '',
-				year: '',
-				copies: '',
-			})
-
-			await fetchBooks()
-		} catch (error) {
-			console.error('Error adding book:', error)
-		}
+		addBookMutation.mutate(newBook, {
+			onSuccess: () => {
+				setNewBook({
+					title: '',
+					author: '',
+					description: '',
+					year: 0,
+					copies: 0,
+					borrowedBy: [],
+				})
+				refetchBooks()
+			},
+			onError: (error) => {
+				console.error('Error adding book:', error)
+			},
+		})
 	}
 
-	const handleUpdateBook = async (e: React.FormEvent): Promise<void> => {
+	const handleUpdateBook = async (e: React.FormEvent) => {
 		e.preventDefault()
 		if (!editingBook) return
 
-		try {
-			const response = await fetch(`${API_URL}/books/${editingBook.id}`, {
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(editingBook),
-			})
-
-			if (!response.ok) {
-				throw new Error('Failed to update book')
-			}
-
-			setEditingBook(null)
-			await fetchBooks()
-		} catch (error) {
-			console.error('Error updating book:', error)
-		}
+		updateBookMutation.mutate(editingBook, {
+			onSuccess: () => {
+				setEditingBook(null)
+				refetchBooks()
+			},
+			onError: (error) => {
+				console.error('Error updating book:', error)
+			},
+		})
 	}
 
-	const handleDeleteBook = async (book: Book): Promise<void> => {
+	const handleDeleteBook = async (book: Book) => {
 		if (book.borrowedBy && book.borrowedBy.length > 0) {
 			alert('Nie można usunąć książki, która jest aktualnie wypożyczona.')
 			return
 		}
 
-		try {
-			const response = await fetch(`${API_URL}/books/${book.id}`, {
-				method: 'DELETE',
-			})
-
-			if (!response.ok) {
-				throw new Error('Failed to delete book')
-			}
-
-			setDeleteDialogOpen(false)
-			setBookToDelete(null)
-			await fetchBooks()
-		} catch (error) {
-			console.error('Error deleting book:', error)
-		}
+		deleteBookMutation.mutate(book.id, {
+			onSuccess: () => {
+				setDeleteDialogOpen(false)
+				setBookToDelete(null)
+				refetchBooks()
+			},
+			onError: (error) => {
+				console.error('Error deleting book:', error)
+			},
+		})
 	}
-	const handleForceReturn = async (borrowingId: string): Promise<void> => {
+
+	const handleForceReturn = async (borrowingId: string) => {
 		try {
-			// Pobierz dane o wypożyczeniu
-			const borrowingResponse = await fetch(
-				`${API_URL}/borrowings/${borrowingId}`,
-			)
-			const borrowing = await borrowingResponse.json()
+			const borrowing = borrowings.find((b) => b.id === borrowingId)
+			if (!borrowing) throw new Error('Wypożyczenie nie znalezione')
 
-			// Zaktualizuj datę zwrotu w borrowings
-			const updatedBorrowing = {
-				...borrowing,
-				returnDate: new Date().toISOString(),
-			}
-
-			const response = await fetch(`${API_URL}/borrowings/${borrowingId}`, {
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(updatedBorrowing),
+			await new Promise<void>((resolve, reject) => {
+				updateBorrowingMutation.mutate(
+					{ ...borrowing, returnDate: new Date().toISOString() },
+					{
+						onSuccess: () => resolve(),
+						onError: (e) => reject(e),
+					},
+				)
 			})
 
-			if (!response.ok) {
-				throw new Error('Failed to force return')
+			const userToUpdate = users.find((u) => u.id === borrowing.userId)
+			const bookToUpdate = books.find((b) => b.id === borrowing.bookId)
+
+			if (!userToUpdate || !bookToUpdate)
+				throw new Error('Nie znaleziono użytkownika lub książki')
+
+			const updatedUser: User = {
+				...userToUpdate,
+				borrowedBooks: userToUpdate.borrowedBooks.filter(
+					(title) => title !== bookToUpdate.title,
+				),
 			}
 
-			// Pobierz użytkownika i książkę
-			const user = users.find((u) => u.id === borrowing.userId)
-			const book = books.find((b) => b.id === borrowing.bookId)
-
-			if (user && book) {
-				// Usuń książkę z borrowedBooks użytkownika
-				const updatedUser = {
-					...user,
-					borrowedBooks: user.borrowedBooks.filter(
-						(title) => title !== book.title,
-					),
-				}
-
-				await fetch(`${API_URL}/users/${user.id}`, {
-					method: 'PUT',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(updatedUser),
-				})
-
-				// Usuń użytkownika z borrowedBy w książce
-				const updatedBook = {
-					...book,
-					borrowedBy: book.borrowedBy.filter(
-						(cardId) => cardId !== user.cardId,
-					),
-				}
-
-				await fetch(`${API_URL}/books/${book.id}`, {
-					method: 'PUT',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(updatedBook),
-				})
-
-				// Dodaj log systemowy
-				await fetch(`${API_URL}/logs`, {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({
-						date: new Date().toISOString(),
-						userId: user.id,
-						action: 'Wymuszony zwrot książki',
-						details: `Administrator wymusił zwrot książki: ${book.title} od użytkownika ${user.email}`,
-					}),
-				})
+			const updatedBook: Book = {
+				...bookToUpdate,
+				borrowedBy: bookToUpdate.borrowedBy.filter(
+					(cardId) => cardId !== userToUpdate.cardId,
+				),
 			}
 
-			// Odśwież dane
-			await fetchBorrowings()
-			await fetchUsers()
-			await fetchBooks()
+			await new Promise<void>((resolve, reject) => {
+				updateUserMutation.mutate(updatedUser, {
+					onSuccess: () => resolve(),
+					onError: (e) => reject(e),
+				})
+			})
+
+			await new Promise<void>((resolve, reject) => {
+				updateBookMutation.mutate(updatedBook, {
+					onSuccess: () => resolve(),
+					onError: (e) => reject(e),
+				})
+			})
+
+			await logAction({
+				userId: userToUpdate.id,
+				userEmail: userToUpdate.email,
+				action: 'Wymuszony zwrot książki',
+				details: `Administrator wymusił zwrot książki: ${bookToUpdate.title} od użytkownika ${userToUpdate.email}`,
+			})
+
+			refetchBorrowings()
+			refetchUsers()
+			refetchBooks()
 		} catch (error) {
 			console.error('Error forcing return:', error)
 		}

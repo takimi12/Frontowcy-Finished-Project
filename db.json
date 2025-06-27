@@ -51,5 +51,13 @@
 		}
 	],
 	"borrowings": [],
-	"logs": []
+	"logs": [
+		{
+			"id": "d7ac",
+			"date": "2025-06-25T15:10:52.274Z",
+			"userId": "c4ad",
+			"action": "Logowanie",
+			"details": "Użytkownik admin@admin.pl zalogował się."
+		}
+	]
 }
