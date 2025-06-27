@@ -23,7 +23,7 @@ export const useCreateLog = () => {
 			details: string
 		}) => {
 			const res = await fetch(
-				'https://frontowcy-finished-project-op3s.vercel.app/api/logs',
+				'https://frontowcy-finished-project.vercel.app/api/logs',
 				{
 					method: 'POST',
 					headers: {
