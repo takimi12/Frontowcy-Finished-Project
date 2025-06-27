@@ -4,7 +4,7 @@ export const useLogs = () => {
 	return useQuery({
 		queryKey: ['logs'],
 		queryFn: async () => {
-			const res = await fetch('http://localhost:3002/logs')
+			const res = await fetch('https://frontowcy-finished-project-op3s.vercel.app/logs')
 			if (!res.ok) throw new Error('Błąd pobierania logów')
 			return res.json()
 		},
@@ -20,7 +20,7 @@ export const useCreateLog = () => {
 			action: string
 			details: string
 		}) => {
-			const res = await fetch('http://localhost:3002/logs', {
+			const res = await fetch('https://frontowcy-finished-project-op3s.vercel.app/logs', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

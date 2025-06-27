@@ -12,7 +12,7 @@ export const useUpdateBorrowing = () => {
 				updatedBorrowing,
 			)
 			const res = await fetch(
-				`http://localhost:3002/borrowings/${updatedBorrowing.id}`,
+				`https://frontowcy-finished-project-op3s.vercel.app/${updatedBorrowing.id}`,
 				{
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },

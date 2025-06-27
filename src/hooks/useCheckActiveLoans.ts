@@ -17,7 +17,7 @@ const fetchActiveLoans = async (
 		return false
 	}
 	const response = await fetch(
-		`http://localhost:3002/borrowings?userId=${userId}&returnDate=null`,
+		`https://frontowcy-finished-project-op3s.vercel.app/borrowings?userId=${userId}&returnDate=null`,
 	)
 	if (!response.ok) {
 		throw new Error('Błąd podczas pobierania danych o wypożyczeniach')

@@ -18,7 +18,7 @@ export const useLogger = () => {
 		}
 
 		try {
-			await fetch('http://localhost:3002/logs', {
+			await fetch('https://frontowcy-finished-project-op3s.vercel.app/logs', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(logEntry),
