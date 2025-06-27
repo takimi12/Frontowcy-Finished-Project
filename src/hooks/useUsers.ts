@@ -5,7 +5,9 @@ export const useUsers = () =>
 	useQuery<User[]>({
 		queryKey: ['users'],
 		queryFn: async () => {
-			const res = await fetch('https://frontowcy-finished-project-op3s.vercel.app/users')
+			const res = await fetch(
+				'https://frontowcy-finished-project-op3s.vercel.app/users',
+			)
 			if (!res.ok) throw new Error('Błąd pobierania użytkowników')
 			return res.json()
 		},
@@ -15,11 +17,14 @@ export const useUpdateUser = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: async (user: User) => {
-			const res = await fetch(`https://frontowcy-finished-project-op3s.vercel.app/${user.id}`, {
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(user),
-			})
+			const res = await fetch(
+				`https://frontowcy-finished-project-op3s.vercel.app/${user.id}`,
+				{
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(user),
+				},
+			)
 			if (!res.ok) throw new Error('Błąd aktualizacji użytkownika')
 			return res.json()
 		},

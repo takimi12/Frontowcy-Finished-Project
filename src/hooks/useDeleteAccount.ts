@@ -7,26 +7,32 @@ interface DeleteAccountData {
 }
 
 const deleteUserAccount = async ({ userId, userEmail }: DeleteAccountData) => {
-	const userResponse = await fetch(`https://frontowcy-finished-project-op3s.vercel.app/users/${userId}`, {
-		method: 'DELETE',
-	})
+	const userResponse = await fetch(
+		`https://frontowcy-finished-project-op3s.vercel.app/users/${userId}`,
+		{
+			method: 'DELETE',
+		},
+	)
 
 	if (!userResponse.ok) {
 		throw new Error('Błąd podczas usuwania konta użytkownika')
 	}
 
-	const logResponse = await fetch('https://frontowcy-finished-project-op3s.vercel.app/logs', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	const logResponse = await fetch(
+		'https://frontowcy-finished-project-op3s.vercel.app/logs',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				date: new Date().toISOString(),
+				userId: userId,
+				action: 'Usunięcie konta',
+				details: `Użytkownik ${userEmail} usunął swoje konto.`,
+			}),
 		},
-		body: JSON.stringify({
-			date: new Date().toISOString(),
-			userId: userId,
-			action: 'Usunięcie konta',
-			details: `Użytkownik ${userEmail} usunął swoje konto.`,
-		}),
-	})
+	)
 
 	if (!logResponse.ok) {
 		console.error('Nie udało się zapisać logu usunięcia konta.')

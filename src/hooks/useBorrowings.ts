@@ -5,7 +5,9 @@ export const useBorrowings = () =>
 	useQuery<Borrowing[]>({
 		queryKey: ['borrowings'],
 		queryFn: async () => {
-			const res = await fetch('https://frontowcy-finished-project-op3s.vercel.app/borrowings')
+			const res = await fetch(
+				'https://frontowcy-finished-project-op3s.vercel.app/borrowings',
+			)
 			if (!res.ok) throw new Error('Błąd pobierania wypożyczeń')
 			return res.json()
 		},
@@ -15,11 +17,14 @@ export const useCreateBorrowing = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: async (newBorrowing: NewBorrowing) => {
-			const res = await fetch('https://frontowcy-finished-project-op3s.vercel.app/borrowings', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(newBorrowing),
-			})
+			const res = await fetch(
+				'https://frontowcy-finished-project-op3s.vercel.app/borrowings',
+				{
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(newBorrowing),
+				},
+			)
 			if (!res.ok) throw new Error('Nie udało się zapisać wypożyczenia')
 			return res.json()
 		},
