@@ -12,7 +12,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
-// new vercel.json
 export const App: React.FC = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
