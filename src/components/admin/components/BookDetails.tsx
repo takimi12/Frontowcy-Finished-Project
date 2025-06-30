@@ -60,12 +60,16 @@ export const BookDetails: React.FC<BookDetailsProps> = ({
 
 	const totalPages = Math.ceil(borrowedByUsers.length / itemsPerPage)
 
+
+
+
 	const startIndex = (currentPage - 1) * itemsPerPage
 	const currentBorrowings = borrowedByUsers.slice(
 		startIndex,
 		startIndex + itemsPerPage,
 	)
 
+	console.log(currentBorrowings, 'current borrowings')
 	const handlePreviousPage = () => {
 		setCurrentPage((prev) => Math.max(prev - 1, 1))
 	}
