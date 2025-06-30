@@ -14,81 +14,87 @@ const Header: React.FC = () => {
 						Biblioteka
 					</Link>
 				</Typography>
-				{user ? (
-					<Box display="flex" alignItems="center" gap={2}>
-						<Link to="/user" style={{ textDecoration: 'none' }}>
-							<Typography variant="body1" sx={{ color: 'white' }}>
-								Witaj, {user.name} {user.surname} ({user.role})
-							</Typography>
-						</Link>
-						<Button
-							color="inherit"
-							onClick={logout}
-							sx={{
-								backgroundColor: '#f44336',
-								'&:hover': {
-									backgroundColor: '#d32f2f',
-								},
-								padding: '6px 12px',
-								borderRadius: '4px',
-								fontWeight: 'bold',
-							}}
-						>
-							Wyloguj
-						</Button>
-					</Box>
-				) : (
-					<Box display="flex" alignItems="center" gap={2}>
-						<Button
-							color="inherit"
-							component={Link}
-							to="/login"
-							sx={{
-								backgroundColor: '#4caf50',
-								'&:hover': {
-									backgroundColor: '#388e3c',
-								},
-								padding: '6px 16px',
-								borderRadius: '4px',
-								fontWeight: 'bold',
-							}}
-						>
-							Zaloguj się
-						</Button>
-						<Button
-							color="inherit"
-							component={Link}
-							to="/register"
-							sx={{
-								backgroundColor: '#4caf50',
-								'&:hover': {
-									backgroundColor: '#388e3c',
-								},
-								padding: '6px 16px',
-								borderRadius: '4px',
-								fontWeight: 'bold',
-							}}
-						>
-							Zarejestruj się
-						</Button>
-						<Button
-							color="inherit"
-							component={Link}
-							to="/admin"
-							sx={{
-								backgroundColor: '#4caf50',
-								'&:hover': {
-									backgroundColor: '#388e3c',
-								},
-								padding: '6px 16px',
-								borderRadius: '4px',
-								fontWeight: 'bold',
-							}}
-						>
-							Panel administratora
-						</Button>
-					</Box>
-				)}
+
+				{/* Panel administratora zawsze widoczny */}
+				<Box display="flex" alignItems="center" gap={2}>
+					<Button
+						color="inherit"
+						component={Link}
+						to="/admin"
+						sx={{
+							backgroundColor: '#4caf50',
+							'&:hover': {
+								backgroundColor: '#388e3c',
+							},
+							padding: '6px 16px',
+							borderRadius: '4px',
+							fontWeight: 'bold',
+						}}
+					>
+						Panel administratora
+					</Button>
+
+					{/* Zależne od zalogowania */}
+					{user ? (
+						<>
+							<Link to="/user" style={{ textDecoration: 'none' }}>
+								<Typography variant="body1" sx={{ color: 'white' }}>
+									Witaj, {user.name} {user.surname} ({user.role})
+								</Typography>
+							</Link>
+							<Button
+								color="inherit"
+								onClick={logout}
+								sx={{
+									backgroundColor: '#f44336',
+									'&:hover': {
+										backgroundColor: '#d32f2f',
+									},
+									padding: '6px 12px',
+									borderRadius: '4px',
+									fontWeight: 'bold',
+								}}
+							>
+								Wyloguj
+							</Button>
+						</>
+					) : (
+						<>
+							<Button
+								color="inherit"
+								component={Link}
+								to="/login"
+								sx={{
+									backgroundColor: '#4caf50',
+									'&:hover': {
+										backgroundColor: '#388e3c',
+									},
+									padding: '6px 16px',
+									borderRadius: '4px',
+									fontWeight: 'bold',
+								}}
+							>
+								Zaloguj się
+							</Button>
+							<Button
+								color="inherit"
+								component={Link}
+								to="/register"
+								sx={{
+									backgroundColor: '#4caf50',
+									'&:hover': {
+										backgroundColor: '#388e3c',
+									},
+									padding: '6px 16px',
+									borderRadius: '4px',
+									fontWeight: 'bold',
+								}}
+							>
+								Zarejestruj się
+							</Button>
+						</>
+					)}
+				</Box>
 			</Toolbar>
 		</AppBar>
 	)
