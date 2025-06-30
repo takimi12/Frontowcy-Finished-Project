@@ -15,9 +15,9 @@ const Header: React.FC = () => {
 					</Link>
 				</Typography>
 				{user ? (
-					<Box display="flex" alignItems="center">
+					<Box display="flex" alignItems="center" gap={2}>
 						<Link to="/user" style={{ textDecoration: 'none' }}>
-							<Typography variant="body1" sx={{ color: 'white', mr: 2 }}>
+							<Typography variant="body1" sx={{ color: 'white' }}>
 								Witaj, {user.name} {user.surname} ({user.role})
 							</Typography>
 						</Link>
@@ -38,56 +38,56 @@ const Header: React.FC = () => {
 						</Button>
 					</Box>
 				) : (
-					<>
-					<Button
-						color="inherit"
-						component={Link}
-						to="/login"
-						sx={{
-							backgroundColor: '#4caf50',
-							'&:hover': {
-								backgroundColor: '#388e3c',
-							},
-							padding: '6px 16px',
-							borderRadius: '4px',
-							fontWeight: 'bold',
-						}}
-					>
-						Zaloguj się
-					</Button>
+					<Box display="flex" alignItems="center" gap={2}>
 						<Button
-						color="inherit"
-						component={Link}
-						to="/login"
-						sx={{
-							backgroundColor: '#4caf50',
-							'&:hover': {
-								backgroundColor: '#388e3c',
-							},
-							padding: '6px 16px',
-							borderRadius: '4px',
-							fontWeight: 'bold',
-						}}
-					>
-						Zarejestruj się
-					</Button>
-					<Button
-						color="inherit"
-						component={Link}
-						to="/admin"
-						sx={{
-							backgroundColor: '#4caf50',
-							'&:hover': {
-								backgroundColor: '#388e3c',
-							},
-							padding: '6px 16px',
-							borderRadius: '4px',
-							fontWeight: 'bold',
-						}}
-					>
-						Panel administratora
-					</Button>
-					</>
+							color="inherit"
+							component={Link}
+							to="/login"
+							sx={{
+								backgroundColor: '#4caf50',
+								'&:hover': {
+									backgroundColor: '#388e3c',
+								},
+								padding: '6px 16px',
+								borderRadius: '4px',
+								fontWeight: 'bold',
+							}}
+						>
+							Zaloguj się
+						</Button>
+						<Button
+							color="inherit"
+							component={Link}
+							to="/register"
+							sx={{
+								backgroundColor: '#4caf50',
+								'&:hover': {
+									backgroundColor: '#388e3c',
+								},
+								padding: '6px 16px',
+								borderRadius: '4px',
+								fontWeight: 'bold',
+							}}
+						>
+							Zarejestruj się
+						</Button>
+						<Button
+							color="inherit"
+							component={Link}
+							to="/admin"
+							sx={{
+								backgroundColor: '#4caf50',
+								'&:hover': {
+									backgroundColor: '#388e3c',
+								},
+								padding: '6px 16px',
+								borderRadius: '4px',
+								fontWeight: 'bold',
+							}}
+						>
+							Panel administratora
+						</Button>
+					</Box>
 				)}
 			</Toolbar>
 		</AppBar>
