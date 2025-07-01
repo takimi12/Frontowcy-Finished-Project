@@ -5,7 +5,7 @@ export const useLogs = () => {
 		queryKey: ['logs'],
 		queryFn: async () => {
 			const res = await fetch(
-				'https://frontowcy-finished-project.vercel.app/api/logs',
+				`${process.env.BASE_URL}/logs`,
 			)
 			if (!res.ok) throw new Error('Błąd pobierania logów')
 			return res.json()
@@ -23,7 +23,7 @@ export const useCreateLog = () => {
 			details: string
 		}) => {
 			const res = await fetch(
-				'https://frontowcy-finished-project.vercel.app/api/logs',
+				`${process.env.BASE_URL}/logs`,
 				{
 					method: 'POST',
 					headers: {

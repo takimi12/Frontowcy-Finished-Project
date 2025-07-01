@@ -29,7 +29,6 @@ export const BookDetails: React.FC<BookDetailsProps> = ({
 	const [currentPage, setCurrentPage] = React.useState<number>(1)
 	const itemsPerPage = 5
 
-
 	console.log(users, 'user')
 
 	const bookBorrowings = borrowings.filter(
@@ -65,8 +64,7 @@ export const BookDetails: React.FC<BookDetailsProps> = ({
 			return new Date(b.borrowDate).getTime() - new Date(a.borrowDate).getTime()
 		})
 
-		console.log(borrowedByUsers, 'borrowedbyusers')
-
+	console.log(borrowedByUsers, 'borrowedbyusers')
 
 	const totalPages = Math.ceil(borrowedByUsers.length / itemsPerPage)
 

@@ -1,3 +1,4 @@
+
 export const useLogger = () => {
 	const logAction = async ({
 		userId,
@@ -18,7 +19,7 @@ export const useLogger = () => {
 		}
 
 		try {
-			await fetch('https://frontowcy-finished-project.vercel.app/api/logs', {
+			await fetch(`${process.env.BASE_URL}/logs`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(logEntry),

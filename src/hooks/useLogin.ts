@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-const API_URL = 'https://frontowcy-finished-project.vercel.app/api/'
 
 export interface User {
 	id: string
@@ -34,11 +33,11 @@ export const registerUser = async (
 			borrowedBooks: [],
 		}
 
-		const response = await axios.post(`${API_URL}/users`, userToRegister)
+		const response = await axios.post(`${process.env.BASE_URL}/users`, userToRegister)
 
 		const newUser = { ...response.data, cardId }
 
-		await axios.post(`${API_URL}/logs`, {
+		await axios.post(`${process.env.BASE_URL}/logs`, {
 			date: new Date().toISOString(),
 			userId: newUser.id,
 			action: 'Rejestracja',
@@ -59,7 +58,7 @@ export const registerUser = async (
 
 export const loginUser = async (cardId: string, password: string) => {
 	try {
-		const response = await axios.get(`${API_URL}/users`, {
+		const response = await axios.get(`${process.env.BASE_URL}/users`, {
 			params: {
 				cardId,
 				password,
@@ -68,7 +67,7 @@ export const loginUser = async (cardId: string, password: string) => {
 
 		const user = response.data
 
-		await axios.post(`${API_URL}/logs`, {
+		await axios.post(`${process.env.BASE_URL}/logs`, {
 			date: new Date().toISOString(),
 			userId: user.id,
 			action: 'Logowanie',
@@ -87,7 +86,7 @@ export const loginUser = async (cardId: string, password: string) => {
 
 export const logAction = async (log: Omit<Log, 'id'>) => {
 	try {
-		await axios.post(`${API_URL}/logs`, log)
+		await axios.post(`${process.env.BASE_URL}/logs`, log)
 	} catch (error) {
 		console.error('Błąd podczas logowania akcji:', error)
 	}
@@ -95,7 +94,7 @@ export const logAction = async (log: Omit<Log, 'id'>) => {
 
 export const checkIfUserExists = async (email: string) => {
 	try {
-		const response = await axios.get(`${API_URL}/users?email=${email}`)
+		const response = await axios.get(`${process.env.BASE_URL}/users?email=${email}`)
 		return response.data.length > 0
 	} catch (error) {
 		console.error('Błąd podczas sprawdzania istnienia użytkownika:', error)

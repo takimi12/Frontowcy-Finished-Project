@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../context/AuthContext'
 
+
 interface DeleteAccountData {
 	userId: string
 	userEmail: string
@@ -8,7 +9,7 @@ interface DeleteAccountData {
 
 const deleteUserAccount = async ({ userId, userEmail }: DeleteAccountData) => {
 	const userResponse = await fetch(
-		`https://frontowcy-finished-project.vercel.app/api/users/${userId}`,
+		`${process.env.BASE_URL}/users/${userId}`,
 		{
 			method: 'DELETE',
 		},
@@ -19,7 +20,7 @@ const deleteUserAccount = async ({ userId, userEmail }: DeleteAccountData) => {
 	}
 
 	const logResponse = await fetch(
-		'https://frontowcy-finished-project.vercel.app/api/logs',
+		`${process.env.BASE_URL}/logs`,
 		{
 			method: 'POST',
 			headers: {
