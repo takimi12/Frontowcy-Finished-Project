@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Book } from '@/types/types'
 
 export const useBooks = () => {
+	console.log('VITE_BASE_URL:', import.meta.env.VITE_BASE_URL)
 	return useQuery<Book[]>({
 		queryKey: ['books'],
 		queryFn: async () => {
