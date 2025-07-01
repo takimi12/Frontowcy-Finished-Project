@@ -2,11 +2,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Book } from '@/types/types'
 
 export const useBooks = () => {
-	console.log('VITE_BASE_URL:', import.meta.env.VITE_BASE_URL)
 	return useQuery<Book[]>({
 		queryKey: ['books'],
 		queryFn: async () => {
-			const res = await fetch(`${process.env.BASE_URL}api/books`)
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/books`)
 			if (!res.ok) throw new Error('Błąd pobierania książek')
 			return res.json()
 		},

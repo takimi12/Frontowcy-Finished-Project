@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import { Book } from '@/types/types'
 
 export const useBook = (id: string) => {
-	console.log('VITE_BASE_URL:', import.meta.env.VITE_BASE_URL)
 
 	return useQuery<Book>({
 		queryKey: ['book', id],
