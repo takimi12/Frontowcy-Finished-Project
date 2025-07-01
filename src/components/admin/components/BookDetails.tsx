@@ -33,7 +33,8 @@ export const BookDetails: React.FC<BookDetailsProps> = ({
 		(borrowing) => borrowing.bookId === book.id,
 	)
 
-	console.log(bookBorrowings, 'bookborrowings')
+console.log(users, 'users')
+
 
 	const isOverdue = (borrowDate: string) => {
 		const borrowDateObj = new Date(borrowDate)
@@ -72,7 +73,6 @@ export const BookDetails: React.FC<BookDetailsProps> = ({
 		startIndex + itemsPerPage,
 	)
 
-	console.log(currentBorrowings, 'currentborrowings')
 
 	const handlePreviousPage = () => {
 		setCurrentPage((prev) => Math.max(prev - 1, 1))
