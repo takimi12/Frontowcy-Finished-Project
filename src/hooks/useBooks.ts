@@ -16,11 +16,14 @@ export const useUpdateBook = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: async (book: Book) => {
-			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/books/${book.id}`, {
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(book),
-			})
+			const res = await fetch(
+				`${import.meta.env.VITE_BASE_URL}api/books/${book.id}`,
+				{
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(book),
+				},
+			)
 			if (!res.ok) throw new Error('Błąd aktualizacji książki')
 			return res.json()
 		},

@@ -15,11 +15,14 @@ export const useCreateBorrowing = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: async (newBorrowing: NewBorrowing) => {
-			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/borrowings`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(newBorrowing),
-			})
+			const res = await fetch(
+				`${import.meta.env.VITE_BASE_URL}api/borrowings`,
+				{
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(newBorrowing),
+				},
+			)
 			if (!res.ok) throw new Error('Nie udało się zapisać wypożyczenia')
 			return res.json()
 		},

@@ -60,12 +60,15 @@ export const registerUser = async (
 
 export const loginUser = async (cardId: string, password: string) => {
 	try {
-		const response = await axios.get(`${import.meta.env.VITE_BASE_URL}api/users`, {
-			params: {
-				cardId,
-				password,
+		const response = await axios.get(
+			`${import.meta.env.VITE_BASE_URL}api/users`,
+			{
+				params: {
+					cardId,
+					password,
+				},
 			},
-		})
+		)
 
 		const user = response.data
 
