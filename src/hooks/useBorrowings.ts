@@ -5,7 +5,7 @@ export const useBorrowings = () =>
 	useQuery<Borrowing[]>({
 		queryKey: ['borrowings'],
 		queryFn: async () => {
-			const res = await fetch(`${process.env.BASE_URL}api/borrowings`)
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/borrowings`)
 			if (!res.ok) throw new Error('Błąd pobierania wypożyczeń')
 			return res.json()
 		},
@@ -15,7 +15,7 @@ export const useCreateBorrowing = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: async (newBorrowing: NewBorrowing) => {
-			const res = await fetch(`${process.env.BASE_URL}api/borrowings`, {
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/borrowings`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(newBorrowing),

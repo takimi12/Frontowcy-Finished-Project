@@ -16,7 +16,7 @@ export const useUpdateBook = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: async (book: Book) => {
-			const res = await fetch(`${process.env.BASE_URL}api/books/${book.id}`, {
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/books/${book.id}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(book),

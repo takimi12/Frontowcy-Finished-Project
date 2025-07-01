@@ -7,15 +7,18 @@ interface DeleteAccountData {
 }
 
 const deleteUserAccount = async ({ userId, userEmail }: DeleteAccountData) => {
-	const userResponse = await fetch(`${process.env.BASE_URL}api/users/${userId}`, {
-		method: 'DELETE',
-	})
+	const userResponse = await fetch(
+		`${import.meta.env.VITE_BASE_URL}api/users/${userId}`,
+		{
+			method: 'DELETE',
+		},
+	)
 
 	if (!userResponse.ok) {
 		throw new Error('Błąd podczas usuwania konta użytkownika')
 	}
 
-	const logResponse = await fetch(`${process.env.BASE_URL}api/logs`, {
+	const logResponse = await fetch(`${import.meta.env.VITE_BASE_URL}api/logs`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

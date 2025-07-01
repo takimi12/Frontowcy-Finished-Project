@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 export const useAddBook = () => {
 	return useMutation<Book, Error, NewBook>({
 		mutationFn: async (newBook: NewBook) => {
-			const res = await fetch(`${process.env.BASE_URL}api/books`, {
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/books`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(newBook),

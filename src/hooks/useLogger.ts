@@ -18,7 +18,7 @@ export const useLogger = () => {
 		}
 
 		try {
-			await fetch(`${process.env.BASE_URL}api/logs`, {
+			await fetch(`${import.meta.env.VITE_BASE_URL}api/logs`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(logEntry),

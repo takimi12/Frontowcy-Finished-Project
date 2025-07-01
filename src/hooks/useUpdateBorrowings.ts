@@ -12,7 +12,7 @@ export const useUpdateBorrowing = () => {
 				updatedBorrowing,
 			)
 			const res = await fetch(
-				`${process.env.BASE_URL}api/borrowings/${updatedBorrowing.id}`,
+				`${import.meta.env.VITE_BASE_URL}api/borrowings/${updatedBorrowing.id}`,
 				{
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },

@@ -33,13 +33,13 @@ export const registerUser = async (
 		}
 
 		const response = await axios.post(
-			`${process.env.BASE_URL}api/users`,
+			`${import.meta.env.VITE_BASE_URL}api/users`,
 			userToRegister,
 		)
 
 		const newUser = { ...response.data, cardId }
 
-		await axios.post(`${process.env.BASE_URL}api/logs`, {
+		await axios.post(`${import.meta.env.VITE_BASE_URL}api/logs`, {
 			date: new Date().toISOString(),
 			userId: newUser.id,
 			action: 'Rejestracja',
@@ -60,7 +60,7 @@ export const registerUser = async (
 
 export const loginUser = async (cardId: string, password: string) => {
 	try {
-		const response = await axios.get(`${process.env.BASE_URL}api/users`, {
+		const response = await axios.get(`${import.meta.env.VITE_BASE_URL}api/users`, {
 			params: {
 				cardId,
 				password,
@@ -88,7 +88,7 @@ export const loginUser = async (cardId: string, password: string) => {
 
 export const logAction = async (log: Omit<Log, 'id'>) => {
 	try {
-		await axios.post(`${process.env.BASE_URL}api/logs`, log)
+		await axios.post(`${import.meta.env.VITE_BASE_URL}api/logs`, log)
 	} catch (error) {
 		console.error('Błąd podczas logowania akcji:', error)
 	}
@@ -97,7 +97,7 @@ export const logAction = async (log: Omit<Log, 'id'>) => {
 export const checkIfUserExists = async (email: string) => {
 	try {
 		const response = await axios.get(
-			`${process.env.BASE_URL}api/users?email=${email}`,
+			`${import.meta.env.VITE_BASE_URL}api/users?email=${email}`,
 		)
 		return response.data.length > 0
 	} catch (error) {

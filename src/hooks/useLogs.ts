@@ -4,7 +4,7 @@ export const useLogs = () => {
 	return useQuery({
 		queryKey: ['logs'],
 		queryFn: async () => {
-			const res = await fetch(`${process.env.BASE_URL}api/logs`)
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/logs`)
 			if (!res.ok) throw new Error('Błąd pobierania logów')
 			return res.json()
 		},
@@ -20,7 +20,7 @@ export const useCreateLog = () => {
 			action: string
 			details: string
 		}) => {
-			const res = await fetch(`${process.env.BASE_URL}api/logs`, {
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}api/logs`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

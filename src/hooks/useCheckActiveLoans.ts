@@ -17,7 +17,7 @@ const fetchActiveLoans = async (
 		return false
 	}
 	const response = await fetch(
-		`${process.env.BASE_URL}api/borrowings?userId=${userId}&returnDate=null`,
+		`${import.meta.env.VITE_BASE_URL}api/borrowings?userId=${userId}&returnDate=null`,
 	)
 	if (!response.ok) {
 		throw new Error('Błąd podczas pobierania danych o wypożyczeniach')
