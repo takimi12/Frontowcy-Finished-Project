@@ -4,9 +4,7 @@ export const useLogs = () => {
 	return useQuery({
 		queryKey: ['logs'],
 		queryFn: async () => {
-			const res = await fetch(
-				`${process.env.BASE_URL}/logs`,
-			)
+			const res = await fetch(`${process.env.BASE_URL}api/logs`)
 			if (!res.ok) throw new Error('Błąd pobierania logów')
 			return res.json()
 		},
@@ -22,16 +20,13 @@ export const useCreateLog = () => {
 			action: string
 			details: string
 		}) => {
-			const res = await fetch(
-				`${process.env.BASE_URL}/logs`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(logData),
+			const res = await fetch(`${process.env.BASE_URL}api/logs`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
 				},
-			)
+				body: JSON.stringify(logData),
+			})
 			if (!res.ok) {
 				const errorData = await res.json()
 				throw new Error(errorData.message || 'Błąd dodawania logu')

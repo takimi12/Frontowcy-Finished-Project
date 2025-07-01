@@ -1,12 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Book } from '@/types/types'
 
-
 export const useBooks = () => {
 	return useQuery<Book[]>({
 		queryKey: ['books'],
 		queryFn: async () => {
-			const res = await fetch(`${process.env.BASE_URL}/books`)
+			const res = await fetch(`${process.env.BASE_URL}api/books`)
 			if (!res.ok) throw new Error('Błąd pobierania książek')
 			return res.json()
 		},
@@ -17,7 +16,7 @@ export const useUpdateBook = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: async (book: Book) => {
-			const res = await fetch(`${process.env.BASE_URL}/books/${book.id}`, {
+			const res = await fetch(`${process.env.BASE_URL}api/books/${book.id}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(book),

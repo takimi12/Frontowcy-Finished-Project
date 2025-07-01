@@ -1,4 +1,3 @@
-
 export const useLogger = () => {
 	const logAction = async ({
 		userId,
@@ -19,7 +18,7 @@ export const useLogger = () => {
 		}
 
 		try {
-			await fetch(`${process.env.BASE_URL}/logs`, {
+			await fetch(`${process.env.BASE_URL}api/logs`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(logEntry),

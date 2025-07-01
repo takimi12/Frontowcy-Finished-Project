@@ -10,7 +10,6 @@ interface Loan {
 	returnDate: string | null
 }
 
-
 const fetchActiveLoans = async (
 	userId: string | undefined,
 ): Promise<boolean> => {
@@ -18,7 +17,7 @@ const fetchActiveLoans = async (
 		return false
 	}
 	const response = await fetch(
-		`${process.env.BASE_URL}/borrowings?userId=${userId}&returnDate=null`,
+		`${process.env.BASE_URL}api/borrowings?userId=${userId}&returnDate=null`,
 	)
 	if (!response.ok) {
 		throw new Error('Błąd podczas pobierania danych o wypożyczeniach')
