@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import { Book } from '@/types/types'
 
 export const useBook = (id: string) => {
-
 	return useQuery<Book>({
 		queryKey: ['book', id],
 		queryFn: async () => {

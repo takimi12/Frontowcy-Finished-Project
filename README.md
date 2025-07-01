@@ -93,10 +93,16 @@ LinkedIn:
 
 # Screen z aplikacji
 
+![Hero](public/app.png)
+
+
 # Opis projektu
 
 Aplikacja do zarządzania biblioteką, pozwalająca na łatwe rejestrowanie użytkowników, logowanie, wypożyczanie książek, a także umożliwiająca administratorowi zarządzanie zasobami biblioteki. Aplikacja jest podzielona na dwa typy użytkowników: **Klient** oraz **Administrator**, a każda akcja wykonywana przez użytkownika jest rejestrowana w logach systemowych. Dodatkowo wszystkie kompononety są pokryte testami jednostkowymi przy wykorzystaniu testing-library/react,
-vitejs/plugin-react-swc, a główne procesy aplikacji takie jak logowanie, rejestracja, zwrot ksiąki są testowane przy uyciu playwright.
+vitejs/plugin-react-swc, a główne procesy aplikacji takie jak logowanie, rejestracja, zwrot ksiąki są testowane przy uyciu playwright. 
+
+Na branchu mongo-db aplikacja została zdeployowana na vercela i podłązona do bazy danych mongo-db. Na platformie vercel zostały
+wykorzystane api-routy w celu uniknięcia korzystania z dodatkowego backendu.
 
 # Główne funkcje:
 
@@ -171,9 +177,8 @@ npm run start
 # 10. Plany na przyszłość
 
 - Rozbudowa systemu powiadomień o terminach zwrotu książek
-- Integracja z zewnętrzną bazą danych (np. MongoDB)
-- Możliwość rezerwacji książek online
 - Implementacja zaawansowanej wyszukiwarki książek
+- Napisanie testów jednostkowych do brancha mongo-db, gdzie zmianie uległa logika komponentów
 
 # 11. Kontakt do autora
 
@@ -181,4 +186,4 @@ npm run start
 
 Email: tomek12olech@gmail.com
 GitHub: [takimi12](https://github.com/takimi12)
-LinkedIn:
+LinkedIn: https://www.linkedin.com/in/tomaszolechfrontend
