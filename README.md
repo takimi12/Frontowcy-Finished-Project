@@ -22,6 +22,10 @@ Projekt posiada trzy branche:
 - **`mongo-db`** – aplikacja została zdeployowana na [Vercel](https://vercel.com) i połączona z bazą danych **MongoDB**.
 - **`fullStack`** – zawiera lokalny backend napisany w **Express.js**, znajdujący się w folderze `backend`.
 
+# Link do aplikacji / App link
+
+https://frontowcy-finished-project.vercel.app/
+
 # Screen z aplikacji / Screen from the App
 
 ![Hero](public/app.png)
